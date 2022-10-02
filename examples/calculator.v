@@ -11,23 +11,23 @@ class Calculator { // in out lang we can make comments like this anywhere in the
 
     func add(a, b) {
         // This function adds two numbers
-        return a + b;
-    },
+        return a + b; // As you can see a ; does work
+    }, // and a comma as well
 
     func subtract(a, b) {
         // This function subtracts two numbers
-        return a - b;
-    },
+        return a - b
+    }
 
     func multiply(a, b) {
         // This function multiplies two numbers
-        return a * b;
-    },
+        return a * b
+    }
 
     func divide(a, b) {
         // This function divides two numbers
-        return a / b;
-    },
+        return a / b
+    }
 
     func choose(num1, num2, op) {
     // This function chooses which function to use
