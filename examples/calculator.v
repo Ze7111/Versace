@@ -8,7 +8,6 @@ include [time] // time is a python module but it will work with verscae
 class Calculator { // in out lang we can make comments like this anywhere in the code and they will be ignored by the compiler
     // This is the class that contains all of the calculator functions
     // It is a class because it is easier to organize the functions this way
-
     func add(a, b) {
         // This function adds two numbers
         return a + b; // As you can see a ; does work
@@ -24,10 +23,10 @@ class Calculator { // in out lang we can make comments like this anywhere in the
         return a * b
     }
 
-    func divide(a, b) {
-        // This function divides two numbers
-        return a / b
-    }
+    func divide(a, b) { // No indentation needed, even tho this function is a part of this class, not indenting it will still work as it should
+// This function divides two numbers
+return a / b
+}
 
     func choose(num1, num2, op) {
     // This function chooses which function to use
