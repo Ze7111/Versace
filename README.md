@@ -1,6 +1,8 @@
 # Verscae-Programing-language
-### This Language does NOT require indentation, tho you can still use it.
-### This Language is also ; and , friendly
+
+### This Language does ```NOT``` require indentation, however you ```can``` use it.
+### This Language is also semicolon and comma friendly
+
 
 ## How to use
 | There are example files located in the example folder
@@ -43,3 +45,6 @@ $ python3 verscae.py "examples\calculator.v"
 - try {} catch (var name) {} = try:
 - except (name) as (name):
 - all native and external python syntax
+
+## Dramatic Mode in action
+![image](images/Picture1.png)
