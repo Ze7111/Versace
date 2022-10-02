@@ -23,7 +23,7 @@ class Calculator { // in out lang we can make comments like this anywhere in the
         return a * b
     }
 
-    func divide(a, b) { // No indentation needed, even tho this function is a part of this class, not indenting it will still work as it should
+func divide(a, b) { // No indentation needed, even tho this function is a part of this class, not indenting it will still work as it should
 // This function divides two numbers
 return a / b
 }
