@@ -25,6 +25,15 @@
 ### This Language does ```NOT``` require indentation, however you ```can``` use it.
 ### This Language is also semicolon and comma friendly
 
+## Table of Contents
+- [How to install](#how-to-install)
+- [How to use](#how-to-use)
+  * [Dramatic Mode](#if-you-want-to-turn-on-dramatic-mode)
+  * [Decompile](#if-you-want-to-decompile-the-verscae-file-to-python)
+- [Features](#features)
+- [Syntax](#currently-inbuilt-syntax)
+- [Dramatic Mode in action](#dramatic-mode-in-action)
+
 ## How to install
 - Clone the repo
 ```bash
