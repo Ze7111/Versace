@@ -59,6 +59,7 @@ func main() {
     in num1 < "Enter a number: " | red | endl | int
     in num2 < "Enter another number: " | red | endl | int
     in op < "Enter an operation: " | red | endl | str
+    time.sleep(0.8) // using python native syntax for this module
     Calculator.choose(num1, num2, op)
 }
 
