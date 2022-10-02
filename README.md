@@ -4,15 +4,18 @@
 
 ## Features
 
-• It natively works with python and python libraries
-• The inbuilt syntax is very user friendly and easy to understand
-• Inbuilt decompiler to converd Verscae files to python code
-• Dramatic Music and cool build style
-• Crossover between Java, JavaScript and Python
-• No indentaiton Required anywhere at anypoint (you can still indent for neatness)
+- It natively works with python and python libraries
+- The inbuilt syntax is very user friendly and easy to understand
+- Inbuilt decompiler to converd Verscae files to python code
+- Dramatic Music and cool build style
+- Crossover between Java, JavaScript and Python
+- No indentaiton Required anywhere at anypoint (you can still indent for neatness)
 
 ## How to use
-• There are example file located in the example folder
+| There are example files located in the example folder
+- For windows Powershell
+`` .\verscae "examples\calculator.v" True ``
+
 
 
 
