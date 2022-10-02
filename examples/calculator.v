@@ -5,7 +5,7 @@
 
 include [time] // time is a python module but it will work with verscae
 
-class Calculator {
+class Calculator { // in out lang we can make comments like this anywhere in the code and they will be ignored by the compiler
     // This is the class that contains all of the calculator functions
     // It is a class because it is easier to organize the functions this way
 
