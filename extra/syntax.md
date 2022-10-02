@@ -14,6 +14,3 @@ try {} catch (var name) {} = try:
 except (name) as (name):
 
 `` it also supports all native python functions, scripts and modules. ``
-
-[]: # Language: markdown
-[]: # Path: extra\variables.md
