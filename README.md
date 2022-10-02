@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-2.4.5-green?style=for-the-badge">
-  <img src="https://img.shields.io/github/license/Ze7111/Verscae-Programing-language?style=for-the-badge">
+  <img src="https://img.shields.io/badge/license-Creative%20Commons-green?style=for-the-badge">
   <img src="https://img.shields.io/github/stars/Ze7111/Verscae-Programing-language?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/Ze7111/Verscae-Programing-language?color=red&style=for-the-badge">
   <img src="https://img.shields.io/github/forks/Ze7111/Verscae-Programing-language?color=teal&style=for-the-badge">
