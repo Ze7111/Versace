@@ -45,5 +45,5 @@ def main(final, decomplie, filename='src\\output.v'):
         try: os.system(f'python "src\\{current_time}.tmp"')
         except FileNotFoundError: os.system(f'python3 "src\\{current_time}.tmp"')
         except KeyboardInterrupt: print(f'\u001b[41m\u001b[30mKeyboard Interrupt Detected\u001b[0m'); exit()
-    except: print(f'\u001b[41m\u001b[30mError: {filename} Failed to run.\u001b[0m'); exit()
+    except Exception: print(f'\u001b[41m\u001b[30mError: {filename} Failed to run.\u001b[0m'); exit()
     finally: os.remove(f'src\\{current_time}.tmp')
