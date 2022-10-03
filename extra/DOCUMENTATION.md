@@ -227,53 +227,26 @@ out < (value or string) | (args)
 ```Swift
 out < f"(data)" | (args)
 ```
-- These are the folloing arguments you can use for colors:
-```Swift
-red
-green
-yellow
-blue
-magenta
-cyan
-white
-black
-bright_red
-bright_green
-bright_yellow
-bright_blue
-bright_magenta
-bright_cyan
-bright_white
-bright_black
-```
+- These are the folloing arguments you can use for styles, endtypes and more:
 
-- These are the folloing arguments you can use for styles:
-```Swift
-bold
-dim
-italic
-underline
-blink
-reverse
-hidden
-```
 
-- These are the folloing arguments you can use for aligning:
-```Swift
-left
-center
-right
-justify
-```
-
-- These are the folloing arguments you can use for ending:
-```Swift
-newl
-tab
-rw
-space
-endl
-```
+Colors | Styles | Endtypes | Alignments
+---: | :---: | :---: | :---
+black | bold | endl | left 
+red | dim | newl | center 
+green | italic | tab |  right 
+yellow | underline | space | justify 
+blue | blink | rw | 
+magenta | reverse |
+cyan | hidden |
+white | strikethrough |
+bright_red|
+bright_green|
+bright_yellow|
+bright_blue|
+bright_magenta|
+bright_cyan|
+bright_white|
 
 - Here are some examples of printing with arguments:
 ```Swift
