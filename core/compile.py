@@ -1,5 +1,6 @@
 import os, time
-def main(final, decomplie, filename='verscae\\src\\output.v'):
+import subprocess
+def main(final, decomplie, filename='src\\output.v'):
     os.system('cls' if os.name == 'nt' else 'clear')
     current_time = time.time()
     current_time = time.strftime('%d-%m-%Y %H-%M-%S', time.localtime(current_time))
@@ -9,9 +10,9 @@ def main(final, decomplie, filename='verscae\\src\\output.v'):
         name = input()
         print('\u001b[0m')
         if name == '':
-            name = f'verscae\\python\\{current_time}.py'
+            name = f'python\\{current_time}.py'
         else:
-            name = f'verscae\\python\\{name}.py'
+            name = f'python\\{name}.py'
         
         print('\u001b[41;1mDecompiling...\u001b[0m', end='\r')
         try:
@@ -33,17 +34,18 @@ def main(final, decomplie, filename='verscae\\src\\output.v'):
         time.sleep(3)     
         print('\u001b[42;1mDecompiling Complete\u001b[0m')
     
-    files = os.listdir('verscae\\src')
+    files = os.listdir('src')
     files.sort()
     for file in files[:-10]:
-        os.remove(f'verscae\\src\\{file}')
+        os.remove(f'src\\{file}')
     
-    with open(f'verscae\\src\\{current_time}.tmp', 'w') as f:
+    with open(f'src\\{current_time}.tmp', 'w') as f:
         for line in final:
             f.write(line)
+    
     try:
-        try: os.system(f'python "verscae\\src\\{current_time}.tmp"')
-        except FileNotFoundError: os.system(f'python3 "verscae\\src\\{current_time}.tmp"')
+        try: subprocess.call(f'python "src\\{current_time}.tmp"', shell=False)
+        except FileNotFoundError: subprocess.call(f'python3 "src\\{current_time}.tmp"', shell=False)
         except KeyboardInterrupt: print(f'\u001b[41m\u001b[30mKeyboard Interrupt Detected\u001b[0m'); exit()
     except Exception: print(f'\u001b[41m\u001b[30mError: {filename} Failed to run.\u001b[0m'); exit()
-    finally: os.remove(f'verscae\\src\\{current_time}.tmp')
+    finally: os.remove(f'src\\{current_time}.tmp')

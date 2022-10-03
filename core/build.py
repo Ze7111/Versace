@@ -4,6 +4,7 @@ try:
     import rich
     import playsound
     import os
+    import subprocess
     import sys
     import time
     
@@ -26,7 +27,7 @@ def build(filename, music_option, Version, music_path, decomplie=False):
                 print('\u001b[32;1mDo you want to play music while compiling? (y/n): \u001b[0m', end='')
                 
                 if input().lower() == 'y':
-                    os.system(f'start python -m playsound {music_path}')
+                    subprocess.call(f'start python -m playsound {music_path}', shell=True)
                     
                     print('\u001b[41;1mPlaying music.\u001b[0m', end='\r')
                     time.sleep(0.5)
