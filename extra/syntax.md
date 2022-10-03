@@ -6,7 +6,7 @@ out < (string or var) | (statement or style)  = print("string or var", end="", s
 func (name)(statements) {}  = def (name)(args):
 class (name) {} = class (name):
 if (condition) {} = if (condition):
-elif (condition) {} = elif (condition):
+else if (condition) {} = elif (condition):
 else {} = else:
 for (var name) in (var name) {} = for (name) in (name):
 while (condition) {} = while (condition):

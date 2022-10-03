@@ -27,38 +27,20 @@
 
 ## Table of Contents
 - [How to install](#how-to-install)
-- [How to use](#how-to-use)
-  * [Dramatic Mode](#if-you-want-to-turn-on-dramatic-mode)
-  * [Decompile](#if-you-want-to-decompile-the-verscae-file-to-python)
+- [Quick Start Gide](extra\DOCUMENTATION.md)
+- [Release Downalod Readme](extra\RELEASE%README.md)
+- [Syntax](extra\syntax.md)
+- [Dramatic Mode](#if-you-want-to-turn-on-dramatic-mode)
+- [Decompile](#if-you-want-to-decompile-the-verscae-file-to-python)
 - [Features](#features)
 - [Syntax](#currently-inbuilt-syntax)
 - [Dramatic Mode in action](#dramatic-mode-in-action)
 
 ## How to install
-- Clone the repo
-```bash
-git clone --depth=1 https://github.com/Ze7111/Verscae-Programing-language.git
-```
-- Go to the directory
-```bash
-cd Verscae-Programing-language
-```
-- And your done
-
-## How to use
-| There are example files located in the example folder
-- For windows Powershell
-```sh
-$ .\verscae "examples\calculator.v"
-```
-- For windows CMD
-```bat
-$ verscae "examples\calculator.v"
-```
-- For all Linux
-```bash
-$ python3 verscae.py "examples\calculator.v"
-```
+- Download the latest release from [here](https://github.com/Ze7111/Verscae-Programing-language/releases/latest)
+- Extract the zip file
+- Open the folder in vscode
+- Read the README.md file there
 
 ### If you want to turn on DRAMATIC mode...
 | Go to the ```verscae.py``` and set the ```music_option``` to ``` True ```
