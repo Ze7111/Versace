@@ -44,8 +44,16 @@ def main(final, decomplie, filename='src\\output.v'):
             f.write(line)
     
     try:
-        try: subprocess.call(f'python "src\\{current_time}.tmp"', shell=False)
-        except FileNotFoundError: subprocess.call(f'python3 "src\\{current_time}.tmp"', shell=False)
-        except KeyboardInterrupt: print(f'\u001b[41m\u001b[30mKeyboard Interrupt Detected\u001b[0m'); exit()
-    except Exception: print(f'\u001b[41m\u001b[30mError: {filename} Failed to run.\u001b[0m'); exit()
-    finally: os.remove(f'src\\{current_time}.tmp')
+        try: 
+            subprocess.call(f'python "src\\{current_time}.tmp"', shell=False)
+        except FileNotFoundError: 
+            subprocess.call(f'python3 "src\\{current_time}.tmp"', shell=False)
+        except KeyboardInterrupt: 
+            print(f'\u001b[41m\u001b[30mKeyboard Interrupt Detected\u001b[0m'); exit()
+    
+    except Exception: 
+        print(f'\u001b[41m\u001b[30mError: {filename} Failed to run.\u001b[0m')
+        exit()
+    
+    finally: 
+        os.remove(f'src\\{current_time}.tmp')
