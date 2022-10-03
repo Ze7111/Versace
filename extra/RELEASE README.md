@@ -1,8 +1,4 @@
 # Verscae Release 2.4.5
-
-## This is the dir you should open in vscode to work on the project.
-## You can make all your files here
-
 ## Instructions
 - Downlaod the zip
 - Extract the zip anywhere
@@ -39,11 +35,11 @@ README.md
         "command": "workbench.action.tasks.runTask",
         "args": "Decompile Verscae File"
     }
-'''
+```
 
 - So the file should look like this:
 
-```json
+```jsonc
 [
     // Your other keybindings if you have any
     {
@@ -66,4 +62,4 @@ README.md
 
 - Remember wherever you have a verscae file, you should have the verscae folder in the same directory
 
-- If you need help coding a DOCUMENTATION.md file is there in the verscae folder
+- If you need help coding a [DOCUMENTATION.md](DOCUMENTATION.md) file is there in the verscae folder
