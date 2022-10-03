@@ -62,4 +62,4 @@ README.md
 
 - Remember wherever you have a verscae file, you should have the verscae folder in the same directory
 
-- If you need help coding a DOCUMENTATION.md file is there in the verscae folder
+- If you need help coding a [DOCUMENTATION.md](extra/DOCUMENTATION.md) file is there in the verscae folder
