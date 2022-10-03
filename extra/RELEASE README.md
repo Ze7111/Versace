@@ -39,11 +39,11 @@ README.md
         "command": "workbench.action.tasks.runTask",
         "args": "Decompile Verscae File"
     }
-'''
+```
 
 - So the file should look like this:
 
-```json
+```jsonc
 [
     // Your other keybindings if you have any
     {
