@@ -11,7 +11,7 @@ try:
 except ModuleNotFoundError as e:
     import subprocess
     for module in e.name.split(', '):
-        subprocess.call(f'pip install {module}', shell=True)
+        subprocess.call(f'pip install {module}', shell=False)
     print('\u001b[41;1mRestart the compiler to continue\u001b[0m')
 
 os.system('cls' if os.name == 'nt' else 'clear')
