@@ -42,6 +42,13 @@
 - Open the folder in vscode
 - Read the README.md file there
 
+### For Syntax highlighting
+- Open a `.v` file in vscode
+- Open the command pallete `(Ctrl+Shift+P)`
+- Type `Select Language Mode`
+- Select `Rust` or `Swift` (we dont have a syntax highlighter for verscae yet)
+- Enjoy
+
 ### If you want to turn on DRAMATIC mode...
 | Go to the ```verscae.py``` and set the ```music_option``` to ``` True ```
 
