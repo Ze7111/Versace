@@ -328,7 +328,7 @@ for i in range(10) {
 ```
 - You can put comments anywhere in the code.
 - Example:
-```rust
+```Swift
 a += 10 // This is a comment
 ```
 
@@ -346,7 +346,7 @@ a += 10 // This is a comment
 
 ### Example Program
 - Here is an example program that takes input from the user and prints it back to the user along with 2 functions.
-```rust:
+```Swift
 class Person {
     func say_hi() {
         out < "Hello, my name is Jhon" | red
