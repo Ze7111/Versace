@@ -19,7 +19,6 @@ def build(filename, music_option, Version, music_path, decomplie=False):
     try:
         if Version != '2.4.5':
             print('\u001b[41;1mYou are using an unsupported version of the compiler, please fix it. The complier will still work but it may not be as stable as the official version.\u001b[0m')
-            
             time.sleep(2)
             os.system('cls' if os.name == 'nt' else 'clear')
             
@@ -41,6 +40,10 @@ def build(filename, music_option, Version, music_path, decomplie=False):
                         print('\u001b[41;1mBuilding' + '.'*i, '\u001b[0m', end='\r')
                         time.sleep(0.5)
                     print('\u001b[42;1mBuild Complete\u001b[0m      ', end='\n')
+                    pass
+                
+                else:
+                    pass
                     
         
         m(filename, decomplie)

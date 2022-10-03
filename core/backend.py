@@ -1,6 +1,6 @@
-from core.build import build as b
+from core.build import build as b # don't change this unless you know what you are doing
 
-def main(filename, music_option, Version, music_path, argv):
+def main(filename, music_option, Version, music_path, argv): # don't change this unless you know what you are doing
     try: # don't change this either
         if argv[1] != None or argv[1] != '': # don't change this unless you know what you are doing
             b(argv[1], music_option, Version, music_path, argv[2]) # don't change this unless you know what you are doing

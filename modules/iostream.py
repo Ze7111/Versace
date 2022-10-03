@@ -143,3 +143,6 @@ class IOStream:
             line += f'{tabs}{var} = input()'
         
         return line   
+    
+    def error(text):
+        print(f"\u001b[41;1m{text}\u001b[0m")

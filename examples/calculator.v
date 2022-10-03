@@ -11,7 +11,7 @@ class Calculator { // in out lang we can make comments like this anywhere in the
     func add(a, b) {
         // This function adds two numbers
         return a + b; // As you can see a ; does work
-    }, // and a comma as well
+    }
 
     func subtract(a, b) {
         // This function subtracts two numbers
@@ -23,10 +23,10 @@ class Calculator { // in out lang we can make comments like this anywhere in the
         return a * b
     }
 
-func divide(a, b) { // No indentation needed, even tho this function is a part of this class, not indenting it will still work as it should
-// This function divides two numbers
-return a / b
-}
+    func divide(a, b) { // No indentation needed, even tho this function is a part of this class, not indenting it will still work as it should
+        // This function divides two numbers
+        return a / b
+    }
 
     func choose(num1, num2, op) {
     // This function chooses which function to use
@@ -34,15 +34,15 @@ return a / b
             ans = Calculator.add(num1, num2)
             out < "The answer is " | ans | newl | blue
         }
-        elif op == "-" {
+        else if op == "-" {
             ans = Calculator.subtract(num1, num2)
             out < "The answer is " | ans | newl | blue
         }
-        elif op == "*" {
+        else if op == "*" {
             ans = Calculator.multiply(num1, num2)
             out < "The answer is " | ans | newl | blue
         }
-        elif op == "/" {
+        else if op == "/" {
             ans = Calculator.divide(num1, num2)
             out < "The answer is " | ans | newl | blue
         }
@@ -53,13 +53,21 @@ return a / b
     }
 }
 
-func main() {
-    // This is the main function
+public main() { // This is the start function that will be called when the program is run
+    // This is the main function 
     in num1 < "Enter a number: " | red | endl | int
     in num2 < "Enter another number: " | red | endl | int
     in op < "Enter an operation: " | red | endl | str
-    time.sleep(0.8) // using python native syntax for this module
+
+    for i in range(6) {
+        out < f"Calculating{'. ' * i}" | rw | green 
+        time.sleep(0.5)
+    }    
+    out < "                        " | rw
+
     Calculator.choose(num1, num2, op)
 }
 
-main() // This calls the main function
+// Run the program by typing "verscae run examples\calculator.v"(if in cmd) in the terminal.
+// Remember you do not call the main function, verscae does that for you.
+// Remember to always have a public main function in your program or it will not run.
