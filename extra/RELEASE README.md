@@ -1,8 +1,4 @@
 # Verscae Release 2.4.5
-
-## This is the dir you should open in vscode to work on the project.
-## You can make all your files here
-
 ## Instructions
 - Downlaod the zip
 - Extract the zip anywhere
