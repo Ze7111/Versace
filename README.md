@@ -26,21 +26,26 @@
 ### This Language is also semicolon and comma friendly
 
 ## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Quick Start Guide](#quick-start-guide)
 - [How to install](#how-to-install)
-- [Quick Start Gide](extra/DOCUMENTATION.md)
-- [Release Downalod Readme](extra/RELEASE%20README.md)
-- [Syntax](extra/syntax.md)
-- [Dramatic Mode](#if-you-want-to-turn-on-dramatic-mode)
-- [Decompile](#if-you-want-to-decompile-the-verscae-file-to-python)
+  - [For Syntax highlighting](#for-syntax-highlighting)
+  - [If you want to turn on DRAMATIC mode...](#if-you-want-to-turn-on-dramatic-mode)
+  - [If you want to decompile the Verscae file to python.](#if-you-want-to-decompile-the-verscae-file-to-python)
+- [Diffrences between Verscae and Python](#diffrences-between-verscae-and-python)
+  - [At this point, you might be wondering, ghee, I have to give this language a try, but how do I do that?](#at-this-point-you-might-be-wondering-ghee-i-have-to-give-this-language-a-try-but-how-do-i-do-that)
 - [Features](#features)
-- [Syntax](#currently-inbuilt-syntax)
+- [Currently Inbuilt Syntax](#currently-inbuilt-syntax)
 - [Dramatic Mode in action](#dramatic-mode-in-action)
+
+## Quick Start Guide
+- [Quick Start Guide](docs/DOCUMENTATION.md)
 
 ## How to install
 - Download the latest release from [here](https://github.com/Ze7111/Verscae-Programing-language/releases/latest)
 - Extract the zip file
 - Open the folder in vscode
-- Read the README.md file there
+- Read the README.md file there or [here](docs/RELEASE%20README.md)
 
 ### For Syntax highlighting
 - Open a `.v` file in vscode
@@ -58,6 +63,22 @@
 $ verscae "examples\calculator.v" True
 ```
 
+## Diffrences between Verscae and Python
+- Verscae is a ```beginners friendly``` language, so it has a lot of features that make it easier to learn.
+- Verscae is a non ```indentation based``` language, so you can use it without worrying about indentation.
+- Verscae is a ```semicolon and comma``` friendly language, so you can use it without worrying about semicolons and commas.
+- Verscae is non ```linear``` language, so you can use it without worrying about the order of the functions, classes, etc.
+- Verscae is a ```dramatic``` language, so you can use it in a ```dramatic``` way.
+- Verscae has a ```decompiler``` so you can decompile your verscae code to python.
+- Verscae is a ```python``` based language, so you can use it with python.
+- Verscae has ```colors and emojis``` so you can use it with colors and emojis.
+  
+### At this point, you might be wondering, ghee, I have to give this language a try, but how do I do that?
+- You can download the latest release from [here](https://github.com/Ze7111/Verscae-Programing-language/releases/latest)
+- Extract the zip and open the folder in vscode
+- Read the README.md file there or read the [Release Documentation](docs/RELEASE%20README.md)
+- Enjoy :D
+
 ## Features
 - It natively works with python and python libraries
 - The inbuilt syntax is very user friendly and easy to understand
@@ -74,13 +95,14 @@ $ verscae "examples\calculator.v" True
 - func (name)(statements) {}  = def (name)(args):
 - class (name) {} = class (name):
 - if (condition) {} = if (condition):
-- elif (condition) {} = elif (condition):
+- else if (condition) {} = elif (condition):
 - else {} = else:
 - for (var name) in (var name) {} = for (name) in (name):
 - while (condition) {} = while (condition):
 - try {} catch (var name) {} = try:
 - except (name) as (name):
 - all native and external python syntax
+- You can read the full syntax [here](docs/DOCUMENTATION.md)
 
 ## Dramatic Mode in action
 ![image](images/Picture1.png)
