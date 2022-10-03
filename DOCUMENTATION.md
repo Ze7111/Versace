@@ -59,6 +59,23 @@
 - The syntax is also very similar to JavaScript and C++.
 - In the following anywhere you see `()` you can replace it with an appropriate value.
 
+## Code that MUST be in every Verscae file
+- You must have a `main` function in your code.
+- like this:
+```Swift
+public main() {
+    // your code here
+}
+```
+- This is the entry point of your code.
+- You can just use this to call other functions in your code
+- Like this: 
+```Swift
+public main() {
+    say_hi()
+}
+```
+
 ## Basics
 - You can use `,` to seperate things in `{}` and it will not cause any errors.
 - You can use `;` at the end of lines, and it will not cause any errors.
@@ -87,23 +104,6 @@ class Person {
 }
 ```
 - Not using `,` will also work as seen as on the example above.
-
-### Code that should be in every Verscae file
-- You must have a `main` function in your code.
-- like this:
-```Swift
-public main() {
-    // your code here
-}
-```
-- This is the entry point of your code.
-- You can just use this to call other functions in your code
-- Like this: 
-```Swift
-public main() {
-    say_hi()
-}
-```
 
 ### Classes
 - Classes are written in the following format:
