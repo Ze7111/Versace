@@ -27,8 +27,8 @@
 
 ## Table of Contents
 - [How to install](#how-to-install)
-- [Quick Start Gide](extra\DOCUMENTATION.md)
-- [Release Downalod Readme](extra\RELEASE%README.md)
+- [Quick Start Gide](extra/DOCUMENTATION.md)
+- [Release Downalod Readme](extra/RELEASE%README.md)
 - [Syntax](extra\syntax.md)
 - [Dramatic Mode](#if-you-want-to-turn-on-dramatic-mode)
 - [Decompile](#if-you-want-to-decompile-the-verscae-file-to-python)
