@@ -1,5 +1,13 @@
 # Quick Start Guide
-### Installation
+## Requirements
+- You must have Python 3.6 or higher installed on your system. You can download it from [here](https://www.python.org/downloads/). or you can use [this](https://www.microsoft.com/en-us/p/python-39/9p7qfqmjrfp7?activetab=pivot:overviewtab) if you are on windows 10 or higher.
+
+- Visual Studio Code is recommended, but not required. You can download it from [here](https://code.visualstudio.com/download).
+
+- You must have the Python extension installed in Visual Studio Code. You can install it from [here](https://marketplace.visualstudio.com/items?itemName=ms-python.python).
+
+
+## Installation
 - In VSCode, open the command palette (Ctrl+Shift+P) and type `Tasks: Configure Tasks` -> `Create tasks.json file from template` -> `Others` -> `Python: Current File`
 
 - Now open the new `tasks.json` in the `.vscode` folder and replace the contents with the following:
@@ -10,12 +18,12 @@
         {
             "label": "Run Verscae File",
             "type": "shell",
-            "command": "python verscae.py ${file}",
+            "command": "python verscae.py ${relativeFile}",
         },
         {
             "label": "Decompile Verscae File",
             "type": "shell",
-            "command": "python verscae.py ${file} True",
+            "command": "python verscae.py ${relativeFile} True",
         }
     ]
 }
@@ -51,7 +59,7 @@
 - The syntax is also very similar to JavaScript and C++.
 - In the following anywhere you see `()` you can replace it with an appropriate value.
 
-### Basics
+## Basics
 - You can use `,` to seperate things in `{}` and it will not cause any errors.
 - You can use `;` at the end of lines, and it will not cause any errors.
 
@@ -80,6 +88,23 @@ class Person {
 ```
 - Not using `,` will also work as seen as on the example above.
 
+### Code that should be in every Verscae file
+- You must have a `main` function in your code.
+- like this:
+```Swift
+public main() {
+    // your code here
+}
+```
+- This is the entry point of your code.
+- You can just use this to call other functions in your code
+- Like this: 
+```Swift
+public main() {
+    say_hi()
+}
+```
+
 ### Classes
 - Classes are written in the following format:
 ```Swift
@@ -87,6 +112,18 @@ class (name) {
     (statements)
 }
 ```
+- Example:
+```Swift
+class Person {
+    func say_hi() {
+        out < "Hello, my name is Jhon" | red | tab
+    }
+    func say_bye() {
+        out < "Goodbye" | green 
+    }
+}
+```
+
 
 ### Functions
 - Functions are written in the following format:
@@ -95,12 +132,24 @@ func (name)(args) {
     (statements)
 }
 ```
+- Example:
+```Swift
+func say_hi() {
+    in name < "What is your name? " | green | endl
+    out < f"Hello, my name is {name}" | red
+}
+
 
 ### Variables
 - Variables are written in the following format:
 ```Swift
 var (name) = (value)
 ```
+- Example:
+```Swift
+var name = "Jhon"
+```
+
 
 ### If statements
 - The conditions in an if statement can follow the python syntax.
@@ -108,6 +157,15 @@ var (name) = (value)
 ```Swift
 if (condition) {
     (statements)
+}
+```
+- Example:
+```Swift
+if name == "Jhon" {
+    out < "Hello, my name is Jhon" | red
+}
+else {
+    out < "Hello, my name is not Jhon" | red
 }
 ```
 
@@ -118,6 +176,13 @@ for (variable) in (range) {
     (statements)
 }
 ```
+- Example:
+```Swift
+for i in range(10) {
+    out < i | red
+}
+```
+
 
 ### While loops
 - The conditions in a while loop can follow the python syntax.
@@ -125,6 +190,14 @@ for (variable) in (range) {
 ```Swift
 while (condition) {
     (statements)
+}
+```
+- Example:
+```Swift
+i = 0
+while i < 10 {
+    out < "Hello, my name is Jhon" | red
+    i += 1
 }
 ```
 
@@ -137,6 +210,10 @@ include [(module)]
 - For multiple imports, you can use the following format:
 ```ruby
 include [(module1), (module2), (module3)]
+```
+- Example:
+```ruby
+include [os, sys]
 ```
 
 
@@ -217,6 +294,10 @@ out < "Hello"
 in (variable) < (string) | (args)
 ```
 - Input arguments are the same as the print arguments.
+- Example:
+```Swift
+in name < "What is your name? " | green | endl
+```
 
 ### Any python syntax
 - You can use any python syntax in the verscae file, and it will work as expected.
@@ -246,6 +327,10 @@ for i in range(10) {
 // (comment)
 ```
 - You can put comments anywhere in the code.
+- Example:
+```rust
+a += 10 // This is a comment
+```
 
 ### Other
 - You can use `return` to return a value from a function.
@@ -260,7 +345,7 @@ for i in range(10) {
 - If you do not have a `main` function, the file will not run.
 
 ### Example Program
-- Here is an example program that takes input from the user and prints it back to the user.
+- Here is an example program that takes input from the user and prints it back to the user along with 2 functions.
 ```rust:
 class Person {
     func say_hi() {
