@@ -56,7 +56,7 @@
 - You can use `;` at the end of lines, and it will not cause any errors.
 
 - Heres 2 fully working examples:
-```rust
+```Swift
 class Person {
     func say_hi() {
         out < "Hello, my name is Jhon" | red;
@@ -68,7 +68,7 @@ class Person {
 ```
 - Using `,` will also work as seen as on the example above.
 
-```rust
+```Swift
 class Person {
     func say_hi() {
         out < "Hello, my name is Jhon" | red
@@ -82,7 +82,7 @@ class Person {
 
 ### Classes
 - Classes are written in the following format:
-```r
+```Swift
 class (name) {
     (statements)
 }
@@ -90,7 +90,7 @@ class (name) {
 
 ### Functions
 - Functions are written in the following format:
-```r
+```Swift
 func (name)(args) {
     (statements)
 }
@@ -98,14 +98,14 @@ func (name)(args) {
 
 ### Variables
 - Variables are written in the following format:
-```r
+```Swift
 var (name) = (value)
 ```
 
 ### If statements
 - The conditions in an if statement can follow the python syntax.
 - If statements are written in the following format:
-```r
+```Swift
 if (condition) {
     (statements)
 }
@@ -113,7 +113,7 @@ if (condition) {
 
 ### For loops
 - For loops are written in the following format:
-```r
+```Swift
 for (variable) in (range) {
     (statements)
 }
@@ -122,7 +122,7 @@ for (variable) in (range) {
 ### While loops
 - The conditions in a while loop can follow the python syntax.
 - While loops are written in the following format:
-```r
+```Swift
 while (condition) {
     (statements)
 }
@@ -131,11 +131,11 @@ while (condition) {
 ### Importing
 - You can import python modules using the `include` keyword. (in the future you will be able to import other verscae files)
 - Importing is written in the following format:
-```r
+```ruby
 include [(module)]
 ```
 - For multiple imports, you can use the following format:
-```r
+```ruby
 include [(module1), (module2), (module3)]
 ```
 
@@ -143,15 +143,15 @@ include [(module1), (module2), (module3)]
 ### Printing
 - You can print to the console using the `out` keyword.
 - Printing is written in the following format:
-```r
+```Swift
 out < (value or string) | (args)
 ```
 - For printing you can use `f` strings in the following format:
-```r
+```Swift
 out < f"(data)" | (args)
 ```
 - These are the folloing arguments you can use for colors:
-```r
+```Swift
 red
 green
 yellow
@@ -171,7 +171,7 @@ bright_black
 ```
 
 - These are the folloing arguments you can use for styles:
-```r
+```Swift
 bold
 dim
 italic
@@ -182,7 +182,7 @@ hidden
 ```
 
 - These are the folloing arguments you can use for aligning:
-```r
+```Swift
 left
 center
 right
@@ -190,7 +190,7 @@ justify
 ```
 
 - These are the folloing arguments you can use for ending:
-```r
+```Swift
 newl
 tab
 rw
@@ -199,21 +199,21 @@ endl
 ```
 
 - Here are some examples of printing with arguments:
-```r
+```Swift
 out < "Hello" | red | center | newl
 out < "Hello" | bold
 out < "Hello" | center | tab
 out < "Hello" | center | endl | green
 ```
 - You can also print without arguments:
-```r
+```Swift
 out < "Hello"
 ```
 
 ### Input
 - You can get input from the user using the `in` keyword.
 - Input is written in the following format:
-```r
+```Swift
 in (variable) < (string) | (args)
 ```
 - Input arguments are the same as the print arguments.
