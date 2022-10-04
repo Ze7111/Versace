@@ -1,4 +1,4 @@
-# Verscae Release 2.4.5
+# Verscae Release 3.0.1
 ## Instructions
 - Downlaod the zip
 - Extract the zip anywhere

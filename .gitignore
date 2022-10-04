@@ -109,6 +109,14 @@ ipython_config.py
 #   https://pdm.fming.dev/#use-with-ide
 .pdm.toml
 
+# My Additions
+__pycache__/
+Xhecklist.md
+
+
+
+
+
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
 
@@ -120,7 +128,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-__pycache__/
 .env
 .venv
 env/
