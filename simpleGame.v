@@ -13,25 +13,28 @@ catch ModuleNotFoundError {
 
 public main() {
     out < "Game Started" | endl | green
-    pygame.init()
-    screen = pygame.display.set_mode((800, 600))
-    pygame.display.set_caption("Simple Game")
+    pygame.init() // initialize pygame
+    pygame.display.set_caption("Simple Game") // set window title
+    screen = pygame.display.set_mode((800, 600)) // set window size
+    window = MainWindow()
+    window.run() // run main window
+    out < "Game Ended" | endl | red
 }
 
 class MainWindow {
-    func repr() {
+    func repr(self) {
         self.window = pygame.display.set_mode((500, 500))
         self.window.fill((255, 255, 255))
-        self.running = true
+        self.running = True
         self.clock = pygame.time.Clock()
-        self.fps = 60
+        self.fps = 900
     }
 
-    func run() {
+    func run(self) {
         while self.running {
             for event in pygame.event.get() {
                 if event.type == pygame.QUIT {
-                    self.running = false
+                    self.running = False
                 }
             }
             self.clock.tick(self.fps)
@@ -39,7 +42,7 @@ class MainWindow {
         }
     }
 
-    func quit() {
+    func quit(self) {
         pygame.quit()
     }
 }

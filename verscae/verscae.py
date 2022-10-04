@@ -3,7 +3,7 @@ import sys, os
 os.system('cls' if os.name == 'nt' else 'clear')
 
 
-music_option = True # change to False if you don't want want to play music while compling
+music_option = False # change to False if you don't want want to play music while compling
 music_path = 'music.mp3' # change to the path of your music file
 
 
