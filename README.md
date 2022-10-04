@@ -27,7 +27,7 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
-- [Quick Start Guide and Beginner's Guide](#quick-start-guide-and-beginners-guide)
+- [Quick Start Guide, Syntax diffrences sheet and Beginner's Guide](#quick-start-guide-syntax-diffrences-sheet-and-beginners-guide)
 - [How to install the release version](#how-to-install-the-release-version)
   - [For Syntax highlighting](#for-syntax-highlighting)
 - [How to install the source code and use it](#how-to-install-the-source-code-and-use-it)
@@ -39,9 +39,10 @@
 - [Currently Inbuilt Syntax](#currently-inbuilt-syntax)
 - [Dramatic Mode in action](#dramatic-mode-in-action)
 
-## Quick Start Guide and Beginner's Guide
+## Quick Start Guide, Syntax diffrences sheet and Beginner's Guide
 - [Beginner's Guide](verscae/docs/BEGINNERS%20GUIDE.md)
 - [Quick Start Guide](verscae/docs/DOCUMENTATION.md)
+- [Syntax Diffrences Sheet](verscae/docs/SYNTAX.md)
 
 ## How to install the release version
 - Download the latest release from [here](https://github.com/Ze7111/Verscae-Programing-language/releases/latest)
