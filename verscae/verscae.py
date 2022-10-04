@@ -7,13 +7,17 @@ music_option = True # change to False if you don't want want to play music while
 music_path = 'music.mp3' # change to the path of your music file
 
 
-
-if sys.argv[1] == '':
-    print('\u001b[31;1mThe filename you put was either invalid or mismathced, enter file to run : \u001b[32;1m', end='')
+try:
+    if sys.argv[1] == '':
+        print('\u001b[31;1mThe filename you put was either invalid or mismathced, enter file to run : \u001b[32;1m', end='')
+        filename = input()
+        print('\u001b[0m')
+    else:
+        filename = sys.argv[1]
+except IndexError:
+    print('\u001b[31;1mYou did not put a filename, enter file to run : \u001b[32;1m', end='')
     filename = input()
     print('\u001b[0m')
-else:
-    filename = sys.argv[1]
 
 
 

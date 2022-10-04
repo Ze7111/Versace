@@ -25,7 +25,8 @@ def build(filename, music_option, Version, music_path, decomplie=False):
         if music_option:
                 print('\u001b[32;1mDo you want to play music while compiling? (y/n): \u001b[0m', end='')
                 
-                if input().lower() == 'y':
+                inp = input().lower()
+                if inp == 'y':
                     subprocess.call(f'start python -m playsound {music_path}', shell=True)
                     
                     print('\u001b[41;1mPlaying music.\u001b[0m', end='\r')
@@ -42,7 +43,7 @@ def build(filename, music_option, Version, music_path, decomplie=False):
                     print('\u001b[42;1mBuild Complete\u001b[0m      ', end='\n')
                     pass
                 
-                elif input().lower() == 'e':
+                elif inp == 'e':
                     exit()
                     
                 else:
