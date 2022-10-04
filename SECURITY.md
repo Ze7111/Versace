@@ -2,20 +2,17 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| 3.0.x   | :white_check_mark: |
+| 2.3.x   | :x:                |
+| 2.0.x   | :white_check_mark: |
+| < 2.0   | :x:                |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+The best way to report a vulnerability is to open an issue on the GitHub repository. If you want to report a vulnerability privately, you can send an email to `ze7111@gmail.com`.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+## How to fix a vulnerability
+
+If you want to fix a vulnerability, you can open a pull request on the GitHub repository. If you want to fix a vulnerability privately, you can send an email to `ze7111@gmail.com`.

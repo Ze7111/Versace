@@ -17,7 +17,7 @@ else:
 
 
 
-Version = '2.4.5' # don't change this unless you know what you are doing
+Version = '3.0.1' # don't change this unless you know what you are doing
 
 if __name__ == '__main__': 
     m(filename, music_option, Version, music_path, sys.argv) # don't change this unless you know what you are doing

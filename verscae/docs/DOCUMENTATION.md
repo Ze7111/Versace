@@ -138,21 +138,23 @@ func say_hi() {
     in name < "What is your name? " | green | endl
     out < f"Hello, my name is {name}" | red
 }
-
+```
 
 ### Variables
+- Variables are dynamicly typed, so you don't have to specify the type.
 - Variables are written in the following format:
 ```Swift
-var (name) = (value)
+(name) = (value)
 ```
 - Example:
 ```Swift
-var name = "Jhon"
+name = "Jhon"
 ```
 
 
 ### If statements
 - The conditions in an if statement can follow the python syntax.
+- By default, the condition is checked for truthiness (if it is not `None` or `False`).
 - If statements are written in the following format:
 ```Swift
 if (condition) {

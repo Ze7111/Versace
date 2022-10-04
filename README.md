@@ -27,9 +27,10 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
-- [Quick Start Guide](#quick-start-guide)
-- [How to install](#how-to-install)
+- [Quick Start Guide and Beginner's Guide](#quick-start-guide-and-beginners-guide)
+- [How to install the release version](#how-to-install-the-release-version)
   - [For Syntax highlighting](#for-syntax-highlighting)
+- [How to install the source code and use it](#how-to-install-the-source-code-and-use-it)
   - [If you want to turn on DRAMATIC mode...](#if-you-want-to-turn-on-dramatic-mode)
   - [If you want to decompile the Verscae file to python.](#if-you-want-to-decompile-the-verscae-file-to-python)
 - [Diffrences between Verscae and Python](#diffrences-between-verscae-and-python)
@@ -38,14 +39,15 @@
 - [Currently Inbuilt Syntax](#currently-inbuilt-syntax)
 - [Dramatic Mode in action](#dramatic-mode-in-action)
 
-## Quick Start Guide
-- [Quick Start Guide](docs/DOCUMENTATION.md)
+## Quick Start Guide and Beginner's Guide
+- [Beginner's Guide](verscae/docs/BEGINNERS%20GUIDE.md)
+- [Quick Start Guide](verscae/docs/DOCUMENTATION.md)
 
-## How to install
+## How to install the release version
 - Download the latest release from [here](https://github.com/Ze7111/Verscae-Programing-language/releases/latest)
 - Extract the zip file
 - Open the folder in vscode
-- Read the README.md file there or [here](docs/RELEASE%20README.md)
+- Read the README.md file there or [here](verscae/docs/RELEASE%20README.md)
 
 ### For Syntax highlighting
 - Open a `.v` file in vscode
@@ -53,6 +55,57 @@
 - Type `Select Language Mode`
 - Select `Rust` or `Swift` (we dont have a syntax highlighter for verscae yet)
 - Enjoy
+
+## How to install the source code and use it
+- Clone the repo with the following command
+```bash
+git clone https://github.com/Ze7111/Verscae-Programing-language
+```
+- Open the folder in vscode
+- Open the command pallete `(Ctrl+Shift+P)`
+- Type `Select Python Interpreter`
+- Create a `.v` file in vscode
+- and put the following code in it (this is a test program)
+```swift
+public main() {
+  out < "Hello World" | blue | center | newl
+}
+```
+- For the above code to work, you need to have the following python modules installed
+  - `rich`
+  - `playsound`
+  - `requests`
+
+- For Syntax highlighting do the following
+  - with the `.v` file open in vscode
+  - Open the command pallete `(Ctrl+Shift+P)`
+  - Type `Select Language Mode`
+  - Select `Rust` or `Swift` (we dont have a syntax highlighter for verscae yet)
+  - Enjoy
+  
+- To run the program do the following
+  - open the `.vscode` -> `tasks.json` file
+  - save the file
+  - open the command pallete `(Ctrl+Shift+P)`
+  - type `Preferences: Open Keyboard Shortcuts (JSON)`
+  - add the following code to the file
+  ```json
+  {
+      "key": "F6",
+      "command": "workbench.action.tasks.runTask",
+      "args": "Run Verscae File"
+  },
+  {
+      "key": "shift+F6",
+      "command": "workbench.action.tasks.runTask",
+      "args": "Decompile Verscae File"
+  }
+  ```
+  - Now you can run the program by pressing `F6` and decompile it into a python file by pressing `Shift+F6`
+- If you did everything correctly, you should see the following output
+```bash
+Hello World
+```
 
 ### If you want to turn on DRAMATIC mode...
 | Go to the ```verscae.py``` and set the ```music_option``` to ``` True ```
@@ -76,7 +129,7 @@ $ verscae "examples\calculator.v" True
 ### At this point, you might be wondering, ghee, I have to give this language a try, but how do I do that?
 - You can download the latest release from [here](https://github.com/Ze7111/Verscae-Programing-language/releases/latest)
 - Extract the zip and open the folder in vscode
-- Read the README.md file there or read the [Release Documentation](docs/RELEASE%20README.md)
+- Read the README.md file there or read the [Release Documentation](verscae/docs/RELEASE%20README.md)
 - Enjoy :D
 
 ## Features
@@ -102,7 +155,7 @@ $ verscae "examples\calculator.v" True
 - try {} catch (var name) {} = try:
 - except (name) as (name):
 - all native and external python syntax
-- You can read the full syntax [here](docs/DOCUMENTATION.md)
+- You can read the full syntax [here](verscae/docs/DOCUMENTATION.md)
 
 ## Dramatic Mode in action
-![image](images/Picture1.png)
+![image](verscae/images/Picture1.png)

@@ -1,6 +1,6 @@
 import os, time
 import subprocess
-def main(final, decomplie, filename='src\\output.v'):
+def main(final, decomplie, filename='verscae\\src\\output.v'):
     os.system('cls' if os.name == 'nt' else 'clear')
     current_time = time.time()
     current_time = time.strftime('%d-%m-%Y %H-%M-%S', time.localtime(current_time))
@@ -8,13 +8,22 @@ def main(final, decomplie, filename='src\\output.v'):
     if decomplie:
         print('\u001b[31;1mWhat do you want to call the new file (file will be save to python folder)? : \u001b[32;1m', end='')
         name = input()
+        
         print('\u001b[0m')
+        
         if name == '':
-            name = f'python\\{current_time}.py'
+            if os.name == 'nt':
+                name = f'verscae\\python\\{current_time}.py'
+            else:
+                name = f'verscae/python/{current_time}.py'
         else:
-            name = f'python\\{name}.py'
+            if os.name == 'nt':
+                name = f'verscae\\python\\{name}.py'
+            else:
+                name = f'verscae/python/{name}.py'
         
         print('\u001b[41;1mDecompiling...\u001b[0m', end='\r')
+        
         try:
             with open(name, 'w') as f:
                 for line in final:
@@ -25,6 +34,7 @@ def main(final, decomplie, filename='src\\output.v'):
                     elif line == '   ' and line == final[final.index(line) + 1]:
                         final.remove(line)
                     f.write(line)
+        
         except KeyboardInterrupt:
             print('\n\u001b[41;1mKeyboard Interrupt Detected\u001b[0m')
             print('\u001b[1m\u001b[31mDecompile Canclled\u001b[0m')
@@ -34,20 +44,34 @@ def main(final, decomplie, filename='src\\output.v'):
         time.sleep(3)     
         print('\u001b[42;1mDecompiling Complete\u001b[0m')
     
-    files = os.listdir('src')
+    files = os.listdir('verscae\\src')
     files.sort()
-    for file in files[:-10]:
-        os.remove(f'src\\{file}')
     
-    with open(f'src\\{current_time}.tmp', 'w') as f:
-        for line in final:
-            f.write(line)
+    for file in files[:-10]:
+        os.remove(f'verscae\\src\\{file}')
+    
+    if os.name == 'nt':
+        with open(f'verscae\\src\\{current_time}.tmp', 'w') as f:
+            for line in final:
+                f.write(line)
+    else:
+        with open(f'verscae/src/{current_time}.tmp', 'w') as f:
+            for line in final:
+                f.write(line)
     
     try:
-        try: 
-            subprocess.call(f'python "src\\{current_time}.tmp"', shell=False)
+        try:
+            if os.name == 'nt':
+                subprocess.call(f'python "verscae\\src\\{current_time}.tmp"', shell=False)
+            else:
+                os.system(f'python3 "verscae/src/{current_time}.tmp"')
+                
         except FileNotFoundError: 
-            subprocess.call(f'python3 "src\\{current_time}.tmp"', shell=False)
+            if os.name == 'nt':
+                subprocess.call(f'python3 "verscae\\src\\{current_time}.tmp"', shell=False)
+            else:
+                os.system(f'python "verscae/src/{current_time}.tmp"')
+                
         except KeyboardInterrupt: 
             print(f'\u001b[41m\u001b[30mKeyboard Interrupt Detected\u001b[0m')
             exit()
@@ -56,5 +80,5 @@ def main(final, decomplie, filename='src\\output.v'):
         print(f'\u001b[41m\u001b[30mError: {filename} Failed to run.\u001b[0m')
         exit()
     
-    finally: 
-        os.remove(f'src\\{current_time}.tmp')
+    finally:
+        os.remove(f'verscae\\src\\{current_time}.tmp')
