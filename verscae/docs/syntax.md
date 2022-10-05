@@ -16,7 +16,7 @@ Verscae Code | Python Equivalent | C++ Equivalent | Description
 `continue` | `continue` | `continue` | Continues to the next iteration of a loop
 `True` | `True` | `true` | A boolean value
 `False` | `False` | `false` | A boolean value
-`and` | `and` | `&&` | A boolean operator
+`and` | `and` | `&&` | A boolean operator 
 `or` | `or` | `\|\|` | A boolean operator
 
 ### Similar to C++
