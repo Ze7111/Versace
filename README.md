@@ -37,6 +37,7 @@
   - [At this point, you might be wondering, ghee, I have to give this language a try, but how do I do that?](#at-this-point-you-might-be-wondering-ghee-i-have-to-give-this-language-a-try-but-how-do-i-do-that)
 - [Features](#features)
 - [Currently Inbuilt Syntax](#currently-inbuilt-syntax)
+  - [With a basic Description](#with-a-basic-description)
 - [Dramatic Mode in action](#dramatic-mode-in-action)
 
 ## Quick Start Guide, Syntax diffrences sheet and Beginner's Guide
@@ -143,43 +144,35 @@ $ verscae "examples\calculator.v" True
 - All string types work nativly
 
 ## Currently Inbuilt Syntax
-### Similar to Python
-Verscae Code | Python Equivalent | C++ Equivalent | Description
----|---|---|---
-`try` | `try` | `try` | Tries to run the code in the try block
-`if` | `if` | `if` | Runs the code in the if block if the condition is true
-`else` | `else` | `else` | Runs the code in the else block if the condition is true
-`for` | `for` | `for` | Runs the code in the for block for each item in the list
-`while` | `while` | `while` | Runs the code in the while block while the condition is true
-`class` | `class` | `class` | Defines a class
-`new` | `new` | `new` | Creates a new instance of a class
-`return` | `return` | `return` | Returns a value from a function
-`from` | `from` | `using` | Imports a class from a module
-`as` | `as` | `as` | Renames a module or class
-`pass` | `pass` | `pass` | Does nothing
-`break` | `break` | `break` | Breaks out of a loop
-`continue` | `continue` | `continue` | Continues to the next iteration of a loop
-`True` | `True` | `true` | A boolean value
-`False` | `False` | `false` | A boolean value
-`and` | `and` | `&&` | A boolean operator
-`or` | `or` | `\|\|` | A boolean operator
-
-### Similar to C++
+### With a basic Description
 Verscae Code | Description
 ---|---
+`try` | Tries to run the code in the try block
+`if` | Runs the code in the if block if the condition is true
+`else` | Runs the code in the else block if the condition is true
+`for` | Runs the code in the for block for each item in the list
+`while` | Runs the code in the while block while the condition is true
+`class` | Defines a class
+`new` | Creates a new instance of a class
+`return` | Returns a value from a function
+`from` | Imports a class from a module
+`as` | Renames a module or class
+`pass` | Does nothing
+`break` | Breaks out of a loop
+`continue` | Continues to the next iteration of a loop
+`True` | A boolean value
+`False` | A boolean value
+`and` | A boolean operator
+`or` | A boolean operator
 `throw` | Throws an error
 `include` | Imports a module
 `else if` | Runs the code in the else if block if the condition is true
 `catch` | Runs the code in the catch block if the code in the try block fails
-
-### Verscae Specific
-Verscae Code | Description
----|---
-`func` Defines a function
-`null` A null value
+`func` | Defines a function
+`null` | A null value
 `in name < "What is your name?" \| (args) \| (type)` | Asks the user for input and stores it in the variable `name`
-`out < "Hello World" \| (args)` | `print("Hello World", args)` | `std::cout << "Hello World" << args;` | Prints the text to the console with the given arguments
-`public main()` | `def main():` | `int main()` | The main function that runs when the program starts
+`out < "Hello World" \| (args)` |  Prints the text to the console with the given arguments
+`public main()` | The main function that runs when the program starts
 
 ## Dramatic Mode in action
 ![image](verscae/images/Picture1.png)
