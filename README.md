@@ -143,20 +143,43 @@ $ verscae "examples\calculator.v" True
 - All string types work nativly
 
 ## Currently Inbuilt Syntax
-- out < "(string)" | (statement or style) = print("string", end="", style="style")
-- in (var name) < "(string)" | (statement or style) | (type) = print("string", end="", style="style"); (var name) = input()
-- (var name) = (var value) = (name) = (value)
-- func (name)(statements) {}  = def (name)(args):
-- class (name) {} = class (name):
-- if (condition) {} = if (condition):
-- else if (condition) {} = elif (condition):
-- else {} = else:
-- for (var name) in (var name) {} = for (name) in (name):
-- while (condition) {} = while (condition):
-- try {} catch (var name) {} = try:
-- except (name) as (name):
-- all native and external python syntax
-- You can read the full syntax [here](verscae/docs/DOCUMENTATION.md)
+### Similar to Python
+Verscae Code | Python Equivalent | C++ Equivalent | Description
+---|---|---|---
+`try` | `try` | `try` | Tries to run the code in the try block
+`if` | `if` | `if` | Runs the code in the if block if the condition is true
+`else` | `else` | `else` | Runs the code in the else block if the condition is true
+`for` | `for` | `for` | Runs the code in the for block for each item in the list
+`while` | `while` | `while` | Runs the code in the while block while the condition is true
+`class` | `class` | `class` | Defines a class
+`new` | `new` | `new` | Creates a new instance of a class
+`return` | `return` | `return` | Returns a value from a function
+`from` | `from` | `using` | Imports a class from a module
+`as` | `as` | `as` | Renames a module or class
+`pass` | `pass` | `pass` | Does nothing
+`break` | `break` | `break` | Breaks out of a loop
+`continue` | `continue` | `continue` | Continues to the next iteration of a loop
+`True` | `True` | `true` | A boolean value
+`False` | `False` | `false` | A boolean value
+`and` | `and` | `&&` | A boolean operator
+`or` | `or` | `\|\|` | A boolean operator
+
+### Similar to C++
+Verscae Code | Description
+---|---
+`throw` | Throws an error
+`include` | Imports a module
+`else if` | Runs the code in the else if block if the condition is true
+`catch` | Runs the code in the catch block if the code in the try block fails
+
+### Verscae Specific
+Verscae Code | Description
+---|---
+`func` Defines a function
+`null` A null value
+`in name < "What is your name?" \| (args) \| (type)` | Asks the user for input and stores it in the variable `name`
+`out < "Hello World" \| (args)` | `print("Hello World", args)` | `std::cout << "Hello World" << args;` | Prints the text to the console with the given arguments
+`public main()` | `def main():` | `int main()` | The main function that runs when the program starts
 
 ## Dramatic Mode in action
 ![image](verscae/images/Picture1.png)
