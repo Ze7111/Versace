@@ -1,4 +1,4 @@
-from core.backend import main as m
+from backend.starter import main as m
 import sys, os
 os.system('cls' if os.name == 'nt' else 'clear')
 
