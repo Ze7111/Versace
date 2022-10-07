@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/logo.png">
+  <img src="verscae/images/logo.png">
 </p>
 
 <p align="center">
