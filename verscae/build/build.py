@@ -6,6 +6,7 @@ try:
     import subprocess
     import sys
     import time
+    import requests
     
 except ModuleNotFoundError as e:
     import subprocess

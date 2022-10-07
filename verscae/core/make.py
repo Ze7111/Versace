@@ -27,13 +27,11 @@ def lexer(lines, filename, decomplie): # Define the lexer function
         
         elif ': dict' in line: # Check if the line has : dict
             line = line.replace(': dict', '') # Replace
+            continue
             
         elif ': list' in line: # Check if the line has : tuple
             line = line.replace(': list', '') # Replace
-        
-        elif '{' in line and '}' in line: # Check if the line has a } and a {
-            line = line.replace('{', ':') # Remove the { from the line
-            line = line.replace('}', '') # Remove the } from the line
+            continue
         
         elif line.startswith('else if'): # Check if the line starts with else if
             line, numtabs = C.else_if(line, numtabs) # Run the else_if function
@@ -58,37 +56,48 @@ def lexer(lines, filename, decomplie): # Define the lexer function
         elif line.startswith('include'): # Check if the line starts with include
             tabs = tab*numtabs # Define the tabs
             final.append(f"{tabs}{include.include(line)}\n") # Add the include statement to the final list
+            continue
         
         elif line.startswith('out'): # Check if the line starts with out
             tabs = tab*numtabs # Define the tabs
             final.append(f"{tabs}{io.output(line)}") # Add the output statement to the final list
+            continue
 
         elif line.startswith('in'): # Check if the line starts with in
             tabs = tab*numtabs # Define the tabs
             final.append(f"{tabs}{io.inp(line, tabs)}\n") # Add the input statement to the final list
+            continue
             
         elif line.startswith('return'): # Check if the line starts with return
             tabs = tab*numtabs # Define the tabs
             final.append(f"{tabs}{line}\n") # Add the return statement to the final list
-            
+            continue
+        
+        elif '{' in line and '}' in line: # Check if the line has a } and a {
+            tabs = tab*numtabs # Define the tabs
+            final.append(f"{tabs}{line}\n") # Add the line to the final list
+            continue
+        
         elif '}' in line: # Check if } is in the line
             numtabs -= 1 # Subtract 1 from the number of tabs
             line = line.replace('}', '') # Remove the } from the line
-            continue # Continue the loop
+            pass # Continue the loop
         
         elif '{' in line: # Check if { is in the line
             line, numtabs = C.brace(line, numtabs) # Run the brace function
             final.append(line) # Add the line to the final list
-            continue # Continue the loop
+            pass # Continue the loop
         
         else: # If none of the above conditions are met
             tabs = tab*numtabs # Define the tabs
             final.append(f"{tabs}{line}\n") # Add the line to the final list
+            continue
     
     for i in final: # Loop through the final list
         if 'def main' in i: # Check if def main is in the line
             args = i.split('(')[1].split(')')[0] # Define the args
             foundMain = True # Define foundMain as True
+            continue
         
         if numtabs != 0: # Check if the number of tabs is not 0
             IO.error('Error: Missing "}"') # Raise an error
