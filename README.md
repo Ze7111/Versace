@@ -110,7 +110,7 @@ Hello World
 ```
 
 ### If you want to turn on DRAMATIC mode...
-| Go to the ```verscae.py``` and set the ```music_option``` to ``` True ```
+| Run the code normally but add a `-m` flag so like this: `verscae "examples\\calculator.v" -m` 
 
 ### If you want to decompile the Verscae file to python.
 - While Running the file, add a True to the end, so the statemnt looks like the folloing (on windows)
@@ -173,6 +173,7 @@ Verscae Code | Description
 `in name < "What is your name?" \| (args) \| (type)` | Asks the user for input and stores it in the variable `name`
 `out < "Hello World" \| (args)` |  Prints the text to the console with the given arguments
 `public main()` | The main function that runs when the program starts
+`from [module] include *` | Imports all the classes and functions from an other verscae file or a python file into the current scope (you can not use anything other than `*` in the include statement)
 
 ## Dramatic Mode in action
 ![image](images/Picture1.png)

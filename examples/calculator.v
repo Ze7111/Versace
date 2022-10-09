@@ -1,3 +1,6 @@
+// THIS IS A MODULE FOR THE EXAMPLE.V
+// Running this directly will cause errors
+
 // This is an example program made using verscae by ze7111.
 // This program is a simple calculator that can add, subtract, multiply, and divide.
 // This program is made for the purpose of showing how verscae works.
@@ -52,7 +55,7 @@ class Calculator { // in out lang we can make comments like this anywhere in the
     }
 }
 
-public main() { // This is the start function that will be called when the program is run
+public start() { // This is the start function that will be called when the program is run
     // This is the main function 
     in num1 < "Enter a number: " < red < endl < int
     in num2 < "Enter another number: " < red < endl < int
@@ -67,6 +70,6 @@ public main() { // This is the start function that will be called when the progr
     Calculator.choose(num1, num2, op)
 }
 
-// Run the program by typing "verscae run examples\calculator.v"(if in cmd) in the terminal.
+// Run the program by typing "verscae examples\calculator.v"(if in cmd) in the terminal.
 // Remember you do not call the main function, verscae does that for you.
 // Remember to always have a public main function in your program or it will not run.

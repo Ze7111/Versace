@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Verscae File",
+            "type": "shell",
+            "command": "python verscae.pyc ${relativeFile}",
+        },
+        {
+            "label": "Decompile Verscae File",
+            "type": "shell",
+            "command": "python verscae.pyc ${relativeFile} -d",
+        }
+    ]
+}
