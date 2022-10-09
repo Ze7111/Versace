@@ -27,6 +27,7 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
+- [Quick Wiki](https://github.com/Ze7111/Verscae/wiki)
 - [Quick Start Guide, Syntax diffrences sheet and Beginner's Guide](#quick-start-guide-syntax-diffrences-sheet-and-beginners-guide)
 - [How to install the release version](#how-to-install-the-release-version)
   - [For Syntax highlighting](#for-syntax-highlighting)
