@@ -70,7 +70,7 @@ git clone https://github.com/Ze7111/Verscae-Programing-language
 - and put the following code in it (this is a test program)
 ```swift
 public main() {
-  out < "Hello World" | blue | center | newl
+  out < "Hello World" < blue < center < newl
 }
 ```
 - For the above code to work, you need to have the following python modules installed
