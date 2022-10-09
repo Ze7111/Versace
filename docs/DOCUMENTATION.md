@@ -116,10 +116,10 @@ class (name) {
 ```Swift
 class Person {
     func say_hi() {
-        out < "Hello, my name is Jhon" | red | tab
+        out < "Hello, my name is Jhon" < red < tab
     }
     func say_bye() {
-        out < "Goodbye" | green 
+        out < "Goodbye" < green 
     }
 }
 ```
@@ -271,7 +271,7 @@ in (variable) < (string) | (args)
 - Input arguments are the same as the print arguments.
 - Example:
 ```Swift
-in name < "What is your name? " | green | endl
+in name < "What is your name? " < green < endl
 ```
 
 ### Any python syntax
