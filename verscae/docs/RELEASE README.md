@@ -1,22 +1,7 @@
 # Verscae Release 3.0.1
 ## Instructions
-- Downlaod the zip
-- Extract the zip anywhere
-- Open the dir of the new folder in vs code
-- The file Structure Should look something like this inside of VSCode
-'''
-.vscode
-|  |
-|  tasks.json
-|
-verscae
-|  |	
-|  ...
-|
-README.md
-'''
-
-- Then Follow the README.md
+- Downlaod the zip for your system
+- Then Follow the README.md inside the extracted path
 - Open the `.vscode` folder
 - Open the `tasks.json` file
 - Press `Ctrl+S` to save the file
