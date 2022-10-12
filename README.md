@@ -100,19 +100,28 @@ public main() {
   - open the command pallete `(Ctrl+Shift+P)`
   - type `Preferences: Open Keyboard Shortcuts (JSON)`
   - add the following code to the file
-  ```json
-  {
-      "key": "F6",
-      "command": "workbench.action.tasks.runTask",
-      "args": "Run Verscae File"
-  },
-  {
-      "key": "shift+F6",
-      "command": "workbench.action.tasks.runTask",
-      "args": "Decompile Verscae File"
-  }
-  ```
-  - Now you can run the program by pressing `F6` and decompile it into a python file by pressing `Shift+F6`
+  - The VSCode keyboard shortcuts for **Windows** and **Linux** is:
+```json
+[
+    {
+        "key": "F6",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "verscae '${file}'\u000D" }
+    },
+    {
+        "key": "shift+F6",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "verscae '${file}' -d\u000D" }
+    },
+    {
+        "key": "ctrl+F6",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "verscae '${file}' --debug\u000D" }
+    }
+
+]
+```
+- Now you can run the program by pressing `F6` and decompile it into a python file by pressing `Shift+F6`
 - If you did everything correctly, you should see the following output
 ```bash
 Hello World
