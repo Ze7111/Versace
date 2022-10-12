@@ -43,8 +43,13 @@
   - [With a basic Description](#with-a-basic-description)
 - [Dramatic Mode in action](#dramatic-mode-in-action)
 
-## [Wiki](https://github.com/Ze7111/Verscae/wiki)
+## NEW INSTALLER SCRIPT FOR EASY INSTALL IN UNDER 2 MINS
+- Download the `install,py` from [here](https://github.com/Ze7111/Verscae/releases/download/4.0.5/Installer.py)
+- After downloading, put the file in a good directory as this will be the permeant location for Verscae, on your machine
+- Run the python file and follow the instructions, and your done.
+- If you are on Windows or Linux you can now run Verscae files from anywhere in your computer.
 
+## [Wiki](https://github.com/Ze7111/Verscae/wiki)
 ## [Beginner's Guide](docs/BEGINNERS%20GUIDE.md)
 ## [Quick Start Guide](docs/DOCUMENTATION.md)
 ## [Syntax Diffrences Sheet](docs/SYNTAX.md)
