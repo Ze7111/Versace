@@ -1,9 +1,5 @@
 public main() { 
-    name = "Hello, World"
-    
-    func _print(text: str) {
-        out < f"{str(text)}" < newl < red
-    }
-
-    _print(name)
+    name! = "Hello, World!"
+    out < "name! : " < name!
+    in name! < "name! : " < endl < red
 }

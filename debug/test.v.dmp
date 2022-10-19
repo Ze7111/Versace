@@ -1,36 +1,40 @@
 ========================= Verscae Code ========================
-1   | 21:51:09 | public main() { 
-2   | 21:51:09 | _name = "Hello, World!" 
-3   | 21:51:09 | } 
-4   | 21:51:09 |  
-5   | 21:51:09 | func second() { 
-6   | 21:51:09 | out < "WOAH" 
-7   | 21:51:09 | } 
+1   | 16:50:14 | public main() { 
+2   | 16:50:14 | name = "Hello, World" 
+3   | 16:50:14 |  
+4   | 16:50:14 | out < "name : " < _name 
+5   | 16:50:14 | in name < "name : " < red 
+6   | 16:50:14 | } 
 
 ====================== Compiled Python ======================
-1   | 21:51:09 | from rich import console; print = console.Console().print
-2   | 21:51:09 | def main():
-3   | 21:51:09 |     _name = "Hello, World!"
-4   | 21:51:09 | 
-5   | 21:51:09 | def second():
-6   | 21:51:09 |     print("WOAH")
+1   | 16:50:14 | from rich import console; print = console.Console().print
+2   | 16:50:14 | def main():
+3   | 16:50:14 |     name = "Hello, World"
+4   | 16:50:14 |     
+5   | 16:50:14 |     print("name : ", _name)
+6   | 16:50:14 |     print("name : ", style="red")
+    name = input()
 
 =========================== Locals ==========================
-| lines | ['public main() {', '_name = "Hello, World!"', '}', '', 'func second() {', 'out < "WOAH"', '}'] 
+| lines | ['public main() {', 'name = "Hello, World"', '', 'out < "name : " < _name', 'in name < "name : " < red', '}'] 
 | filename | L:\My Drive\containers\parser-1\test.v 
 | decomplie | False 
+| orglines | ['public main() {', 'name = "Hello, World"', '', 'out < "name : " < _name', 'in name < "name : " < red', '}'] 
 | foundMain | False 
-| index | 7 
+| index | 6 
 | line |  
-| something | ['out < ', 'WOAH', '\n }'] 
+| something | ['out < ', 'name : ', ' < _name'] 
 | i | i 
-| pprint | <function pprint at 0x0000014A510FF400> 
 | console | <module 'rich.console' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\rich\\console.py'> 
-| syntaxprinting | <bound method Console.print of <console width=345 ColorSystem.TRUECOLOR>> 
-| _syntax | <rich.syntax.Syntax object at 0x0000014A51181420> 
+| ii | 0 
+| line2 | out < "name : " < _name 
+| syntaxprinting | <bound method Console.print of <console width=181 ColorSystem.TRUECOLOR>> 
+| _syntax | <rich.syntax.Syntax object at 0x00000141FC3A7940> 
 | inas | 0 
-| tabs |  
-| newlines | ['public main() {', '_name = "Hello, World!"', '}', '', 'func second() {', 'out < "WOAH"', '}'] 
+| fun | <function _SYNTAX.IN at 0x00000141FE38FE20> 
+| tabs |      
+| pprint | <function pprint at 0x00000141FE2FF490> 
+| newlines | ['public main() {', 'name = "Hello, World"', '', 'out < "name : " < _name', 'in name < "name : " < red', '}'] 
 | numval | 3 
 | lineno | 1 
 | f | <_io.TextIOWrapper name='L:\\My Drive\\containers\\parser-1\\debug\\test.v.dmp' mode='w' encoding='cp1252'> 
@@ -42,7 +46,7 @@
 | __name__ | __main__ 
 | __doc__ | None 
 | __package__ | None 
-| __loader__ | <_frozen_importlib_external.SourceFileLoader object at 0x0000014A4EDC4A00> 
+| __loader__ | <_frozen_importlib_external.SourceFileLoader object at 0x00000141FBFC4A00> 
 | __spec__ | None 
 | __annotations__ | {} 
 | __builtins__ | <module 'builtins' (built-in)> 
@@ -67,21 +71,21 @@
 | in_module | False 
 | include | <class '__main__.include'> 
 | IO | <class '__main__.IO'> 
-| compiler | <function compiler at 0x0000014A4F14A950> 
+| compiler | <function compiler at 0x00000141FC34A9E0> 
 | Syntax | <class 'rich.syntax.Syntax'> 
 | _SYNTAX | <class '__main__._SYNTAX'> 
-| syntax | {'class': <function _SYNTAX.CLASS at 0x0000014A4FD44A60>, 'else if': <function _SYNTAX.ELSEIF at 0x0000014A5118F910>, 'public': <function _SYNTAX.PUBLIC at 0x0000014A5118F9A0>, 'pub': <function _SYNTAX.PUB at 0x0000014A5118FA30>, 'func': <function _SYNTAX.FUNC at 0x0000014A5118FAC0>, 'catch': <function _SYNTAX.CATCH at 0x0000014A5118FB50>, 'include': <function _SYNTAX.INCLUDE at 0x0000014A5118FBE0>, 'from': <function _SYNTAX.FROM at 0x0000014A5118FC70>, 'out': <function _SYNTAX.OUT at 0x0000014A5118FD00>, 'in': <function _SYNTAX.IN at 0x0000014A5118FD90>, 'retrun': <function _SYNTAX.RETURN at 0x0000014A5118FE20>, 'def main': <function _SYNTAX.DEFMAIN at 0x0000014A5118FEB0>} 
-| private_vars | ['_name'] 
+| syntax | {'class': <function _SYNTAX.CLASS at 0x00000141FE018AF0>, 'else if': <function _SYNTAX.ELSEIF at 0x00000141FE38F9A0>, 'public': <function _SYNTAX.PUBLIC at 0x00000141FE38FA30>, 'pub': <function _SYNTAX.PUB at 0x00000141FE38FAC0>, 'func': <function _SYNTAX.FUNC at 0x00000141FE38FB50>, 'catch': <function _SYNTAX.CATCH at 0x00000141FE38FBE0>, 'include': <function _SYNTAX.INCLUDE at 0x00000141FE38FC70>, 'from': <function _SYNTAX.FROM at 0x00000141FE38FD00>, 'out': <function _SYNTAX.OUT at 0x00000141FE38FD90>, 'in': <function _SYNTAX.IN at 0x00000141FE38FE20>, 'retrun': <function _SYNTAX.RETURN at 0x00000141FE38FEB0>, 'def main': <function _SYNTAX.DEFMAIN at 0x00000141FE38FF40>} 
+| private_vars | ['name!', 'in!'] 
 | numtabs | 0 
-| final | ['from rich import console; print = console.Console().print\n', 'def main():\n', '    _name = "Hello, World!"\n', '\n', 'def second():\n', '    print("WOAH")\n'] 
+| final | ['from rich import console; print = console.Console().print\n', 'def main():\n', '    name = "Hello, World"\n', '    \n', '    print("name : ", _name)\n', '    print("name : ", style="red")\n    name = input()\n'] 
 | main_function_found | False 
-| lexer | <function lexer at 0x0000014A4FD44700> 
-| main | <function main at 0x0000014A5118FF40> 
-| build | <function build at 0x0000014A51194040> 
-| starter | <function starter at 0x0000014A511940D0> 
+| lexer | <function lexer at 0x00000141FE018790> 
+| main | <function main at 0x00000141FE394040> 
+| build | <function build at 0x00000141FE3940D0> 
+| starter | <function starter at 0x00000141FE394160> 
 | music_path | l:\My Drive\containers\parser-1\src\music.mp3 
-| create_temp | <function create_temp at 0x0000014A51194160> 
-| delete_temp | <function delete_temp at 0x0000014A511941F0> 
+| create_temp | <function create_temp at 0x00000141FE3941F0> 
+| delete_temp | <function delete_temp at 0x00000141FE394280> 
 | filename | l:\My Drive\containers\parser-1\test.v 
 | i | --debug 
 
@@ -138,10 +142,10 @@
 | contextlib | <module 'contextlib' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\contextlib.py'> 
 | importlib.util | <module 'importlib.util' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\importlib\\util.py'> 
 | importlib.machinery | <module 'importlib.machinery' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\importlib\\machinery.py'> 
-| mpl_toolkits | <module 'mpl_toolkits' (<_frozen_importlib_external._NamespaceLoader object at 0x0000014A4EE39690>)> 
-| pywin32_system32 | <module 'pywin32_system32' (<_frozen_importlib_external._NamespaceLoader object at 0x0000014A4EE0AB60>)> 
+| mpl_toolkits | <module 'mpl_toolkits' (<_frozen_importlib_external._NamespaceLoader object at 0x00000141FC039690>)> 
+| pywin32_system32 | <module 'pywin32_system32' (<_frozen_importlib_external._NamespaceLoader object at 0x00000141FC00AB60>)> 
 | pywin32_bootstrap | <module 'pywin32_bootstrap' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\win32\\lib\\pywin32_bootstrap.py'> 
-| zope | <module 'zope' (<_frozen_importlib_external._NamespaceLoader object at 0x0000014A4EE7FEE0>)> 
+| zope | <module 'zope' (<_frozen_importlib_external._NamespaceLoader object at 0x00000141FC07FEE0>)> 
 | enum | <module 'enum' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\enum.py'> 
 | _sre | <module '_sre' (built-in)> 
 | sre_constants | <module 'sre_constants' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\sre_constants.py'> 
@@ -185,7 +189,7 @@
 | _struct | <module '_struct' (built-in)> 
 | struct | <module 'struct' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\struct.py'> 
 | urllib3.packages.six | <module 'urllib3.packages.six' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\packages\\six.py'> 
-| urllib3.packages.six.moves | <module 'urllib3.packages.six.moves' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
+| urllib3.packages.six.moves | <module 'urllib3.packages.six.moves' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
 | http | <module 'http' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\http\\__init__.py'> 
 | email | <module 'email' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\email\\__init__.py'> 
 | email.errors | <module 'email.errors' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\email\\errors.py'> 
@@ -219,8 +223,8 @@
 | email.message | <module 'email.message' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\email\\message.py'> 
 | _ssl | <module '_ssl' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\DLLs\\_ssl.pyd'> 
 | ssl | <module 'ssl' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\ssl.py'> 
-| http.client | <module 'urllib3.packages.six.moves.http_client' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
-| urllib3.packages.six.moves.http_client | <module 'urllib3.packages.six.moves.http_client' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
+| http.client | <module 'urllib3.packages.six.moves.http_client' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
+| urllib3.packages.six.moves.http_client | <module 'urllib3.packages.six.moves.http_client' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
 | urllib3.exceptions | <module 'urllib3.exceptions' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\exceptions.py'> 
 | urllib3._version | <module 'urllib3._version' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\_version.py'> 
 | urllib3.contrib | <module 'urllib3.contrib' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\contrib\\__init__.py'> 
@@ -252,8 +256,8 @@
 | mimetypes | <module 'mimetypes' from 'C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.2032.0_x64__qbz5n2kfra8p0\\lib\\mimetypes.py'> 
 | urllib3.fields | <module 'urllib3.fields' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\fields.py'> 
 | urllib3.filepost | <module 'urllib3.filepost' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\filepost.py'> 
-| urllib3.packages.six.moves.urllib | <module 'urllib3.packages.six.moves.urllib' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
-| urllib3.packages.six.moves.urllib.parse | <module 'urllib3.packages.six.moves.urllib.parse' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
+| urllib3.packages.six.moves.urllib | <module 'urllib3.packages.six.moves.urllib' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
+| urllib3.packages.six.moves.urllib.parse | <module 'urllib3.packages.six.moves.urllib.parse' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
 | urllib3.request | <module 'urllib3.request' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\request.py'> 
 | zlib | <module 'zlib' (built-in)> 
 | urllib3.response | <module 'urllib3.response' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\response.py'> 
@@ -312,8 +316,8 @@
 | requests.utils | <module 'requests.utils' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\requests\\utils.py'> 
 | requests.packages.urllib3.packages | <module 'urllib3.packages' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\packages\\__init__.py'> 
 | requests.packages.urllib3.packages.six | <module 'urllib3.packages.six' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\packages\\six.py'> 
-| requests.packages.urllib3.packages.six.moves | <module 'urllib3.packages.six.moves' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
-| requests.packages.urllib3.packages.six.moves.http_client | <module 'urllib3.packages.six.moves.http_client' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
+| requests.packages.urllib3.packages.six.moves | <module 'urllib3.packages.six.moves' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
+| requests.packages.urllib3.packages.six.moves.http_client | <module 'urllib3.packages.six.moves.http_client' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
 | requests.packages.urllib3.exceptions | <module 'urllib3.exceptions' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\exceptions.py'> 
 | requests.packages.urllib3._version | <module 'urllib3._version' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\_version.py'> 
 | requests.packages.urllib3.contrib | <module 'urllib3.contrib' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\contrib\\__init__.py'> 
@@ -334,8 +338,8 @@
 | requests.packages.urllib3.connection | <module 'urllib3.connection' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\connection.py'> 
 | requests.packages.urllib3.fields | <module 'urllib3.fields' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\fields.py'> 
 | requests.packages.urllib3.filepost | <module 'urllib3.filepost' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\filepost.py'> 
-| requests.packages.urllib3.packages.six.moves.urllib | <module 'urllib3.packages.six.moves.urllib' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
-| requests.packages.urllib3.packages.six.moves.urllib.parse | <module 'urllib3.packages.six.moves.urllib.parse' (<urllib3.packages.six._SixMetaPathImporter object at 0x0000014A4F1E7010>)> 
+| requests.packages.urllib3.packages.six.moves.urllib | <module 'urllib3.packages.six.moves.urllib' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
+| requests.packages.urllib3.packages.six.moves.urllib.parse | <module 'urllib3.packages.six.moves.urllib.parse' (<urllib3.packages.six._SixMetaPathImporter object at 0x00000141FC8FCC10>)> 
 | requests.packages.urllib3.request | <module 'urllib3.request' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\request.py'> 
 | requests.packages.urllib3.response | <module 'urllib3.response' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\response.py'> 
 | requests.packages.urllib3.util.queue | <module 'urllib3.util.queue' from 'C:\\Users\\dhruv\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\urllib3\\util\\queue.py'> 

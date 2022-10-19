@@ -1,5 +1,5 @@
 music_option = False # change to False if you don't want want to play music while compling
-Version = '4.0.5' # if you change this value, the compiler will cause an error but it will still compile the code
+Version = '4.1.1' # if you change this value, the compiler will cause an error but it will still compile the code
 
 try: # Try to run the main function
     import rich # Import rich
@@ -72,8 +72,11 @@ except ModuleNotFoundError as e: # If the module is not found
 os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
 compare_version = Version # Define the compare version
 tab = '    ' # Tab
+noargs = True if len(sys.argv) == 1 else False
+
 class C: # Class C
     def class_(line, numtabs): # Class class_
+        line.replace('public class', 'class')
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
         line += ':' # Add a : to the line
@@ -258,15 +261,24 @@ class IO: # Class IO
             'str'
         } # Define the datatypes
         self.endtypes = {
-            'newl' : r'\n',
+            'newl' : r'\n\n',
             'tab' : r'\t',
             'rw' : r'\r',
             'space' : r' ',
-            'endl' : r''
+            'endl' : r'',
         } # Define the endtypes
 
     def output(self, text): # Define the output function
         line = '' # Define the line
+        if '"' not in text:
+            args = text.split('<') # Split the text
+            text = text.replace('<', '') # Replace the text
+            text = text.replace(args[0], '') # Replace the text
+            # remove the first < from the text
+            text = text.replace(args[1], '') # Replace the text
+            arg = args[2:] # Remove the first 2 items
+            arg = '<'.join(arg) # Join the list
+            text = f'out < f"{{{args[1]}}}" {"<" + arg if len(arg) >= 1 else ""}' # Set the text
 
         try : parse = text.split('"')[1] if '"' in text else text.split("'")[1] # Try to parse the text
         except IndexError:  # If there is an error
@@ -277,7 +289,7 @@ class IO: # Class IO
             statements = text.split('<')[1].strip()  # Set the statements to the text after the <
         try: statements = statements.split('<') # Try to split the statements
         except IndexError: pass # If there is an error pass
-
+    
         statements = [statement.strip() for statement in statements] # Strip the statements
         statements = [statement for statement in statements if statement != ''] # Remove the empty statements
         statements = [statement for statement in statements if statement[0] != ' '] # Remove the empty statements
@@ -300,6 +312,7 @@ class IO: # Class IO
                 line += f' {i}' # Add the statement to the line
 
         line = line.rstrip(',') # Remove the , from the line
+        
         if '{' or '}' in text: # Check if { or } is in the text
             additive = text.split('"' or "'")[0] # Set the additive to the text before the "
             additive = additive.split('<')[1].strip() # Set the additive to the text after the <
@@ -307,12 +320,21 @@ class IO: # Class IO
             return line # Return the line
 
         else: # If { or } is not in the text
-            line = f'print("{parse}"{line})\n' # Set the line to the print statement
+            line = f'print("{parse}",{line})\n' # Set the line to the print statement
             return line # Return the line
 
     def inp(self, text, tabs): # Define the inp function
         line = '' # Define the line
-
+        indess = 0
+        
+        for i in text.split('<'): # For each item in the text
+            # check if i in a endtype
+            if i.strip() in self.endtypes: # Check if the statement is a endtype
+                indess += 1
+        
+        if indess == 0: # Check if the indess is 0
+            text += '< endl' # Add endl to the text
+        
         try : parse = text.split('"')[1] if '"' in text else text.split("'")[1] # Try to parse the text
         except IndexError:  # If there is an error
             parse = ''        # Set the parse to ''
@@ -345,9 +367,9 @@ class IO: # Class IO
                 continue    # Continue the loop
             else:   # If the statement is not a color, style, justify, endtype or datatype
                 line += f' {i}' # Add the statement to the line
-
+        
         line = line.rstrip(',') # Remove the , from the line
-        line = f'print("{parse}"{line.strip()})\n'  # Set the line to the print statement
+        line = f'print("{parse}"{line.strip().replace(",,", ",")})\n'  # Set the line to the print statement
         if 'int' in statements: # Check if int is in the statements
             line += f'{tabs}{var} = int(input())'   # Add the input statement to the line
         elif 'float' in statements: # Check if float is in the statements
@@ -456,9 +478,9 @@ def compiler(final, decomplie, filename=None): # Define the compiler function
         delete_temp()   # Delete the temp folder
         exit()  # Exit the program
 
-from rich.syntax import Syntax
+from rich.syntax import Syntax # Import the syntax from rich
 
-class _SYNTAX:
+class _SYNTAX: # Create the _SYNTAX class
     def CLASS(line): # Define the CLASS function
         global numtabs, final, tab # Define the global variables
         line, numtabs = C.class_(line, numtabs) # Run the class_ function
@@ -532,41 +554,162 @@ class _SYNTAX:
     def DEFMAIN(line):
         global numtabs, final, tab
         raise Exception('Line: "def main()", Did you mean "public main()"?') # Raise an exception
+    
+    def VAR(line):
+        global numtabs, final, tab
+        tabs = tab*numtabs
+        # line may look like: int x = 5 or str x = "Hello World"
+        # line needs to become x: int = 5 or x: str = "Hello World"
+        def get_type(line):
+            # line may look like: int x = 5 or str x = "Hello World"
+            # line needs to become int or str
+            line = line.split(' ')
+            return line[0]
+        
+        def get_name(line):
+            # line may look like: int x = 5 or str x = "Hello World"
+            # line needs to become x
+            line = line.split(' ')
+            return line[1]
+        def get_value(line):
+            # line may look like: int x = 5 or str x = "Hello World"
+            # line needs to become 5 or "Hello World"
+            line = line.split('=')
+            return line[1]
+        
+        line = f"{get_name(line)}: {get_type(line)} = {get_value(line)}"
+        final.append(f"{tabs}{line}\n")
+        return
+
+    def THROW(line):
+        global numtabs, final, tab
+        tabs = tab*numtabs
+        line = line.replace('throw', 'raise')
+        final.append(f"{tabs}{line}\n")
+        return
 
 syntax = {
-'class' : _SYNTAX.CLASS,
-'else if' : _SYNTAX.ELSEIF,
-'public' : _SYNTAX.PUBLIC,
-'pub' : _SYNTAX.PUB,
+'public class' : _SYNTAX.CLASS,
 'func' : _SYNTAX.FUNC,
 'catch' : _SYNTAX.CATCH,
 'include' : _SYNTAX.INCLUDE,
+'pub' : _SYNTAX.PUB,
 'from' : _SYNTAX.FROM,
 'out' : _SYNTAX.OUT,
+'public' : _SYNTAX.PUBLIC,
 'in' : _SYNTAX.IN,
 'retrun' : _SYNTAX.RETURN,
-'def main' : _SYNTAX.DEFMAIN
+'throw' : _SYNTAX.THROW,
+'def main' : _SYNTAX.DEFMAIN,
+'str' : _SYNTAX.VAR,
+'int' : _SYNTAX.VAR,
+'float' : _SYNTAX.VAR,
+'string' : _SYNTAX.VAR,
+'bool' : _SYNTAX.VAR,
+'list' : _SYNTAX.VAR,
+'dict' : _SYNTAX.VAR,
 # add more syntax keywords here --------------------------------------------------------------------------------------------------------------------------------------------
+} # Define the syntax dictionary
 
-}
-
-private_vars = []
+private_vars = [] # Define the private_vars list
 numtabs = 0 # Define the number of tabs
 final = ['from rich import console; print = console.Console().print\n'] # Add the import statement to the final line of the list
 tab = '    ' # Define the tab
 main_function_found = False # Define the main function found variable
 
-def lexer(lines, filename, decomplie, orglines): # Define the lexer function
-    
-    lines = orglines
-    global in_module, private_vars, numtabs, final, syntax, main_function_found # Define the global variables
+def intrepedmode(line): # Define the intrepedmode function
+    if line.startswith('out'): # If the line starts with out
+        line = line.replace('"', '') # Remove the quotes
+        print(f"{line.replace('out < ', '')}") # Print the line
+    elif line.startswith('in'): # If the line starts with in 
+        line = line.replace('"', '') # Remove the quotes 
+        print(f"{line.replace('in > ', '')}") # Print the line 
+        input() # Wait for the user to press enter
+    elif line.startswith('exit()'): # If the line starts with exit()
+        exit() # Exit the program 
+    elif line.startswith('clear()'): # If the line starts with clear()
+        os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
+    elif line.startswith('help()'): # If the line starts with help()
+        print(''' 
+    only syntax that works in intreped mode is:
+        out < "Hello World"
+        in > "Hello World"
+        exit()
+        clear()
+        help()
+        
+    any python syntax will work
+    variables will not work
+    functions will not work
+    classes will not work
+    anything with more then one line will not work
+        ''') # Print the help message
+    else: # If the line does not start with any of the above
+        try: # Try to run the line
+            exec(line) # Run the line
+        except Exception as e:  # If there is an error
+            print(e) # Print the error
+            pass # Pass the error
+    return # Return
 
+def lexer(lines=[], filename='', decomplie=False, orglines=[]): # Define the lexer function
+    lines = orglines # Set the lines variable to the orglines variable
+    global in_module, private_vars, numtabs, final, syntax, main_function_found, noargs, Version # Define the global variables
+    if noargs == True: # If the noargs variable is True
+        print(f"Verscape Interpreter v{Version}") # Print the versin
+        print("This also gives you low level access to all variables and functions in Verscae Code") # Print the low level access message
+        print('Type "exit()" to exit the interpreter') # Print the exit message
+        print('Type "help()" to see the help menu') # Print the help message
+        line = ''
+        while line != 'exit()': # While the line is not equal to exit
+            line = input('>> ') # Get the input
+            intrepedmode(line) # Run the lexer function
+        print('Exiting...') # Print exiting
+        exit() # Exit the program
+        
     foundMain = False # Define the foundMain variable
+    index = 0   # Define the index
+    incomment = False  # Define the incomment variable
+    
+    for line in lines:  # For each line in the lines list
+        if line.startswith('/*'): # Check if the line starts with /*
+            incomment = True
+            line = line.replace('/*', '"""') # Remove the /* from the line
+            
+        if line.endswith('*/'): # Check if the line ends with */
+            incomment = False
+            line = line.replace('*/', '"""') # Remove the /* from the line
+            
+        if incomment:
+            line = line.replace('*', '')
+            
+        lines[index] = line # Set the line in the lines list to the line variable
 
+        index += 1  # Add 1 to the index
+        
     index = 0   # Define the index
     
-    for line in lines:
-        index += 1
+    
+    for line in lines: # For each line in the lines list
+        index += 1 # Add 1 to the index variable
+        try: # Try to run the code
+            if '!' in line:     # Check if the line contains a !   
+                if '!' in line.split(' ')[0]: # Check if the ! is in the first word of the line
+                    orgvar = line.split(' ')[0].strip() # Set the orgvar variable to the line split by the space and remove the !
+                    private_vars.append(orgvar) # Add the orgvar to the private_vars list'
+                    newvar = orgvar.replace('!', '') # Remove the ! from the orgvar
+                    newvar = f'_{newvar}' # Add a _ in front of the newvar
+                    line = line.replace(orgvar, newvar) # Replace the orgvar with the newvar                
+                    lines[index-1] = line # Set the line to the line in the lines list
+                else: # If the ! is not in the first word of the line
+                    for i in private_vars: # For each item in the private_vars list
+                        if i in line: # Check if the private variable is in the line
+                            line = line.replace(i, f'_{i[:-1]}') # Replace the i with the i with a _ in front of it
+                            lines[index-1] = line # Set the line to the line in the lines list
+                                        
+        except IndexError: # If there is an index error 
+            raise Exception('SyntaxError: Unexpected EOF while parsing') # Raise an exception
+                 
         if ';' in line: # Check if the line has a ;
             # split the line by the '"' and still keep the '"' in the list
             something = line.split('"').copy() # Set the something variable to the line split by the "
@@ -585,27 +728,14 @@ def lexer(lines, filename, decomplie, orglines): # Define the lexer function
                     lines.insert(index+i, line[i]) # Insert the item into the lines list
             lines.remove(lines[index-1]) # Remove the line from the lines list
         # if the line looks like this: name! = "something" remove the ! and add a _ in front of the name so it looks like this: _name = "something", but if the ! is in a string, ignore it
-        try:
-            if '!' in line:            
-                # split the line by the '"' and still keep the '"' in the list
-                something = line.split('"').copy() # Set the something variable to the line split by the "
-                for i in range(len(something)): # For each item in the something list
-                    if i % 2 == 0: # Check if the index is even
-                        something[i] = something[i].replace('!', '') # Remove the ; from the item
-                line = '_' + '"'.join(something) # Join the something list by the "
-                private_vars.append(line.split(' ')[0]) # Add the variable to the private_vars list
-                lines[index-1] = line # Set the line to the line in the lines list
-                if '!' in line:
-                    from rich import console; cprint = console.Console().print
-                    cprint(f'[bold green]Error: Line {str(index)}:\n\t[bold red]{lines[index]}\n[bold green]The ! character is not allowed along with ; in the same line')
-                    exit()
-        except IndexError:
-            pass
-
+    
+    ii = 0 # Define the ii variable
+    line2 = '' # Define the line2 variable
+    
     newlines = [line.strip() for line in lines] # Remove the spaces from the lines
 
     for i in sys.argv: # For each item in the sys.argv list
-        if i == '--debug': # Check if the item is --debug
+        if i == '-debug': # Check if the item is -debug
             from rich import console; syntaxprinting = console.Console().print # Set the syntaxprinting variable to the print function
             _syntax = Syntax('\n'.join(newlines), "swift", theme="one-dark", line_numbers=True, background_color="default") # Set the syntax variable to the Syntax class
             print("\n\u001b[1m\u001b[31m----------------- Orginal Verscae Code -----------------\u001b[0m") # Print the orginal verscae code message
@@ -631,15 +761,19 @@ def lexer(lines, filename, decomplie, orglines): # Define the lexer function
         if '18@!%281&*&(&*#(!' in line: # Check if the line has a 18@!%281&*&(&*#(!
             line = line.replace('18@!%281&*&(&*#(!', '//') # Replace the // with #
 
-        inas = 0
-        try:
+        inas = 0    # Define the inas variable
+        try: # Try to do this
             # check if the line starts with a keyword from syntax list
-            if line.split(' ')[0] in syntax:
-                syntax.get(line.split(' ')[0])(line)
-
+            if line.split(' ')[0] in syntax: # Check if the first word in the line is in the syntax list
+                fun = syntax.get(line.split(' ')[0]) # Set the fun variable to the syntax dictionary with the first word of the line as the key
+                fun(line) # Run the function
+ 
+            elif 'else if' in line: # Check if the line has a else if
+                _SYNTAX.ELSEIF(line) # Run the ELSEIF function
+                            
             elif ': dict' in line: # Check if the line has : dict
                 line = line.replace(': dict', '') # Replace
-                continue
+                continue # Continue the loop
 
             elif ': list' in line: # Check if the line has : tuple
                 line = line.replace(': list', '') # Replace
@@ -679,7 +813,7 @@ def lexer(lines, filename, decomplie, orglines): # Define the lexer function
             exit()
 
     for i in sys.argv: # For each item in the sys.argv list
-        if i == '--debug': # Check if the item is --debug
+        if i == '-debug': # Check if the item is -debug
             print("\n\u001b[1m\u001b[31m----------------- Compiled Python Code -----------------\u001b[0m") # Print the message
             from rich import console; syntaxprinting = console.Console().print # Define the syntaxprinting variable
             from rich.pretty import pprint # Import the pprint function
@@ -705,9 +839,9 @@ def lexer(lines, filename, decomplie, orglines): # Define the lexer function
             lineno = 1 # Define the lineno variable
 
             # self test the new code in a subprocess and check if it works if it does not then print the error message
-            create_temp()
-            with open(f'temp{os.sep}src{os.sep}debug.tmp', 'w') as f:
-                f.write(''.join(final))
+            create_temp() # Run the create_temp function
+            with open(f'temp{os.sep}src{os.sep}debug.tmp', 'w') as f: # Open the file in write mode
+                f.write(''.join(final)) # Write the final list to the file
 
             print("\u001b[1m\u001b[31mRunning Self Test...\u001b[0m") # Print the message
             if subprocess.run(['python3', 'temp{}src{}debug.tmp'.format(os.sep, os.sep)], check=False, capture_output=True, text=False, timeout=5, encoding='utf-8', errors='ignore').returncode == 0:
@@ -718,24 +852,43 @@ def lexer(lines, filename, decomplie, orglines): # Define the lexer function
                 print("\u001b[1m\u001b[31mTest Failed Your Code has errors\u001b[0m") # Print the message
                 error = subprocess.run(['python3', 'temp{}src{}debug.tmp'.format(os.sep, os.sep)], check=False, capture_output=True, text=False).stderr.decode('utf-8') # Decode the error message
                 error = error.split('\n')[1].split("^")[0].strip() # Split the error message
-                for i in final:
-                    if error in i:
-                        lineno = final.index(i)
+                for i in final: # For each item in the final list
+                    if error in i: # Check if the error is in the line
+                        lineno = final.index(i) # Define the lineno variable
                 
-                orglines.append('')
-                orglines.append('')
-                orglines.append('')
+                orglines.append('') # Add a blank line to the orglines list
+                orglines.append('') # Add a new line to the orglines list 
+                orglines.append('') # Add 3 empty lines to the orglines list
                 
-                error = f"{lineno} | {orglines[lineno - 1]}"
+                error = f"{lineno} | {orglines[lineno - 1]}" # Define the error variable
                 print(f"\u001b[1m\u001b[31mError Found in line {lineno}:\n\t{error}\u001b[0m") # Print the error message
-                
+            
+            delete_temp() # Delete the temp folder
+             
             print("\u001b[1m\u001b[31mDo you want to create a dmp file? (y/n) : \u001b[0m", end='') # Print the message
             if input().lower() == 'y': # Check if the user input is y
                 if not os.path.exists('debug'): # Check if the debug folder exists
                     os.mkdir('debug') # Create the debug folder
+                
+                with open(filename, 'r') as f2: # Open the file in read mode
+                        data = f2.readlines() # Read the file
+                        f2.close() # Close the file
+                
                 with open(f'{os.getcwd()}{os.sep}debug{os.sep}{filename.split(os.sep)[-1]}.dmp', 'w') as f: # Open the file in write mode
                     lineno = 1 # Define the lineno variable
                     numval = 3 # Define the numval variable
+                    f.write("========================= RAW Verscae Code ========================\n") # Write to the file
+                    for i in newlines: # For each item in the newlines list
+                        if lineno > 9: # Check if the lineno is greater than 9
+                            numval = 2 # Define the numval variable
+                            if lineno+1 > 99: # Check if the lineno is greater than 99
+                                numval = 1 # Define the numval variable
+
+                        numspaces = ' '*numval # Define the numspaces variable
+                        data = f'{lineno}{numspaces}| {time.strftime("%H:%M:%S")} | {i} \n' # Define the data variable
+                        lineno += 1 # Add 1 to the lineno variable
+                        f.write(data) # Write to the file
+
                     f.write("========================= Verscae Code ========================\n") # Write to the file
                     for i in newlines: # For each item in the newlines list
                         if lineno > 9: # Check if the lineno is greater than 9
@@ -844,7 +997,12 @@ def main(filename, decomplie): # Define the main function
     with open(filename, 'r') as f: # Open the file in read mode
         code = f.readlines()    # Read the lines
         f.close # Close the file
-    orglines = [line.strip() for line in code] 
+    
+    orglines = [line.strip() for line in code]  # Strip the lines
+    
+    if filename == 'selftest.v': # Check if the filename is selftest.v
+        os.remove(filename) # Remove the file
+        
     lexer(code, filename, decomplie, orglines) # Run the lexer function
 
 def build(filename, music_option, Version, music_path, args=None):    # Define the build function
@@ -912,10 +1070,10 @@ def starter(filename, music_option, Version, music_path, argv): # don't change t
             os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
 
             if response.json()['tag_name'] != Version:  # Check if the version is not the same as the latest version
-                print('\u001b[41;1mA newer version of Verscae is available\u001b[0m')   # Print the message
-                print('\u001b[31;1m  Please update to the latest version\u001b[0m') # Print the message
-                print('\u001b[31;1m  You can Ctrl+click to open the link in a web browser \u001b[0m')   # Print the message
-                print('\u001b[34;1m  https://github.com/Ze7111/Verscae-Programing-language/releases/latest \u001b[0m')  # Print the link
+                print('\u001b[41;1m This version of Verscae is not supported \u001b[0m')   # Print the message
+                print('\u001b[31;1m   Please update to the latest version\u001b[0m') # Print the message
+                print('\u001b[31;1m   You can Ctrl+click to open the link in a web browser \u001b[0m')   # Print the message
+                print('\u001b[34;1m   https://github.com/Ze7111/Verscae-Programing-language/releases/latest \u001b[0m')  # Print the link
                 time.sleep(5)   # Wait 5 seconds
         except KeyError: # If there is a KeyError
             print('\u001b[41;1mError: Could not connect to the internet\u001b[0m') # Print the message
@@ -957,7 +1115,19 @@ def delete_temp():    # Delete the temp folder
     except FileNotFoundError:   # If the folder does not exist
         pass    # Continue the loop
 
+def debugmode():
+    with open('selftest.v', 'w') as file:
+        file.write('public main() {; out < "This is the SELF TEST" < red < newl; in num < "Enter a number: " < endl < green < int; Check.numCheck(num); in string < "Enter a string: " < endl < green < str; Check.stringCheck(string); }; class Check {; func numCheck(num) {; if (num > 0) {; out < "The number is positive" < endl;  }; else if (num < 0) {; out < "The number is negative" < endl; }; else {; out < "The number is zero" < endl; }; return 0; }; func stringCheck(string) {; if (string == "Hello") {; out < "The string is Hello" < endl; }; else {; out < "The string is not Hello" < endl; };return 0; }; }')
+        file.close()
+    return
+
+
+
 try:   # Try to run the code
+    if len(sys.argv) == 1:   # If there are more than 2 arguments
+        filename = ''
+        lexer(filename) # Run the lexer function
+        exit()
     try:    # Try to run the code
         if sys.argv[1] == '':   # Check if the first argument is empty
             print('\u001b[31;1mThe filename you put was either invalid or mismathced, enter file to run : \u001b[32;1m', end='')    # Print the message
@@ -976,11 +1146,17 @@ try:   # Try to run the code
         exit()  # Exit the program
 
     if __name__ == '__main__':  # If the file is run directly
+        if sys.argv[1] == '-debug':    # If the user puts -debug as the first argument
+            print('\u001b[32;1mDebug mode started\u001b[0m') # Print the message
+            debugmode() # Run the debugmode function
+            filename = 'selftest.v' # Set the filename to selftest.v
+            sys.argv.append('-debug')   # Append the filename to the arguments
+            pass
         try:    # Try to run the code
             for i in sys.argv:  # Loop through the arguments
                 if i == '-m':  # Check if the argument is -m
                     music_option = True # Set the music_option to True
-                if i == '--help':
+                if i == '-help':
                     print('\u001b[41;1mYou can read the entire documentation\u001b[0m')   # Print the message
                     print('\u001b[31;1m  In you browser, jsut ctrl + click this link\u001b[0m') # Print the message
                     print('\u001b[34;1m  https://github.com/Ze7111/Verscae/wiki \u001b[0m')  # Print the link
@@ -988,7 +1164,7 @@ try:   # Try to run the code
                     print('\u001b[31;1m  ze7111@gmail.com \u001b[0m')   # Print the message
                     exit()
 
-                if i == '--version':
+                if i == '-version':
                     print(f'\u001b[41;1mYou are using Verscae version {Version}\u001b[0m')
                     exit()
         except IndexError: # If there is an IndexError
@@ -1003,6 +1179,6 @@ except KeyboardInterrupt:   # If the user presses ctrl+c
     print('\u001b[41;1mKeyboard Interrupt Detected\u001b[0m')   # Print the message
     print('\u001b[1m\u001b[31mExiting ...\u001b[0m')  # Print the message
     exit() # Exit the program
-
+    
 finally:   # Run this code no matter what
     delete_temp()   # Run the delete_temp function
