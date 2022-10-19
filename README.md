@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/Maintained%3F-Maybe-yellow?style=flat-square">
   <img src="https://img.shields.io/badge/Written%20In-Python-darkcyan?style=flat-square">
   <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FZe7111%2FVerscae-Programing-language&title=Visitors&edge_flat=True"/>
-  <a href="https://www.codefactor.io/repository/github/ze7111/verscae-programing-language/overview/master"><img src="https://www.codefactor.io/repository/github/ze7111/verscae-programing-language/badge/master" alt="CodeFactor" /></a>  
+  <a href="https://www.codefactor.io/repository/github/ze7111/verscae/overview/master"><img src="https://www.codefactor.io/repository/github/ze7111/verscae/badge/master" alt="CodeFactor" /></a>
 </a>
 </p>
 
