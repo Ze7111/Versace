@@ -4,12 +4,12 @@
         {
             "label": "Run Verscae File",
             "type": "shell",
-            "command": "python3 verscae.pyc ${relativeFile}",
+            "command": "python3 src\\verscae.py ${relativeFile}",
         },
         {
             "label": "Decompile Verscae File",
             "type": "shell",
-            "command": "python3 verscae.pyc ${relativeFile} -d",
+            "command": "python3 src\\verscae.py ${relativeFile} -d",
         }
     ]
 }
