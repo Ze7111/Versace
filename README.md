@@ -5,9 +5,9 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Version-4.1.1-green?style=for-the-badge">
   <img src="https://img.shields.io/badge/license-Creative%20Commons-green?style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/Ze7111/Versace-Programing-language?style=for-the-badge">
-  <img src="https://img.shields.io/github/issues/Ze7111/Versace-Programing-language?color=red&style=for-the-badge">
-  <img src="https://img.shields.io/github/forks/Ze7111/Versace-Programing-language?color=teal&style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/Ze7111/Versace?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/Ze7111/Versace?color=red&style=for-the-badge">
+  <img src="https://img.shields.io/github/forks/Ze7111/Versace?color=teal&style=for-the-badge">
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
   <img src="https://img.shields.io/badge/Maintained%3F-Maybe-yellow?style=flat-square">
   <img src="https://img.shields.io/badge/Written%20In-Python-darkcyan?style=flat-square">
   <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FZe7111%2FVersace-Programing-language&title=Visitors&edge_flat=True"/>
-  <a href="https://www.codefactor.io/repository/github/ze7111/versace/overview/master"><img src="https://www.codefactor.io/repository/github/ze7111/versace/badge/master" alt="CodeFactor" /></a>
+  <a href="https://www.codefactor.io/repository/github/Ze7111/Versace/overview/master"><img src="https://www.codefactor.io/repository/github/Ze7111/Versace/badge/master" alt="CodeFactor" /></a>
 </a>
 </p>
 
