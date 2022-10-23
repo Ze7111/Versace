@@ -70,6 +70,7 @@ except ModuleNotFoundError as e: # If the module is not found
         exit() # Exit the program
 
 os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
+
 compare_version = Version # Define the compare version
 tab = '    ' # Tab
 noargs = True if len(sys.argv) == 1 else False
@@ -158,7 +159,10 @@ class include: # Class include
 
         return line # Return the line
 
-    def _from(line, tabs, final):
+    def _from(line, 
+              tabs, 
+              final):
+        
         global org_final, do_once, in_module # Define the global variables
 
         if do_once: org_final = final; do_once = False # If do once is True, set the orginal final list to the final list and set do once to False
@@ -384,7 +388,10 @@ class IO: # Class IO
     def error(text):    # Define the error function
         print(f"\u001b[41;1m{text}\u001b[0m")   # Print the error
 
-def compiler(final, decomplie, filename=None): # Define the compiler function
+def compiler(final, 
+             decomplie, 
+             filename=None): # Define the compiler function
+    
     os.system('cls' if os.name == 'nt' else 'clear')    # Clear the screen
     current_time = time.time()  # Set the current time
     current_time = time.strftime('%d-%m-%Y %H-%M-%S', time.localtime(current_time)) # Set the current time
@@ -457,6 +464,11 @@ def compiler(final, decomplie, filename=None): # Define the compiler function
             for line in final:  # For each line in the final
                 f.write(line)   # Write the line to the file
 
+    for i in range(20):
+        print('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n')
+        
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
     try:    # Try to open the file
         try:    # Try to open the file
             os.system(f'python3 "{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{current_time}.tmp"')
@@ -589,26 +601,26 @@ class _SYNTAX: # Create the _SYNTAX class
         return
 
 syntax = {
-'public class' : _SYNTAX.CLASS,
-'func' : _SYNTAX.FUNC,
-'catch' : _SYNTAX.CATCH,
-'include' : _SYNTAX.INCLUDE,
-'pub' : _SYNTAX.PUB,
-'from' : _SYNTAX.FROM,
-'out' : _SYNTAX.OUT,
-'public' : _SYNTAX.PUBLIC,
-'in' : _SYNTAX.IN,
-'retrun' : _SYNTAX.RETURN,
-'throw' : _SYNTAX.THROW,
-'def main' : _SYNTAX.DEFMAIN,
-'str' : _SYNTAX.VAR,
-'int' : _SYNTAX.VAR,
-'float' : _SYNTAX.VAR,
-'string' : _SYNTAX.VAR,
-'bool' : _SYNTAX.VAR,
-'list' : _SYNTAX.VAR,
-'dict' : _SYNTAX.VAR,
-# add more syntax keywords here --------------------------------------------------------------------------------------------------------------------------------------------
+    'public class' : _SYNTAX.CLASS,
+    'func' : _SYNTAX.FUNC,
+    'catch' : _SYNTAX.CATCH,
+    'include' : _SYNTAX.INCLUDE,
+    'pub' : _SYNTAX.PUB,
+    'from' : _SYNTAX.FROM,
+    'out' : _SYNTAX.OUT,
+    'public' : _SYNTAX.PUBLIC,
+    'in' : _SYNTAX.IN,
+    'retrun' : _SYNTAX.RETURN,
+    'throw' : _SYNTAX.THROW,
+    'def main' : _SYNTAX.DEFMAIN,
+    'str' : _SYNTAX.VAR,
+    'int' : _SYNTAX.VAR,
+    'float' : _SYNTAX.VAR,
+    'string' : _SYNTAX.VAR,
+    'bool' : _SYNTAX.VAR,
+    'list' : _SYNTAX.VAR,
+    'dict' : _SYNTAX.VAR,
+# TODO: add more syntax keywords here --------------------------------------------------------------------------------------------------------------------------------------------
 } # Define the syntax dictionary
 
 private_vars = [] # Define the private_vars list
@@ -652,12 +664,16 @@ def intrepedmode(line): # Define the intrepedmode function
             pass # Pass the error
     return # Return
 
-def lexer(lines=[], filename='', decomplie=False, orglines=[]): # Define the lexer function
+def lexer(lines=[], 
+          filename='', 
+          decomplie=False, 
+          orglines=[]): # Define the lexer function
+    
     lines = orglines # Set the lines variable to the orglines variable
     global in_module, private_vars, numtabs, final, syntax, main_function_found, noargs, Version # Define the global variables
     if noargs == True: # If the noargs variable is True
         print(f"Verscape Interpreter v{Version}") # Print the versin
-        print("This also gives you low level access to all variables and functions in Versace Code") # Print the low level access message
+        print("This also gives you low level access to all variables and functions in Verscae Code") # Print the low level access message
         print('Type "exit()" to exit the interpreter') # Print the exit message
         print('Type "help()" to see the help menu') # Print the help message
         line = ''
@@ -670,6 +686,18 @@ def lexer(lines=[], filename='', decomplie=False, orglines=[]): # Define the lex
     foundMain = False # Define the foundMain variable
     index = 0   # Define the index
     incomment = False  # Define the incomment variable
+    
+    for line in lines:
+        index = lines.index(line)
+        if line.startswith('{'):
+            lines[index-1] = lines[index-1].strip() + ' {'
+            # remove the first character of the line
+            lines[index] = lines[index][1:]
+            lines[index] = lines[index].strip()
+            if lines[index] == '':
+                lines.pop(index)
+
+    index = 0
     
     for line in lines:  # For each line in the lines list
         if line.startswith('/*'): # Check if the line starts with /*
@@ -688,8 +716,7 @@ def lexer(lines=[], filename='', decomplie=False, orglines=[]): # Define the lex
         index += 1  # Add 1 to the index
         
     index = 0   # Define the index
-    
-    
+
     for line in lines: # For each line in the lines list
         index += 1 # Add 1 to the index variable
         try: # Try to run the code
@@ -738,7 +765,7 @@ def lexer(lines=[], filename='', decomplie=False, orglines=[]): # Define the lex
         if i == '-debug': # Check if the item is -debug
             from rich import console; syntaxprinting = console.Console().print # Set the syntaxprinting variable to the print function
             _syntax = Syntax('\n'.join(newlines), "swift", theme="one-dark", line_numbers=True, background_color="default") # Set the syntax variable to the Syntax class
-            print("\n\u001b[1m\u001b[31m----------------- Orginal Versace Code -----------------\u001b[0m") # Print the orginal versace code message
+            print("\n\u001b[1m\u001b[31m----------------- Orginal Verscae Code -----------------\u001b[0m") # Print the orginal verscae code message
             syntaxprinting(_syntax) # Print the syntax
 
     for line in newlines:  # Loop through the lines
@@ -877,7 +904,7 @@ def lexer(lines=[], filename='', decomplie=False, orglines=[]): # Define the lex
                 with open(f'{os.getcwd()}{os.sep}debug{os.sep}{filename.split(os.sep)[-1]}.dmp', 'w') as f: # Open the file in write mode
                     lineno = 1 # Define the lineno variable
                     numval = 3 # Define the numval variable
-                    f.write("========================= RAW Versace Code ========================\n") # Write to the file
+                    f.write("========================= RAW Verscae Code ========================\n") # Write to the file
                     for i in newlines: # For each item in the newlines list
                         if lineno > 9: # Check if the lineno is greater than 9
                             numval = 2 # Define the numval variable
@@ -889,7 +916,7 @@ def lexer(lines=[], filename='', decomplie=False, orglines=[]): # Define the lex
                         lineno += 1 # Add 1 to the lineno variable
                         f.write(data) # Write to the file
 
-                    f.write("========================= Versace Code ========================\n") # Write to the file
+                    f.write("========================= Verscae Code ========================\n") # Write to the file
                     for i in newlines: # For each item in the newlines list
                         if lineno > 9: # Check if the lineno is greater than 9
                             numval = 2 # Define the numval variable
@@ -969,18 +996,19 @@ def lexer(lines=[], filename='', decomplie=False, orglines=[]): # Define the lex
             exit() # Exit the program
 
         final.append(f'main({args})') # Add the main function to the final list
-        compiler(final, decomplie, filename) # Compile the code
+        compiler(final, decomplie, filename)
     else: # Else
         in_module = False # Define in_module as False
         return final # Return the final list
 
 
-def main(filename, decomplie): # Define the main function
+def main(filename,
+         decomplie): # Define the main function
     # what ever the path of filename is change it to be os independent
     seperator = os.sep
     # check if this dir matches the filename dir
-    # os path = /mnt/z/Versace-Code
-    # filename = Z:/Versace-Code/test.v
+    # os path = /mnt/z/Verscae-Code
+    # filename = Z:/Verscae-Code/test.v
     # replace everthing before the filename folder with everything before the os path folder
     if '\\' in filename: # Check if the filename contains a \
         filename = filename.split('\\') # Split the filename by \
@@ -1005,7 +1033,12 @@ def main(filename, decomplie): # Define the main function
         
     lexer(code, filename, decomplie, orglines) # Run the lexer function
 
-def build(filename, music_option, Version, music_path, args=None):    # Define the build function
+def build(filename, 
+          music_option, 
+          Version, 
+          music_path, 
+          args=None):    # Define the build function
+    
     decomplie = False # Define decomplie as False
     global compare_version # Define the compare_version variable
     try:    # Try to run the code
@@ -1049,7 +1082,12 @@ def build(filename, music_option, Version, music_path, args=None):    # Define t
         delete_temp()   # Run the delete_temp function
         exit()  # Exit the program
 
-def starter(filename, music_option, Version, music_path, argv): # don't change this unless you know what you are doing
+def starter(filename, 
+            music_option, 
+            Version, 
+            music_path, 
+            argv): # don't change this unless you know what you are doing
+    
     try:   # Try to run the code
         sys.argv[1] = filename.replace("'", '') # Remove the .py from the filename
     except IndexError: # If there is an IndexError
@@ -1063,17 +1101,17 @@ def starter(filename, music_option, Version, music_path, argv): # don't change t
             print('\u001b[41;1mFatel Error Exiting...\u001b[0m') # Print the message
             exit() # Exit the program
         try:
-            response = requests.get("https://api.github.com/repos/Ze7111/Versace-Programing-language/releases/latest")  # Get the latest release
+            response = requests.get("https://api.github.com/repos/Ze7111/Verscae-Programing-language/releases/latest")  # Get the latest release
             if response.status_code == 200: # Check if the status code is 200
                 print('\u001b[42;1mChecking for updates...\u001b[0m', end='\r') # Print the message
             print('\u001b[42;1mCompleted\u001b[0m                  ', end='\r') # Print the message
             os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
 
             if response.json()['tag_name'] != Version:  # Check if the version is not the same as the latest version
-                print('\u001b[41;1m This version of Versace is not supported \u001b[0m')   # Print the message
+                print('\u001b[41;1m This version of Verscae is not supported \u001b[0m')   # Print the message
                 print('\u001b[31;1m   Please update to the latest version\u001b[0m') # Print the message
                 print('\u001b[31;1m   You can Ctrl+click to open the link in a web browser \u001b[0m')   # Print the message
-                print('\u001b[34;1m   https://github.com/Ze7111/Versace-Programing-language/releases/latest \u001b[0m')  # Print the link
+                print('\u001b[34;1m   https://github.com/Ze7111/Verscae-Programing-language/releases/latest \u001b[0m')  # Print the link
                 time.sleep(5)   # Wait 5 seconds
         except KeyError: # If there is a KeyError
             print('\u001b[41;1mError: Could not connect to the internet\u001b[0m') # Print the message
@@ -1159,13 +1197,13 @@ try:   # Try to run the code
                 if i == '-help':
                     print('\u001b[41;1mYou can read the entire documentation\u001b[0m')   # Print the message
                     print('\u001b[31;1m  In you browser, jsut ctrl + click this link\u001b[0m') # Print the message
-                    print('\u001b[34;1m  https://github.com/Ze7111/Versace/wiki \u001b[0m')  # Print the link
+                    print('\u001b[34;1m  https://github.com/Ze7111/Verscae/wiki \u001b[0m')  # Print the link
                     print('\u001b[31;1m  If you have a question that is not answred there, you can open an issue or email me at \u001b[0m')   # Print the message
                     print('\u001b[31;1m  ze7111@gmail.com \u001b[0m')   # Print the message
                     exit()
 
                 if i == '-version':
-                    print(f'\u001b[41;1mYou are using Versace version {Version}\u001b[0m')
+                    print(f'\u001b[41;1mYou are using Verscae version {Version}\u001b[0m')
                     exit()
         except IndexError: # If there is an IndexError
             pass   # Continue the loop
