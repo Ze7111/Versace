@@ -1,120 +1,162 @@
+#include <cstdlib>
 #include <iostream>
 #include <stdlib.h>
-// module for downloading files from the internet
+#include <string>
+
 using namespace std;
 
-void WindowsInstall(string Link)
-{
-    string boldGreen("\033[1;32m"); // bold green
-    string boldRed("\033[1;31m"); // bold red
-    string reset("\033[0m"); // reset
-    
-    cout << boldRed << "Downloading Versace for Windows" << reset << endl; // prints "Downloading Versace for Windows"
-    
-    // download from the link into the current directory
-    cout << boldRed;
-    system("powershell ((new-object System.Net.WebClient).DownloadFile('https://github.com/Ze7111/Versace/releases/download/4.1.1/Windows-Versace-4.1.1.zip','Versace.zip'))");
-    cout << boldGreen << "Downloaded Versace.zip" << reset << endl;
-    
-    cout << boldRed;
-    // extract the zip file into the current directory without using unzip or 7zip command
-    system("powershell Expand-Archive -Force 'Versace.zip' 'Versace'");
-    cout << boldGreen << "Extracted Versace.zip" << reset << endl;
-    
-    // inside the new Versace folder, thre is a Windows-Versace-4.1.1 folder move that to a directory that does not require admin permissions
-    cout << boldRed;
-    system("powershell Move-Item -Path 'Versace/Windows-Versace-4.1.1' -Destination '%AppData%/Versace'");
-    cout << boldGreen << "Moved Versace to %%AppData%%/Versace" << reset << endl;
+const string R_Version = "4.1.1";
 
-    // delete the zip file and the Versace folder
-    cout << boldRed;
-    system("powershell Remove-Item -Path 'Versace.zip'");
-    system("powershell Remove-Item -Path 'Versace' -Recurse");
-    cout << boldGreen << "Deleted Versace.zip and Versace folder" << reset << endl;
+std::string getOsName()
+{
+    #ifdef _WIN64
+    return "Windows";
+    #elif _WIN32
+    return "Windows";
+    #elif __APPLE__ || __MACH__
+    return "MacOS";
+    #elif __linux__
+    return "Linux";
+    #elif __FreeBSD__
+    return "FreeBSD";
+    #elif __unix || __unix__
+    return "Unix";
+    #else
+    return "Other";
+    #endif
+}      
+
+const string L_Link = "https://github.com/Ze7111/Versace/releases/latest/download/Linux-Versace-";
+const string W_Link = "https://github.com/Ze7111/Versace/releases/latest/download/Windows-Versace-";
+
+const string Final_Link_W = W_Link + R_Version + ".zip";
+const string Final_Link_L = L_Link + R_Version + ".zip";
+
+const string Win_F_Name = "Windows-Versace-" + R_Version + ".zip";
+const string Lin_F_Name = "Linux-Versace-" + R_Version + ".zip";
+
+const string Win_F_DIR = "Windows-Versace-" + R_Version;
+const string Lin_F_DIR = "Linux-Versace-" + R_Version;
+
+void WIN_INSTALLER(string osname, string colors[5])
+{
+
+    string x; string SETPATHX = "[Environment]::SetEnvironmentVariable(\"Path\", [Environment]::GetEnvironmentVariable(\"Path\", \"User\") + \";$HOME\\versace\\" + Win_F_DIR + "\", \"User\")"; // Set Path
     
-    // add the new Versace folder to the path permanently so that it can be run from anywhere
-    cout << boldRed; 
-    cout << boldGreen << "Failed to add Versace to the path" << reset << endl; 
+    cout << colors[0] << "\n\nPlease copy the following command all together\n" << endl;
+    cout << colors[3] << "New-Item \"$HOME\\versace\" -ItemType \"directory\" -Force" << endl;
+    cout << colors[3] << "Invoke-WebRequest \""+ Final_Link_W +"\" -OutFile \"$HOME\\versace\\versace.zip\"" << endl;
+    cout << colors[3] << "Expand-Archive \"$HOME\\versace\\versace.zip\" -DestinationPath \"$HOME\\versace\" -Force" << endl;
+    cout << colors[3] << "Remove-Item \"$HOME\\versace\\versace.zip\" -Force" << endl;
+    cout << colors[3] << "[Environment]::SetEnvironmentVariable(\"Path\", [Environment]::GetEnvironmentVariable(\"Path\", \"User\") + \";$HOME\\versace\\" + Win_F_DIR + "\", \"User\")" << endl;
+    cout << colors[0] << "\nPress Enter to continue once you have copied the command ";
     
-    // exit
-    cout << boldGreen << "Please add Versace to the path manually, it is located in 'C:\\Users\\(USERNAME)\\AppData\\Roaming\\Versace'" << reset << endl;
+    system("pause >nul");
+    system("cls");
+    
+    cout << colors[0] << "Please paste the copied commands into a non-administrator PowerShell window. then you can use versace" << endl;
+    cout << colors[4];
+    
+    exit(0);
 }
 
-void LinuxInstall(string Link)
+void LIN_INSTALLER(string osname, string colors[5])
 {
-    string boldGreen("\033[1;32m"); // bold green
-    string boldRed("\033[1;31m"); // bold red
-    string reset("\033[0m"); // reset
+    string x; string SETPATHX = "export PATH=$PATH:$HOME/versace/" + Lin_F_DIR; // Set Path
     
-    cout << boldRed << "Downloading Versace for Linux" << reset << endl; // prints "Downloading Versace for Linux"
+    cout << colors[0] << "\n\nPlease copy the following command all together\n" << endl;
+    cout << colors[3] << "mkdir $HOME/versace" << endl;
+    cout << colors[3] << "wget -O $HOME/versace/versace.zip " + Final_Link_L << endl;
+    cout << colors[3] << "unzip $HOME/versace/versace.zip -d $HOME/versace" << endl;
+    cout << colors[3] << "rm $HOME/versace/versace.zip" << endl;
+    cout << colors[3] << "export PATH=$PATH:$HOME/versace/" + Lin_F_DIR << endl;
+    cout << colors[0] << "\nPress Enter to continue once you have copied the command ";
     
-    // download from the link into the current directory
-    cout << boldRed;
-    system("wget https://github.com/Ze7111/Versace/releases/download/4.1.1/Linux-Versace-4.1.1.zip");
-    cout << boldGreen << "Downloaded Linux-Versace-4.1.1.zip" << reset << endl;
+    system("pause >nul");
+    system("clear");
     
-    cout << boldRed;
-    // extract the zip file into the current directory without using unzip or 7zip command
-    system("unzip Linux-Versace-4.1.1.zip");
-    cout << boldGreen << "Extracted Linux-Versace-4.1.1.zip" << reset << endl;
+    cout << colors[0] << "Please paste the copied commands into a terminal. then you can use versace" << endl;
+    cout << colors[4];
     
-    // inside the new Versace folder, thre is a Linux-Versace-4.1.1 folder move that to a directory that does not require admin permissions
-    cout << boldRed;
-    system("mv Linux-Versace-4.1.1 ~/.Versace");
-    cout << boldGreen << "Moved Versace to ~/.Versace" << reset << endl;
-    
-    // delete the zip file and the Versace folder
-    cout << boldRed;
-    system("rm Linux-Versace-4.1.1.zip");
-    system("rm -r Linux-Versace-4.1.1");
-    cout << boldGreen << "Deleted Linux-Versace-4.1.1.zip and Linux-Versace-4.1.1 folder" << reset << endl;
-    
-    // add the new Versace folder to the path permanently so that it can be run from anywhere
-    cout << boldRed;
-    system("echo 'export PATH=$PATH:~/.Versace' >> ~/.bashrc");
-    cout << boldGreen << "Added Versace to the path" << reset << endl;
-    
-    // exit
-    cout << boldGreen << "Please restart your terminal to use Versace" << reset << endl;
+    exit(0);
 }
 
-int main() 
+void CAR(string osname, string LatestReleaseTag, string WindowsLink, string LinuxLink)
 {
-    string boldGreen("\033[1;32m");
-    string boldRed("\033[1;31m");
-    string reset("\033[0m");
-    string WindowsInstallLink("https://github.com/Ze7111/Versace/releases/download/4.1.1/Windows-Versace-4.1.1.zip");
-    string LinuxInstallLink("https://github.com/Ze7111/Versace/releases/download/4.1.1/Linux-Versace-4.1.1.zip");
-    // print "This is the installer for Versace" in bold green
-    cout << boldGreen << "This is the installer for Versace" << reset << endl;
-    // print "Funfact this installer is written in C++" in bold green
-    cout << boldGreen << "Funfact this installer is written in C++" << reset << endl;
-    // find out which OS the user is using
-    // if the user is using Windows
-    cout << boldGreen;
-    if (system("ver") == 0) 
-    {
-        cout << reset;
-        // call the WindowsInstall Function
-        WindowsInstall(WindowsInstallLink);
+    // make a list of 3 color codes
+    string colors[5] = {"\033[1;31m", "\033[1;32m", "\033[1;34m", "\033[1;33m", "\033[0m"};
+    //                     red          green          blue         yellow        reset
+    if (system("cls")) system("clear"); // clear the screen
+    
+    cout << colors[0] << "Welcome to the Versace Installer" << colors[4] << endl; // print the welcome message
+    cout << colors[1] << "Your Operating System is: " << colors[3] << osname << colors[4] << endl; // print the os name
+    cout << colors[1] << "Latest Release Tag: " << colors[3] << LatestReleaseTag << colors[4] << endl; // print the latest release tag
+    cout << colors[1] << "Windows Link: " << colors[3] << WindowsLink << colors[4] << endl; // print the windows link
+    cout << colors[1] << "Linux Link: " << colors[3] << LinuxLink << colors[4] << endl; // print the linux link
+    cout << colors[1] << "Windows File Name: " << colors[3] << Win_F_Name << colors[4] << endl; // print the windows file name
+    cout << colors[1] << "Linux File Name: " << colors[3] << Lin_F_Name << colors[4] << endl; // print the linux file name
+
+    if (osname == "Windows") { WIN_INSTALLER(osname, colors); } // if the osname is Windows run the Windows installer Function
+    else if (osname == "Linux") { LIN_INSTALLER(osname, colors); } // if the osname is Linux run the Linux installer Function
+    else { cout << colors[0] << "Your Operating System is not supported" << colors[4] << endl; exit(0); } // if the osname is not supported exit the program
+}
+
+void CIUHVI() // Check if the user has Versace installed
+{   
+    string choice;
+    string colors[5] = {"\033[1;31m", "\033[1;32m", "\033[1;34m", "\033[1;33m", "\033[0m"};
+    //                     red          green          blue         yellow        reset
+    cout << colors[3] << "Checking if Versace is installed..." << endl;
+// [Environment]::SetEnvironmentVariable(\"Path\", [Environment]::GetEnvironmentVariable(\"Path\", "User\") + \";$HOME\\Versace\\" + "Win_F_Name + "\", \"User\")"
+    // check if the versace -version command works
+    if (system("versace -version") == 0) {   
+        cout << colors[1] << "Latest Version: " << colors[0] << R_Version << endl;
+        // ask if the user wants to update
+        cout << colors[3] << "Do you want to update? (y/n): " << colors[2];
+        cin >> choice;
+
+        if (choice == "y") {
+            cout << colors[4];
+            return;
+        
+        } else {
+            // exit
+            cout << colors[4];
+            exit(0);
+        }
+    }  
+    
+    else  {
+        cout << colors[0] << "Versace will be installed." << endl;
+        cout << colors[4];
+        return; 
     }
-    else if (system("uname") == 0) 
-    {
-        cout << reset;
-        LinuxInstall(LinuxInstallLink);
-    }
-    else 
-    {
-        cout << reset;
-        // print "Your OS is not supported" in bold red
-        cout << boldRed << "Your OS is not supported" << reset << endl;
-        // print "Please download the installer for your OS from the releases page" in bold red
-        cout << boldRed << "Please download the installer for your OS from the releases page" << reset << endl;
-        // print "Press enter to exit" in bold red
-        cout << boldRed << "Press enter to exit" << reset << endl;
-        // wait for the user to press enter
-        cin.get();
-        // exit the program
-        exit(0);
-    }
-};
+}
+
+int main()
+{
+    // clear screen
+    if (system("cls")) system("clear");
+
+    // Initialize variables
+    string LatestReleaseTag = R_Version;
+    string WindowsLink = Final_Link_W;
+    string LinuxLink = Final_Link_L;
+
+    // check what the OS is
+    string osname = getOsName();    
+
+    CIUHVI(); // CIUHVI = Check if the user has Versace installed
+
+    // check if the OS is supported if so, reroute to the correct function
+    CAR(osname, LatestReleaseTag, WindowsLink, LinuxLink); // CAR = Check And Redirect
+    
+    return 0; // exit
+}
+
+
+/*
+New-Item "$HOME\versace" -ItemType "directory" -Force
+Invoke-WebRequest "https://github.com/Ze7111/Versace/releases/latest/download/Windows-Versace-4.1.1.zip" -OutFile "$HOME\versace\versace.zip"
+[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$HOME\versace", "User")
+*/
