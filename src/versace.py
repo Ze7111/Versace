@@ -600,6 +600,11 @@ class _SYNTAX: # Create the _SYNTAX class
         final.append(f"{tabs}{line}\n")
         return
 
+    def ASYNC(line):
+        print('\u001b[41m\u001b[30mWIP: Async functions are not supported yet. In the near future they will be.\u001b[0m')
+        exit()
+        return
+
 syntax = {
     'public class' : _SYNTAX.CLASS,
     'func' : _SYNTAX.FUNC,
@@ -613,6 +618,7 @@ syntax = {
     'retrun' : _SYNTAX.RETURN,
     'throw' : _SYNTAX.THROW,
     'def main' : _SYNTAX.DEFMAIN,
+    'async' : _SYNTAX.ASYNC,
     'str' : _SYNTAX.VAR,
     'int' : _SYNTAX.VAR,
     'float' : _SYNTAX.VAR,
