@@ -19,7 +19,8 @@
 	 "create start function": {
 	 	"prefix": "pm",
 	 	"body": [
-	 		"public main() {",
+	 		"public main()", 
+			"{",
 	 		"\t$1",
 			"}"
 	 	],
@@ -28,7 +29,8 @@
 	"create function": {
 		"prefix": "fn",
 		"body": [
-			"func ${1:name}() {",
+			"func ${1:name}()", 
+			"{",
 			"\t",
 			"}"
 		],
@@ -37,7 +39,8 @@
 	"create class": {
 		"prefix": "cl",
 		"body": [
-			"class ${1:name} {",
+			"class ${1:name}", 
+			"{",
 			"\t",
 			"}"
 		],
@@ -46,7 +49,8 @@
 	"create if statement": {
 		"prefix": "if",
 		"body": [
-			"if (${1:condition}) {",
+			"if (${1:condition})", 
+			"{",
 			"\t",
 			"}"
 		],
@@ -55,16 +59,28 @@
 	"create else statement": {
 		"prefix": "el",
 		"body": [
-			"else {",
+			"else",
+			"{",
 			"\t$1",
 			"}"
 		],
 		"description": "Creates an else statement"
 	},
+	"create async function": {
+		"prefix": "as",
+		"body": [
+			"async func ${1:name}()",
+			"{",
+			"\t",
+			"}"
+		],
+		"description": "Makes a function"
+	},
 	"create else if statement": {
 		"prefix": "elif",
 		"body": [
-			"else if (${1:condition}) {",
+			"else if (${1:condition})", 
+			"{",
 			"\t",
 			"}"
 		],
@@ -73,7 +89,8 @@
 	"create for loop": {
 		"prefix": "for",
 		"body": [
-			"for ${1:condition} {",
+			"for ${1:condition}", 
+			"{",
 			"\t",
 			"}"
 		],
@@ -82,7 +99,8 @@
 	"create while loop": {
 		"prefix": "wh",
 		"body": [
-			"while ${1:condition} {",
+			"while ${1:condition}", 
+			"{",
 			"\t",
 			"}"
 		],
