@@ -575,7 +575,7 @@ class Person {
         self.lastname = lastname
     }
     func printname() {
-        out < f"{self.firstname} {self.lastname}" | newl | red
+        out < f"{self.firstname} {self.lastname}" < newl < red
     }
 }
 ```
@@ -758,7 +758,7 @@ class Person {
     }
 
     func talk() {
-        out < f"Hi, I am {self.name}" | newl | red
+        out < f"Hi, I am {self.name}" < newl < red
     }
 }
 ```
@@ -838,7 +838,7 @@ System.out.println("Hello, " + name);
 ```swift
 // Versace
 name = "John"
-out < f"Hello, {name}" | newl | red
+out < f"Hello, {name}" < newl < red
 ```
 
 # 
@@ -864,7 +864,7 @@ System.out.println("Hello, " + name);
 ```swift
 // Versace
 name = "John"
-out < f"Hello, {name}" | newl | red 
+out < f"Hello, {name}" < newl < red 
 // There is no string formatting in Versace, but you can use string interpolation instead.
 ```
 
@@ -894,7 +894,7 @@ System.out.println(name.toLowerCase());
 ```swift
 // Versace
 name = "John"
-out < f"{name.lower()}" | newl | red
+out < f"{name.lower()}" < newl < red
 ```
 
 #
@@ -960,7 +960,7 @@ System.out.println(array.append(4));
 ```swift
 // Versace
 array = [1, 2, 3]
-out < f"{array.append(4)}" | newl | red
+out < f"{array.append(4)}" < newl < red
 ```
 - The append() method adds an element at the end of the list.
 
@@ -996,7 +996,7 @@ System.out.println(list.append(4));
 ```swift
 // Versace
 list = [1, 2, 3]
-out < f"{list.append(4)}" | newl | red
+out < f"{list.append(4)}" < newl < red
 ```
 - The append() method adds an element at the end of the list.
 
@@ -1032,7 +1032,7 @@ System.out.println(dictionary.get(key1));
 ```swift
 // Versace
 dictionary = {key1: value1, key2: value2, key3: value3}
-out < f"{dictionary.get(key1)}" | newl | red
+out < f"{dictionary.get(key1)}" < newl < red
 ```
 # 
 ### Loops
@@ -1092,7 +1092,7 @@ for (item in sequence) {
 ```swift
 // Versace
 for item in sequence {
-    out < f"{item}" | newl | red
+    out < f"{item}" < newl < red
 }
 ```
 #
@@ -1182,13 +1182,13 @@ if (number > 10) {
 ```swift
 // Versace
 if number > 10 {
-    out < "Number is greater than 10" | newl | red
+    out < "Number is greater than 10" < newl < red
 } 
 else if number < 10 {
-    out < "Number is less than 10" | newl | red
+    out < "Number is less than 10" < newl < red
 } 
 else {
-    out < "Number is equal to 10" | newl | red
+    out < "Number is equal to 10" < newl < red
 }
 ```
 
@@ -1252,7 +1252,7 @@ while (number < 10) {
 ```swift
 // Versace
 while number < 10 {
-    out < f"{number}" | newl | red
+    out < f"{number}" < newl < red
     number += 1
 }
 ```
@@ -1344,13 +1344,13 @@ try {
 ```java
 // Versace
 try {
-    out < f"{x}" | newl | red
+    out < f"{x}" < newl < red
 } 
 catch (exception) {
-    out < "An exception occurred" | newl | red
+    out < "An exception occurred" < newl < red
 } 
 finally {
-    out < "The 'try except' is finished" | newl | red
+    out < "The 'try except' is finished" < newl < red
 }
 ```
 
