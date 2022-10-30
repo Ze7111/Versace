@@ -5,26 +5,7 @@
 
 using namespace std;
 
-const string R_Version = "4.1.1";
-
-string getOsName()
-{
-    #ifdef _WIN64
-    return "Windows";
-    #elif _WIN32
-    return "Windows";
-    #elif __APPLE__ || __MACH__
-    return "MacOS";
-    #elif __linux__
-    return "Linux";
-    #elif __FreeBSD__
-    return "FreeBSD";
-    #elif __unix || __unix__
-    return "Unix";
-    #else
-    return "Other";
-    #endif
-}      
+const string R_Version = "4.6.6";
 
 const string L_Link = "https://github.com/Ze7111/Versace/releases/latest/download/Linux-Versace-";
 const string W_Link = "https://github.com/Ze7111/Versace/releases/latest/download/Windows-Versace-";
@@ -144,7 +125,7 @@ int main()
     string LinuxLink = Final_Link_L;
 
     // check what the OS is
-    string osname = getOsName();    
+    string osname = "Windows";    
 
     CIUHVI(); // CIUHVI = Check if the user has Versace installed
 
@@ -157,6 +138,6 @@ int main()
 
 /*
 New-Item "$HOME\versace" -ItemType "directory" -Force
-Invoke-WebRequest "https://github.com/Ze7111/Versace/releases/latest/download/Windows-Versace-4.1.1.zip" -OutFile "$HOME\versace\versace.zip"
+Invoke-WebRequest "https://github.com/Ze7111/Versace/releases/latest/download/Windows-Versace-4.6.6.zip" -OutFile "$HOME\versace\versace.zip"
 [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$HOME\versace", "User")
 */
