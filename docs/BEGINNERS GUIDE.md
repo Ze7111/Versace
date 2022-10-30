@@ -314,52 +314,82 @@ name: str = "John"
   - The first statement of a function can be an optional statement - the documentation string of the function or docstring.
   - The code block within every function starts with a colon (:) and is indented.
   - The statement `return [expression]` exits a function, optionally passing back an expression to the caller. A return statement with no arguments is the same as return None.
+
+- Versace has a special type of function aalled async function, this function runs in the background and doesn't block the main thread. This function is usally used to make requests to the internet. or to do some other task that takes a long time to complete.
+- To create an async function in Versace you need to use the `async` keyword before the function name.
 #### How to set functions in Python:
 ```python
+# Regular function
 def function_name():
-    # code
+    # Code
+    return
+
+# Async function
+# non existant in python without a library
 ```
+
 #### How to set functions in C++:
 ```cpp
-type function_name() {
-    // code
+// Regular function
+void function_name() {
+    // Code
+    return;
 }
+// Async function
+// non existant in C++ without a library
 ```
+
 #### How to set functions in Java:
 ```java
-type function_name() {
-    // code
+// Regular function
+public void function_name() {
+    // Code
+    return;
 }
-```
+// Async function
+// non existant in Java without a library
+``` 
+
 #### How to set functions in Versace:
 ```swift
+// Regular function
 func function_name() {
-    // code
+    // Code
+    return
+}
+// Async function
+async func function_name() {
+    // Code
+    return
 }
 ```
 
 #### Examples:
 ```python
 # Python
-def say_hello():
-    print("Hello!")
+def print_name():
+    print("John")
 ```
 ```cpp
-// C++ (dont forget you need to include iostream)
-void say_hello() {
-    std::cout << "Hello!";
+// C++
+void print_name() {
+    cout << "John";
 }
 ```
 ```java
 // Java
-void say_hello() {
-    System.out.println("Hello!");
+public void print_name() {
+    System.out.println("John");
 }
 ```
 ```swift
 // Versace
-func say_hello() {
-    out < "Hello!" | newl | red
+func print_name() {
+    print("John")
+}
+
+async func print_name() {
+    print("John")
 }
 ```
 
