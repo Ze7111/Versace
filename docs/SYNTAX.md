@@ -26,7 +26,15 @@ Versace Code | Python Equivalent | C++ Equivalent | Description
 `include` | `import` | `#include` | Imports a module
 `else if` | `elif` | `else if` | Runs the code in the else if block if the condition is true
 `catch` | `except` | `catch` | Runs the code in the catch block if the code in the try block fails
-`const` | `None` | `const` | Declares a constant
+`const <type> varname` | `None` | `const <type> *varname` | Defines a constant variable
+`str varname` | `varname: str` | `string` | A string variable
+`int varname` | `varname: int` | `int` | An integer variable
+`float varname` | `varname: float` | `float` | A floating point variable
+`bool varname` | `varname: bool` | `bool` | A boolean variable
+`list varname` | `varname: list` | `vector` | A list variable
+`dict varname` | `varname: dict` | `map` | A dictionary variable
+`set varname` | `varname: set` | `set` | A set variable
+`tuple varname` | `varname: tuple` | `tuple` | A tuple variable
 
 ### Versace Specific
 Versace Code | Python Equivalent | C++ Equivalent | Description
