@@ -26,6 +26,7 @@ Versace Code | Python Equivalent | C++ Equivalent | Description
 `include` | `import` | `#include` | Imports a module
 `else if` | `elif` | `else if` | Runs the code in the else if block if the condition is true
 `catch` | `except` | `catch` | Runs the code in the catch block if the code in the try block fails
+`const` | `None` | `const` | Declares a constant
 
 ### Versace Specific
 Versace Code | Python Equivalent | C++ Equivalent | Description
@@ -35,3 +36,4 @@ Versace Code | Python Equivalent | C++ Equivalent | Description
 `in name < "What is your name?" < (args) < (type:optional)` | `name = type(input("What is your name?"))` | `std::cin >> name;` | Asks the user for input and stores it in the variable `name`
 `out < "Hello World" < (args)` | `print("Hello World", args)` | `std::cout << "Hello World" << args;` | Prints the text to the console with the given arguments
 `public main()` | `def main():` | `int main()` | The main function that runs when the program starts
+`async func` | `None` | `None` | Defines an asynchronous function that runs in the background
