@@ -138,6 +138,6 @@ int main()
 
 /*
 New-Item "$HOME\versace" -ItemType "directory" -Force
-Invoke-WebRequest "https://github.com/Ze7111/Versace/releases/latest/download/Windows-Versace-4.6.6.zip" -OutFile "$HOME\versace\versace.zip"
+Invoke-WebRequest "https://github.com/Ze7111/Versace/releases/latest/download/WindowsVersace4.6.6.zip" -OutFile "$HOME\versace\versace.zip"
 [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$HOME\versace", "User")
 */
