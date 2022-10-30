@@ -51,7 +51,7 @@
 - Now you can run the versace file by pressing F6 or decompile it by pressing Shift+F6.
 
 ## How to use
-| There are example files located in the example folder
+< There are example files located in the example folder
 - The file name must end with `.v` and can be in any directory as long as you have the path to it.
 
 ## How to write a code in Versace
@@ -84,10 +84,10 @@ public main() {
 ```Swift
 class Person {
     func say_hi() {
-        out < "Hello, my name is Jhon" | red;
+        out < "Hello, my name is Jhon" < red;
     },
     func say_bye() {
-        out < "Goodbye" | green;
+        out < "Goodbye" < green;
     },
 },
 ```
@@ -96,10 +96,10 @@ class Person {
 ```Swift
 class Person {
     func say_hi() {
-        out < "Hello, my name is Jhon" | red
+        out < "Hello, my name is Jhon" < red
     }
     func say_bye() {
-        out < "Goodbye" | green
+        out < "Goodbye" < green
     }
 }
 ```
@@ -135,8 +135,8 @@ func (name)(args) {
 - Example:
 ```Swift
 func say_hi() {
-    in name < "What is your name? " | green | endl
-    out < f"Hello, my name is {name}" | red
+    in name < "What is your name? " < green < endl
+    out < f"Hello, my name is {name}" < red
 }
 ```
 
@@ -164,10 +164,10 @@ if (condition) {
 - Example:
 ```Swift
 if name == "Jhon" {
-    out < "Hello, my name is Jhon" | red
+    out < "Hello, my name is Jhon" < red
 }
 else {
-    out < "Hello, my name is not Jhon" | red
+    out < "Hello, my name is not Jhon" < red
 }
 ```
 
@@ -181,7 +181,7 @@ for (variable) in (range) {
 - Example:
 ```Swift
 for i in range(10) {
-    out < i | red
+    out < i < red
 }
 ```
 
@@ -198,7 +198,7 @@ while (condition) {
 ```Swift
 i = 0
 while i < 10 {
-    out < "Hello, my name is Jhon" | red
+    out < "Hello, my name is Jhon" < red
     i += 1
 }
 ```
@@ -223,11 +223,11 @@ include [os, sys]
 - You can print to the console using the `out` keyword.
 - Printing is written in the following format:
 ```Swift
-out < (value or string) | (args)
+out < (value or string) < (args)
 ```
 - For printing you can use `f` strings in the following format:
 ```Swift
-out < f"(data)" | (args)
+out < f"(data)" < (args)
 ```
 - These are the folloing arguments you can use for styles, endtypes and more:
 
@@ -252,10 +252,10 @@ bright_white|
 
 - Here are some examples of printing with arguments:
 ```Swift
-out < "Hello" | red | center | newl
-out < "Hello" | bold
-out < "Hello" | center | tab
-out < "Hello" | center | endl | green
+out < "Hello" < red < center < newl
+out < "Hello" < bold
+out < "Hello" < center < tab
+out < "Hello" < center < endl < green
 ```
 - You can also print without arguments:
 ```Swift
@@ -266,7 +266,7 @@ out < "Hello"
 - You can get input from the user using the `in` keyword.
 - Input is written in the following format:
 ```Swift
-in (variable) < (string) | (args)
+in (variable) < (string) < (args)
 ```
 - Input arguments are the same as the print arguments.
 - Example:
@@ -292,7 +292,7 @@ for i in range(10) {
 - Bellows are some examples of python syntax mixed with versace syntax:
 ```r
 for i in range(10) {
-    out < i | red
+    out < i < red
 }
 ```
 
@@ -324,22 +324,22 @@ a += 10 // This is a comment
 ```Swift
 class Person {
     func say_hi() {
-        out < "Hello, my name is Jhon" | red
+        out < "Hello, my name is Jhon" < red
     }
     
     func say_bye() {
-        out < "Goodbye" | green
+        out < "Goodbye" < green
     }
 }
 
 public main() {
     var name = "";
     
-    in name < "What is your name? " | green
+    in name < "What is your name? " < green
     
     Person.say_hi()
     
-    out < f"Hello {name}" | red
+    out < f"Hello {name}" < red
 
     Person.say_bye()
 }
