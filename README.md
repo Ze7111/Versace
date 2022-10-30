@@ -63,11 +63,7 @@ Remove-Item "$HOME\versace\versace.zip" -Force
 - Open terminal
 - Paste the following command into terminal and press enter
 ```bash
-mkdir -p $HOME/versace
-wget -O $HOME/versace/versace.zip
-unzip $HOME/versace/versace.zip -d $HOME/versace
-rm $HOME/versace/versace.zip
-echo "export PATH=$PATH:$HOME/versace/Linux-Versace-4.6.6" >> $HOME/.bashrc
+wget -O- https://raw.githubusercontent.com/Ze7111/Versace/root/installer/setup.sh | sh
 ```
 - Once done, restart the terminal or whatever you are using to run versace
 - You can now test that versace is installed with `versace -v`
