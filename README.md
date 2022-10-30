@@ -27,7 +27,9 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
-- [NEW INSTALLER SCRIPT FOR EASY INSTALL IN UNDER 2 MINS](#new-installer-script-for-easy-install-in-under-2-mins)
+- [Install for Windows](#install-for-windows)
+- [Install for Linux](#install-for-linux)
+- [Install for Mac](#install-for-mac)
 - [Visual Studio Code Extension for Syntax Highlighting](#visual-studio-code-extension-for-syntax-highlighting)
 - [Wiki](#wiki)
 - [Beginner's Guide](#beginners-guide)
@@ -46,11 +48,33 @@
   - [With a basic Description](#with-a-basic-description)
 - [Dramatic Mode in action](#dramatic-mode-in-action)
 
-## NEW INSTALLER SCRIPT FOR EASY INSTALL IN UNDER 2 MINS
-- Download the `install,py` from [here](https://github.com/Ze7111/Versace/releases/download/4.0.5/Installer.py)
-- After downloading, put the file in a good directory as this will be the permeant location for Versace, on your machine
-- Run the python file and follow the instructions, and your done.
-- If you are on Windows or Linux you can now run Versace files from anywhere in your computer.
+## Install for Windows
+- Open a non-admin powershell window
+- Paste the following command
+```powershell
+New-Item "$HOME\versace" -ItemType "directory" -Force
+Invoke-WebRequest "https://github.com/Ze7111/Versace/releases/latest/download/Windows-Versace-4.6.6.zip" -OutFile "$HOME\versace\versace.zip"
+Expand-Archive "$HOME\versace\versace.zip" -DestinationPath "$HOME\versace" -Force
+Remove-Item "$HOME\versace\versace.zip" -Force
+[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$HOME\versace\Windows-Versace-4.6.6", "User")
+```
+
+## Install for Linux
+- Open terminal
+- Paste the following command into terminal and press enter
+```bash
+mkdir -p $HOME/versace
+wget -O $HOME/versace/versace.zip
+unzip $HOME/versace/versace.zip -d $HOME/versace
+rm $HOME/versace/versace.zip
+echo "export PATH=$PATH:$HOME/versace/Linux-Versace-4.6.6" >> $HOME/.bashrc
+```
+- Once done, restart the terminal or whatever you are using to run versace
+- You can now test that versace is installed with `versace -v`
+- If that does not work, you can download the zip manually from the releases below and extract it to `$HOME/versace/Linux-Versace-4.6.6`
+
+## Install for Mac
+- There is no binary for mac, you will need to install the python located in `src/versace.py` file along with the dependencies and use it with python
 
 ## Visual Studio Code Extension for Syntax Highlighting
 - Download the extension from [here](https://marketplace.visualstudio.com/items?itemName=Ze7111.versace)
