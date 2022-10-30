@@ -116,7 +116,8 @@ public main() {
 ```
 - For the above code to work, you need to have the following python modules installed
   - `rich`
-  - `playsound`
+  - `pyinstaller`
+  - `psutil`
   - `requests`
 
 - For Syntax highlighting do the following
