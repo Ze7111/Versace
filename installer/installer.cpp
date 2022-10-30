@@ -7,7 +7,7 @@ using namespace std;
 
 const string R_Version = "4.1.1";
 
-std::string getOsName()
+string getOsName()
 {
     #ifdef _WIN64
     return "Windows";

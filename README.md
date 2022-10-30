@@ -195,11 +195,14 @@ Versace Code | Description
 `else if` | Runs the code in the else if block if the condition is true
 `catch` | Runs the code in the catch block if the code in the try block fails
 `func` | Defines a function
+`async func` | Defines a function that runs in the background (async)
+`const` | Defines a constant variable
 `null` | A null value
-`in name < "What is your name?" \| (args) \| (type)` | Asks the user for input and stores it in the variable `name`
-`out < "Hello World" \| (args)` |  Prints the text to the console with the given arguments
+`include [function] from [module]` | Imports a function from a module
+`from [file] include *` | (you can **NOT** yet import a specific function) Imports all the classes and functions from a file (the file can be a python file or a versace file)
+`in name < "What is your name?" < (args) < (type)` | Asks the user for input and stores it in the variable `name`
+`out < "Hello World" < (args)` |  Prints the text to the console with the given arguments
 `public main()` | The main function that runs when the program starts
-`from [module] include *` | Imports all the classes and functions from an other versace file or a python file into the current scope (you can not use anything other than `*` in the include statement)
 
 ## Dramatic Mode in action
 ![image](images/Picture1.png)

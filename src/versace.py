@@ -1,82 +1,166 @@
-music_option = False # change to False if you don't want want to play music while compling
-Version = '4.1.1' # if you change this value, the compiler will cause an error but it will still compile the code
+import random
+import sys
+
+Version = '4.6.6'   # Define the Version variable as 4.6.6
+
+def makeconfigfile(configpath):
+    data = """[Core-Config]
+music-option = false
+version = 4.6.6
+tab-style = "    "
+
+start-indentation-level = 0
+do-once = true
+start-in-module-mode = false
+recurse-from-function = false
+no-args-start = false
+always-monitor-performance = false"""
+    with open(configpath, 'w') as f:
+        f.write(data)
+
+def installmodules():  # Define the installmodules function
+    try:   # Try to run the code
+        subprocess.run('pip install rich requests psutil pyinstaller', shell=True)  # Install the modules
+    except Exception as e:
+        subprocess.run('pip3 install rich requests psutil pyinstaller', shell=True) # Install the modules        
+
+def readconfig():   # Define the readconfig function
+    import configparser, os
+    config_obj = configparser.ConfigParser()  # Define the config variable as a ConfigParser object
+    
+    if os.name == 'nt': # Check if the OS is Windows
+        if os.path.exists(f"C:{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Windows-Versace-{Version}{os.sep}config.ini"):
+            configpath = f"C:{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Windows-Versace-{Version}{os.sep}config.ini"  # Define the configpath variable as the path to the config file
+        else:
+            if os.path.exists(f"C:{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Windows-Versace-{Version}"):
+                configpath = f"C:{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Windows-Versace-{Version}{os.sep}config.ini"  # Define the configpath variable as the path to the config file
+                makeconfigfile(configpath)
+            else:
+                makeconfigfile("config.ini")
+    elif os.name == 'posix':
+        if os.path.exists(f"{os.sep}home{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Linux-Versace-{Version}{os.sep}config.ini"):
+            configpath = f"{os.sep}home{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Linux-Versace-{Version}{os.sep}config.ini"
+        else:
+            if os.path.exists(f"{os.sep}home{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Linux-Versace-{Version}"):
+                configpath = f"{os.sep}home{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Linux-Versace-{Version}{os.sep}config.ini"
+                makeconfigfile(configpath)
+            else:
+                makeconfigfile("config.ini")
+    elif os.name == 'mac':
+        if os.path.exists(f'{os.path.dirname(os.path.realpath(__file__))}{os.sep}config.ini"'):
+            configpath = f"{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Mac-Versace-{Version}{os.sep}config.ini"
+        else:
+            configpath = os.path.dirname(os.path.realpath(__file__)) + f"{os.sep}config.ini"
+            makeconfigfile(configpath)
+    else:
+        print('Error: Could not locate the config file please add it to the same directory where you installed Versace')
+        exit()
+    
+    try:
+        config_obj.read(f'{configpath}')   # Read the config.ini file
+        Core = config_obj["Core-Config"]   # Define the Core variable as the Core-Config section
+
+        music_option = Core["music-option"] # Define the music_option variable as the music-option option
+        tab = Core["tab-style"] # Define the tab variable as the tab-style option
+        
+        numtabs = Core["start-indentation-level"] # Define the numtabs variable as the start-indentation-level option
+        do_once = Core["do-once"]  # Define the do_once variable as the do-once option
+        in_module = Core["start-in-module-mode"] # Get the start-in-module-mode value
+        recurse = Core["recurse-from-function"]  # Get the recurse value
+        noargs = Core["no-args-start"] # Define the noargs variable as the no-args-start value in the config file
+        perf_monitor_always_on = Core["always-monitor-performance"] # Define the perf_monitor_always_on variable as the perf-monitor-always-on value in the config file
+    except Exception as e:
+        print('Error: Could not read the config file from {}'.format(configpath))
+        print(f"Error: {e}")
+        exit()
+    
+    return music_option, tab, numtabs, do_once, in_module, recurse, noargs, perf_monitor_always_on # Return the variables
+
+def convert_to_bool(string):    # Define the convert_to_bool function
+    import os
+    if string.lower() == 'true':    # If the string is True
+        return True
+    elif string.lower() == 'false': # If the string is False
+        return False
+    else:
+        os.system("")
+        # find where in the config file is the string
+        print('\u001b[41;1m' + f'Error: Could not read a line in the config file as it is not a valid statemnt' + '\u001b[0m')  # Print an error message
+        print('\u001b[31;1m' + f'Expected : a boolean value not "{string}"' + '\u001b[0m')  # Print an error message
+        exit()
+
+music_option, tab, numtabs, do_once, in_module, recurse, noargs, perf_monitor_always_on = readconfig() # Read the config file 
+
+music_option = convert_to_bool(music_option) # Define the music_option variable as a boolean
+tab = tab.replace('"', '')
+numtabs = int(numtabs)  # Convert the numtabs variable to an integer
+do_once = convert_to_bool(do_once) # Convert the do_once variable to a bool
+in_module = convert_to_bool(in_module) # Convert the in_module variable to a bool
+recurse = convert_to_bool(recurse) # Convert the recurse variable to a bool
+noargs = convert_to_bool(noargs) # Convert the noargs variable to a bool
+perf_monitor_always_on = convert_to_bool(perf_monitor_always_on) # Convert the perf_monitor_always_on variable to a bool
+compare_version = Version # Define the compare version
+
+if len(sys.argv) == 1:  # If there are no arguments
+    if noargs == False:
+        noargs = True
+
+st_time: float # create the start time variable
+ed_time: float # Create the end function
+main_function_found = False # Define the main function found variable
+org_final = [] # Define the final list
+private_vars = [] # Define the private_vars list
+data = [] # Define the data list
+final = [] # Add the import statement to the final line of the list
 
 try: # Try to run the main function
     import rich # Import rich
-    import playsound # Import playsound
     import os  # Import os
     import subprocess # Import subprocess
+    import configparser
     import sys # Import sys
     import time # Import time
     import requests # Import requests
     import shutil # Import shutil
+    import psutil # Import psutil
     from sys import exit
+    from time import perf_counter   # Import the perf_counter function from the time module
 
 except ModuleNotFoundError as e: # If the module is not found
     import subprocess, os # Import subprocess
     from sys import exit
-    print('\u001b[41;1mModules Not Found\u001b[0m') # Print the message
-    print('\u001b[1m\u001b[31mWould you like to auto-install the following modules?\u001b[0m') # Print the message
-    print('\u001b[1m\u001b[32m[\u001b[1m\u001b[31m\n    rich\n    playsound\n    requests\n\u001b[1m\u001b[32m]\u001b[0m') # Print the message
-    print('\u001b[1m\u001b[31m(y/n) : \u001b[0m', end='') # Print the message
+    os.system('')
+    print('\u001b[41;1mModules Not Found \u001b[0m') # Print the message
+    print('\u001b[32;1mWould you like to auto-install the following modules? \u001b[0m') # Print the message
+    print('\u001b[31;1m    rich\n    psutil\n    requests\n    pyinstaller\n\u001b[0m') # Print the message
+    print('\u001b[32;1m(y/n) : \u001b[0m', end='') # Print the message
     if input().lower() == 'y':
-        if os.name == 'nt':
-            if os.path.exists('C:\\Users\\%s\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe' % os.getlogin()): # Check if python is installed in the windows store
-                subprocess.call('pip3 install rich') # Install rich
-                subprocess.call('pip3 install playsound') # Install playsound
-                subprocess.call('pip3 install requests') # Install requests
-                os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
-                print('\u001b[1m\u001b[31mPlease restart your terminal\u001b[0m') # Print the message
-                exit() # Exit the program
-            else:
-                subprocess.call('pip install rich') # Install rich
-                subprocess.call('pip install playsound') # Install playsound
-                subprocess.call('pip install requests') # Install requests
-                os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
-                print('\u001b[1m\u001b[31mPlease restart your terminal\u001b[0m') # Print the message
-                exit() # Exit the program
-
-        else: # If the os is not windows
-            if os.path.exists('/usr/bin/python3'): # Check if python3 is installed
-                subprocess.call('pip3 install rich')    # Install rich
-                subprocess.call('pip3 install playsound')  # Install playsound
-                subprocess.call('pip3 install requests')  # Install requests
-                os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
-                print('\u001b[1m\u001b[31mPlease restart your terminal\u001b[0m') # Print the message
-                exit()
-
-            elif os.path.exists('/usr/bin/python'): # If the python path exists
-                subprocess.call('pip install rich') # Install rich
-                subprocess.call('pip install playsound') # Install the playsound module
-                subprocess.call('pip install requests') # Install the modules
-                os.system('cls' if os.name == 'nt' else 'clear') # Clear the terminal
-                print('\u001b[1m\u001b[31mPlease restart your terminal\u001b[0m') # Print the message
-                exit() # Exit the program
-
-            else:
-                subprocess.call('pip3 install rich') # Install rich
-                subprocess.call('pip3 install playsound') # Install the module playsound
-                subprocess.call('pip3 install requests') # Install the modules requests
-                os.system('cls' if os.name == 'nt' else 'clear') # Clear the terminal
-                print('\u001b[1m\u001b[31mPlease restart your terminal\u001b[0m')   # Print the message
-                exit() # Exit the program
-
-        print('\u001b[1m\u001b[32mDone\u001b[0m') # Print the message
-
+        installmodules()
+        print('\u001b[32;1mModules Installed \u001b[0m') # Print the message
+        print('\u001b[31;1mPlease re-run Versace to continue\u001b[0m') # Print the message
+        exit()
     else: # If the user does not want to install the modules
-        print('\u001b[1m\u001b[31mInvalid Input\u001b[0m') # Print the message
-        print('\u001b[1m\u001b[31mPlease install the modules manually\u001b[0m') # Print the message
-        print('\u001b[1m\u001b[31mGoodbye...\u001b[0m') # Print the message
+        print('\u001b[32;1mInvalid Input\u001b[0m') # Print the message
+        print('\u001b[32;1mPlease install the modules manually\u001b[0m') # Print the message
+        print('\u001b[32;1mGoodbye...\u001b[0m') # Print the message
         exit() # Exit the program
 
 os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
 
-compare_version = Version # Define the compare version
-tab = '    ' # Tab
-noargs = True if len(sys.argv) == 1 else False
+def memoize(func):
+    cache = {}
+    def memoized_func(*args):
+        if args in cache:
+            return cache[args]
+        result = func(*args)
+        cache[args] = result
+        return result
+
+    return memoized_func
 
 class C: # Class C
     def class_(line, numtabs): # Class class_
+        global tab
         line.replace('public class', 'class')
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
@@ -86,6 +170,7 @@ class C: # Class C
         return line, numtabs # Add the line to the final list
 
     def else_if(line, numtabs): # define the else if function
+        global tab
         line = line.replace('else if', 'elif') # Replace else if with elif
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
@@ -95,6 +180,7 @@ class C: # Class C
         return line, numtabs # Return the line and the number of tabs
 
     def public(line, numtabs): # Define the public function
+        global tab
         if line.startswith('public'): # If the line starts with public
             line = line.replace('public', 'def') # Replace public with def
         elif line.startswith('pub'):
@@ -107,6 +193,7 @@ class C: # Class C
         return line, numtabs # Return the line and the number of tabs
 
     def func(line, numtabs): # Define the function function
+        global tab
         if 'repr' in line: # Check if repr is in the line
             line = line.replace('repr', '__innit__') # Replace repr with __innit__
         line = line.replace('func', 'def') # Replace func with def
@@ -117,7 +204,40 @@ class C: # Class C
         numtabs += 1 # Add 1 to the number of tabs
         return line, numtabs # Return the line and the number of tabs
 
+    def asyncfunc(line, numtabs): # Define the async function
+        global tab
+        if 'repr' in line: # Check if repr is in the line
+            line = line.replace('repr', '__innit__') # Replace repr with __innit__
+        line = line.replace('async func', 'def') # Replace func with def
+        line = line.replace('{', '') # Remove the { from the line
+        line = line.strip() # Remove the spaces from the line
+        line += ':' # Add a : to the line
+        line = ((tab * numtabs) + line + '\n') # Add the line to the final list
+        numtabs += 1 # Add 1 to the number of tabs
+        return line, numtabs # Return the line and the number of tabs
+    
+    def asynccode() -> str:
+        async_code = """import threading # import threading
+def _async(func): # decorator for async function
+    \"\"\"
+        DO NOT EDIT THIS CODE
+        The following code is what allows for the use of async functions in Versace
+        if you do not use this code, async functions and thier associated decorators will not work
+    \"\"\"
+    def wrapper(*args, **kwargs): # the wrapper function that will be returned
+        thread = threading.Thread(target=func, args=args, kwargs=kwargs) # create a thread
+        thread.start() # start the thread
+        return thread # return the thread
+    
+    return wrapper # return the wrapper function
+\"\"\"
+            You can edit any code below this line
+\"\"\"
+"""
+        return async_code
+    
     def catch(line, numtabs): # Define the catch function
+        global tab
         line = line.replace('catch', 'except') # Replace catch with except
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
@@ -127,14 +247,11 @@ class C: # Class C
         return line, numtabs # Return the line and the number of tabs
 
     def brace(line, numtabs): # Define the brace function
+        global tab
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
         line = tab * numtabs + line + ':' + '\n' # Add the line to the final list
         return line # Return the line
-
-org_final = [] # Define the final list
-do_once = True # Define do once
-in_module = False   # Set the in_module to False
 
 class include: # Class include
     def include(line): # Define the include function
@@ -159,59 +276,45 @@ class include: # Class include
 
         return line # Return the line
 
-    def _from(line, 
-              tabs, 
-              final):
+    def _from_Include(line):
+        global data, recurse
+        # line will be something like this
+        # from [file] include *
+        lineargs = line.split(' ') # Split the line by spaces
+        filename = lineargs[1].replace('[', '').replace(']', '') # Get the filename
+        lineargs.pop(1) # Remove the filename from the lineargs
+        lineargs.pop(-1)
+        lineargs = ' '.join(lineargs) # Join the lineargs
+        lineargs = lineargs.strip()
+        if lineargs == 'from include':
+            filename = filename.replace('.', os.sep)
+            if os.path.exists(filename + '.v'):
+                filename = filename + '.v'
+            elif os.path.exists(filename + '.py'):
+                filename = filename + '.py'
+            elif os.path.exists(filename + '.vh'):
+                filename = filename + '.vh'
+            elif os.path.exists(filename + '.vs'):
+                filename = filename + '.vs'
+            else:
+                raise FileNotFoundError(f'File {filename} not found')
         
-        global org_final, do_once, in_module # Define the global variables
-
-        if do_once: org_final = final; do_once = False # If do once is True, set the orginal final list to the final list and set do once to False
-
-        # from [module] import *
-        line = line.strip() # Remove the spaces from the line
-        module = line.split(' ')[1] # Split the line
-
-        lines = [] # Define the lines list
-        lines = line.split(' ') # Split the line
-        lines.remove(module) # Remove the module from the list
-        lines = ' '.join(lines) # Join the list
-        if lines == 'from include *': # Check if the line is from include *
-            pass  # Do nothing
-        else: # If the line is not from include *
-            IO.error('INVALID SYNTAX') # Print a message
-            IO.error('  Format must be:')   # Print a message
-            IO.error('      from [module] include *') # Print a message
-            delete_temp() # Delete the temp file
-            exit() # Exit the program
-
-
-        module = module.replace('[', '').replace(']', '') # Remove the [ and ]
-        module_path = module.replace('.', os.sep) # Replace . with os.sep
-        # check if the file exists
-        if os.path.exists(f'{module_path}.v'): # Check if the file exists
-            filename = module_path + '.v' # Define the filename
-            with open(f'{module_path}.v', 'r') as f: # Open the file
-                code = f.readlines() # Read the file
-                f.close() # Close the file
-
-        elif os.path.exists(f'{module_path}.py'):
-            filename = module_path + '.py' # Define the filename
-            with open(f'{module_path}.py', 'r') as f: # Open the file
-                py_code = f.readlines() # Read the file
-                f.close() # Close the file
-        else: # If the file doesn't exist
-            IO.error('INVALID MODULE') # Print a message
-            IO.error(f'  Module {module} does not exist.') # Print a message
-            IO.error(f'  Please check the spelling and try again.') # Print a message
-            delete_temp() # Delete the temp file
-            exit() # Exit the program
-
-        if filename.endswith('.v'): # Check if the file ends with .v
-            in_module = True # Set the in_module to True
-            new_final = lexer(code, filename, False)    # Run the lexer
-            return new_final # Return the final list
-        else: # If the file doesn't end with .v
-            return py_code # Return the code
+        with open(filename, 'r') as f:
+            recurse = False
+            for _ii in f.readlines():
+                data.append(_ii)
+                if _ii.startswith('from'):
+                    recurse = True
+                    data.pop(-1)
+                    include._from_Include(_ii)
+                    continue
+        
+        if recurse:
+            return
+        else:
+            return data        
+        
+        
 
 
 class IO: # Class IO
@@ -392,33 +495,56 @@ def compiler(final,
              decomplie, 
              filename=None): # Define the compiler function
     
+    filename_only = ''
     os.system('cls' if os.name == 'nt' else 'clear')    # Clear the screen
     current_time = time.time()  # Set the current time
     current_time = time.strftime('%d-%m-%Y %H-%M-%S', time.localtime(current_time)) # Set the current time
 
     if decomplie:   # Check if decomplie is True
         try:    # Try to open the file
-            os.mkdir('build')  # Make the build folder
+            os.mkdir('src')  # Make the build folder
         except FileExistsError:     # If the folder already exists
             pass    # If the folder already exists pass
-
-        print('\u001b[31;1mWhat do you want to call the new file (file will be save to python folder)? : \u001b[32;1m', end='') # Print the question
-        name = input()  # Set the name to the input
+        
+        filename_only = filename.split(os.sep)[-1] # Set the filename only to the filename without the extension
+        filename_only = filename_only.split('.')[0]    # Set the filename only to the filename without the extension
+        
+        for i in sys.argv:
+            if i == '-c':
+                try:
+                    name = sys.argv[sys.argv.index(i)+1]
+                    if '.' in name:
+                        file_ext = name.split('.')[1]
+                        name = name.split('.')[0]
+                    else:
+                        file_ext = 'py'
+                        name = name
+                    break
+                except IndexError:
+                    name = ''
+                    break
 
         print('\u001b[0m')  # Print the reset color
 
         if name == '':  # Check if the name is ''
             if os.name == 'nt': # Check if the os is windows
-                name = f'{os.getcwd()}{os.sep}build{os.sep}{current_time}.py' # Set the name to the current time
+                name = f'{os.getcwd()}{os.sep}src{os.sep}{filename_only}.py' # Set the name to the current time
             else:   # If the os is not windows
-                name = f'{os.getcwd()}{os.sep}build{os.sep}{current_time}.py'  # Set the name to the current time
+                name = f'{os.getcwd()}{os.sep}src{os.sep}{current_time}.py'  # Set the name to the current time
         else:   # If the name is not ''
             if os.name == 'nt': # Check if the os is windows
-                name = f'{os.getcwd()}{os.sep}build{os.sep}{name}.py' # Set the name to the name
+                name = f'{os.getcwd()}{os.sep}src{os.sep}{name}.{file_ext}' # Set the name to the name
             else:   # If the os is not windows
-                name = f'{os.getcwd()}{os.sep}build{os.sep}{name}.py'  # Set the name to the name
-
-        print('\u001b[41;1mDecompiling...\u001b[0m', end='\r')  # Print the decompiling message
+                name = f'{os.getcwd()}{os.sep}src{os.sep}{name}.{file_ext}'  # Set the name to the name
+        
+        delete_temp()
+        times = 0
+        os.system('cls' if os.name == 'nt' else 'clear')    # Clear the screen
+        for i in range(5):
+            print(f'\u001b[41;1mDecompiling.{"."*times}\u001b[0m', end='\r')  # Print the decompiling message
+            time.sleep(random.randint(3, 10)/10) # Sleep for a random amount of time
+            times += 1
+        print('\t\t\t\t\t\t\t\t\t\t\t', end='\r') # Print a blank line
 
         try:    # Try to open the file
             with open(name, 'w') as f:  # Open the file
@@ -429,6 +555,8 @@ def compiler(final,
                         final.remove(line)  # Remove the line
                     elif line == '   ' and line == final[final.index(line) + 1]:    # Check if the line is '   ' and the next line is '   '
                         final.remove(line)  # Remove the line
+                    
+                    
                     f.write(line)   # Write the line to the file
 
         except KeyboardInterrupt:   # If the user presses ctrl + c
@@ -438,59 +566,219 @@ def compiler(final,
             delete_temp()   # Delete the temp folder
             exit()  # Exit the program
 
-        time.sleep(2)       # Sleep for 2 seconds
-        print('\u001b[42;1mDecompiling Complete\u001b[0m')  # Print the decompiling complete message
-        print(f'\u001b[42;1mFile saved to {name}\u001b[0m') # Print the file saved message
-
+        print('\u001b[32;1mDecompiling Complete\u001b[0m')  # Print the decompiling complete message
+        print(f'\u001b[32;1mFile saved to {name}\u001b[0m') # Print the file saved message
         print('\u001b[31;1mDo you want to run the file? (y/n) : \u001b[0m', end='') # Print the question
         if input().lower() == 'y':  # Check if the input is y
+            create_temp()
             pass    # If the input is y pass
         else:   # If the input is not y
             delete_temp()
             exit('\u001b[31;1mYOUR FILE IS SAVED!!\u001b[0m')   # Exit the program
 
-    files = os.listdir(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}') # Set the files to the files in the src folder
-    files.sort()    # Sort the files
-
-    for file in files[:-10]:    # For each file in the files
-        os.remove(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{file}') # Remove the file
-
-    if os.name == 'nt': # Check if the os is windows
-        with open(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{current_time}.tmp', 'w') as f:  # Open the file
-            for line in final:  # For each line in the final
-                f.write(line)   # Write the line to the file
-    else:   # If the os is not windows
-        with open(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{current_time}.tmp', 'w') as f:    # Open the file
-            for line in final:  # For each line in the final
-                f.write(line)   # Write the line to the file
+    with open(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{filename_only}.tmp', 'w') as f:  # Open the file
+        for line in final:  # For each line in the final
+            f.write(line)   # Write the line to the file
+    
+    if '-o' in sys.argv:    # Check if -o is in the sys.argv
+        try:    # Try to open the file
+            # rename the file in the temp folder to .py
+            # run this command with subprocess pyinstaller --noconfirm --onefile --console --icon "C:/Users/dhruv/Downloads/logo.ico"  "Z:\GitHub\Repos\BrainLuck2.0\versace.py"
+            print('\u001b[31;1mDo you want to put an icon for the file? (y/n) : \u001b[0m', end='') # Print the question
+            icon_choice = input().lower().strip()
+            if icon_choice == 'y':
+                print('\u001b[31;1mEnter the icon path ("path\\to\\icon.ico"): \u001b[0m', end='')
+                icon = input()
+                if icon.count('"') != 2:
+                    icon = f'"{icon}"'
+            elif icon_choice == 'n':
+                icon = ''
+            else:
+                icon_choice = 'n'
+                icon = ''
+                
+            filepath = f'"{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{filename_only}.tmp"'
+            
+            print('\u001b[31;1mWill this be an Window based application or a console based one? (w/c): \u001b[0m', end='')
+            window_console = input().lower().strip()
+            if window_console == 'w':
+                window_console = '--windowed'
+            elif window_console == 'c':
+                window_console = '--console'
+            else:
+                window_console = ''  
+            
+            if icon_choice == 'y':
+                command = f'pyinstaller --noconfirm --onefile {window_console} --icon {icon} {filepath}'
+            elif icon_choice == 'n':
+                command = f'pyinstaller --noconfirm --onefile {window_console} {filepath}'
+            else:
+                delete_temp()
+                exit('\u001b[31;1mInvalid Input\u001b[0m')
+                
+            # move the .tmp file to the rood dir
+            os.system(command)
+            # move the exe from the dist folder to the root dir
+            # delete the build and dist folder
+            try:
+                shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}.exe', f'{os.getcwd()}{os.sep}{filename_only}.exe')
+            except FileNotFoundError:
+                shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
+            
+            shutil.rmtree(f'{os.getcwd()}{os.sep}build')
+            shutil.rmtree(f'{os.getcwd()}{os.sep}dist')
+            os.remove(f'{os.getcwd()}{os.sep}{filename_only}.spec')
+            # is something is after the -o in the sys.argv
+            try:
+                if sys.argv[sys.argv.index('-o') + 1] != '-o':  # Check if the sys.argv is not -o
+                    # rename the exe to the name after the -o
+                    os.rename(f'{os.getcwd()}{os.sep}{filename_only}.exe', f'{os.getcwd()}{os.sep}{sys.argv[sys.argv.index("-o") + 1]}')
+            except IndexError:
+                pass
+            
+            os.system('cls' if os.name == 'nt' else 'clear')
+            
+            if os.name == 'nt':
+                filename_only = filename_only + '.exe'
+            
+            print('\u001b[32;1mFile Compiled\u001b[0m')
+            print(f'\u001b[32;1mFile saved to the root directory as "{filename_only}"\u001b[0m')
+            print('\u001b[31;1mDo you want to run the binary compiled file? (y/n) : \u001b[0m', end='')
+            
+            if input().lower() == 'y':
+                if os.name == 'nt':
+                    os.system(f'start {filename_only}.exe')
+                else:
+                    os.system(f'{filename_only}')
+            else:
+                delete_temp()
+                exit('\u001b[31;1mYOUR FILE IS SAVED!!\u001b[0m')
+            exit()
+            
+        except Exception as e:
+            raise Exception(e)
+        except FileNotFoundError:   # If the file is not found
+            raise FileNotFoundError('Failure File not found in the temp dir')    # Raise the file not found error
+        except KeyboardInterrupt:   # If the user presses ctrl + c
+            raise KeyboardInterrupt('Keyboard Interrupt Detected')  # Raise the keyboard interrupt detected error
+        except ModuleNotFoundError:
+            raise ModuleNotFoundError('Pyinstaller is not installed, plase install it with "pip install pyinstaller" or "pip3 install pyinstaller"')
 
     for i in range(20):
         print('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n')
         
     os.system('cls' if os.name == 'nt' else 'clear')
     
-    try:    # Try to open the file
+    def runfile(filename):  # Define the runfile function
         try:    # Try to open the file
-            os.system(f'python3 "{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{current_time}.tmp"')
+            os.system(f'python "{filename}"')  # Run the file
 
         except Exception:   # If the file is not found
-            os.system(f'python "{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{current_time}.tmp"')
+            os.system(f'python3 "{filename}"')  # Run the file
 
         except KeyboardInterrupt:  # If the user presses ctrl + c
             print(f'\u001b[41m\u001b[30mKeyboard Interrupt Detected\u001b[0m')  # Print the keyboard interrupt detected message
             delete_temp()   # Delete the temp folder
             exit()  # Exit the program
+        finally:
+            return
+        
+    
+    try:    # Try to open the file
+        filename = f"{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{filename_only}.tmp"
+        runfile(filename)   # Run the file
 
     except Exception:   # If there is an error
         print(f'\u001b[41m\u001b[30mError: {filename} Failed to run.\u001b[0m') # Print the error message
         exit()  # Exit the program
 
     finally:    # If there is an error or not
-        os.remove(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{current_time}.tmp') # Remove the file
+        os.remove(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{filename_only}.tmp') # Remove the file
         delete_temp()   # Delete the temp folder
         exit()  # Exit the program
 
 from rich.syntax import Syntax # Import the syntax from rich
+
+def testType(_type, line):  # Define the testType function
+    if _type == 'int':    # Check if the type is string
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line
+        if type(eval(line)) == int:  # Check if the type is int
+            return True # Return True
+        else:  # If the type is not int
+            raise Exception(f'{line} is not a int') # Raise an exception
+
+    elif _type == 'str': # Check if the type is string
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line
+        # check if line has 2 " or '
+        if line.count('"') == 2 or line.count("'") == 2: # Check if the line has 2 " or '
+            return True # Return True
+        else:  # If the line does not have 2 " or '
+            raise Exception(f'{line} is not a string') # Raise an exception
+
+    elif _type == 'float':   # Check if the type is float
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line 
+        if type(eval(line)) == float: # Check if the type is float
+            return True # Return True
+        else:  # If the type is not float
+            raise Exception(f'{line} is not a float') # Raise an exception
+
+    elif _type == 'bool':    # Check if the type is bool
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line
+        if 'true' in line or 'false' in line:
+            if 'true' in line:
+                raise Exception(f'Did you mean True?')
+            elif 'false' in line:
+                raise Exception(f'Did you mean False?')
+            
+        if type(eval(line)) == bool: # Check if the type is bool
+            return True # Return True
+        else: # If the type is not bool
+            raise Exception(f'{line} is not a bool') # Raise an exception
+
+    elif _type == 'list': # Check if the type is list
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line
+        if type(eval(line)) == list: # Check if the type is list
+            return True # Return True
+        else: # If the type is not list
+            raise Exception(f'{line} is not a list') # Raise an exception
+    
+    elif _type == 'dict':    # Check if the type is dict
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line
+        if type(eval(line)) == dict: # Check if the type is dict
+            return True # Return True
+        else: # If the type is not dict
+            raise Exception(f'{line} is not a dict') # Raise an exception
+        
+    elif _type == 'tuple':    # Check if the type is tuple
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line
+        if type(eval(line)) == tuple: # Check if the type is tuple
+            return True # Return True
+        else: # If the type is not tuple
+            raise Exception(f'{line} is not a tuple') # Raise an exception
+    
+    elif _type == 'set':    # Check if the type is set
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line
+        if type(eval(line)) == set: # Check if the type is set
+            return True # Return True
+        else:  # If the type is not set
+            raise Exception(f'{line} is not a set') # Raise an exception
+        
+    elif _type == 'complex':    # Check if the type is complex
+        line = line.split('=')[-1]  # Split the line by spaces
+        line = line.strip() # Strip the line
+        if type(eval(line)) == complex: # Check if the type is complex
+            return True # Return True
+        else:  # If the type is not complex
+            raise Exception(f'{line} is not a complex') # Raise an exception
+
 
 class _SYNTAX: # Create the _SYNTAX class
     def CLASS(line): # Define the CLASS function
@@ -532,15 +820,19 @@ class _SYNTAX: # Create the _SYNTAX class
     def INCLUDE(line): # Define the include function
         global numtabs, final, tab # Define the global variables
         tabs = tab*numtabs # Define the tabs
-        final.append(f"{tabs}{include.include(line)}\n") # Add the include statement to the final list
-        return
-
-    def FROM(line):
-        global numtabs, final, tab
-        tabs = tab*numtabs # Define the tabs
-        newlines = include._from(line, tabs, final) # Run the _from function
-        for i in newlines: # For each item in the newlines list
-            final.append(i) # Add the item to the final list
+        
+        if line.endswith("||"):
+            keepinline = True
+            line = line.replace("||", "")
+        else:
+            keepinline = False
+        
+        if keepinline:
+            final.append(f"{tabs}{include.include(line)}\n") # Add the include statement to the final list
+        else:
+            if '# --------- Code Start --------- #' not in final:
+                final.insert(0, '# --------- Code Start --------- #\n')
+            final.append(f"{tabs}{include.include(line)}\n") # Add the include statement to the final list
         return
 
     def OUT(line):
@@ -601,8 +893,68 @@ class _SYNTAX: # Create the _SYNTAX class
         return
 
     def ASYNC(line):
-        print('\u001b[41m\u001b[30mWIP: Async functions are not supported yet. In the near future they will be.\u001b[0m')
-        exit()
+        global numtabs, final, tab
+        tabs = tab*numtabs
+        funcname = line.split(' ')[2][:-1]
+        async_code = C.asynccode()
+        if async_code not in final:
+            indexxx = 0
+            for i in final:
+                if i.startswith("\n") or i.startswith(""):
+                    final.insert(indexxx, async_code)
+                    break
+                indexxx += 1
+                
+        line, numtabs = C.asyncfunc(line, numtabs) # Run the public function
+        line = line.replace('def', f'{tabs}@_async\n{tabs}def')
+        final.append(line) # Add the line to the final list
+        # locate which line is this line at and insert @_async before it
+        return
+    
+    def GLOBAL(line):
+        global numtabs, final, tab
+        tabs = tab*numtabs
+        line = line.replace('const ', '')
+        linetype = line.split(' ')[0]
+        if linetype == 'int':
+            line = line.replace('int ', '')
+            line = line.strip()
+            type_ = 'int'
+        elif linetype == 'str':
+            line = line.replace('str ', '')
+            line = line.strip()
+            type_ = 'str'
+        elif linetype == 'float':
+            line = line.replace('float ', '')
+            line = line.strip()
+            type_ = 'float'
+        elif linetype == 'bool':
+            line = line.replace('bool ', '')
+            line = line.strip()
+            type_ = 'bool'
+        elif linetype == 'list':
+            line = line.replace('list ', '')
+            line = line.strip()
+            type_ = 'list'
+        elif linetype == 'dict':
+            line = line.replace('dict ', '')
+            line = line.strip()
+            type_ = 'dict'
+        elif linetype == 'tuple':
+            line = line.replace('tuple ', '')
+            line = line.strip()
+            type_ = 'tuple'
+        elif linetype == 'set':
+            line = line.replace('set ', '')
+            line = line.strip()
+            type_ = 'set'
+        else:
+            raise Exception(f"Unknown type {linetype}")
+        
+        if testType(type_, line):
+            final.insert(0, f"{line}\n")
+        else:
+            raise Exception(f"Invalid type for {line}")
         return
 
 syntax = {
@@ -611,7 +963,6 @@ syntax = {
     'catch' : _SYNTAX.CATCH,
     'include' : _SYNTAX.INCLUDE,
     'pub' : _SYNTAX.PUB,
-    'from' : _SYNTAX.FROM,
     'out' : _SYNTAX.OUT,
     'public' : _SYNTAX.PUBLIC,
     'in' : _SYNTAX.IN,
@@ -622,18 +973,13 @@ syntax = {
     'str' : _SYNTAX.VAR,
     'int' : _SYNTAX.VAR,
     'float' : _SYNTAX.VAR,
-    'string' : _SYNTAX.VAR,
+    'str' : _SYNTAX.VAR,
     'bool' : _SYNTAX.VAR,
     'list' : _SYNTAX.VAR,
     'dict' : _SYNTAX.VAR,
+    'const' : _SYNTAX.GLOBAL,
 # TODO: add more syntax keywords here --------------------------------------------------------------------------------------------------------------------------------------------
 } # Define the syntax dictionary
-
-private_vars = [] # Define the private_vars list
-numtabs = 0 # Define the number of tabs
-final = ['from rich import console; print = console.Console().print\n'] # Add the import statement to the final line of the list
-tab = '    ' # Define the tab
-main_function_found = False # Define the main function found variable
 
 def intrepedmode(line): # Define the intrepedmode function
     if line.startswith('out'): # If the line starts with out
@@ -649,18 +995,18 @@ def intrepedmode(line): # Define the intrepedmode function
         os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
     elif line.startswith('help()'): # If the line starts with help()
         print(''' 
-    only syntax that works in intreped mode is:
-        out < "Hello World"
-        in > "Hello World"
-        exit()
-        clear()
-        help()
-        
-    any python syntax will work
-    variables will not work
-    functions will not work
-    classes will not work
-    anything with more then one line will not work
+only syntax that works in intreped mode is:
+    out < "Hello World"
+    in > "Hello World"
+    exit()
+    clear()
+    help()
+
+any python syntax will work
+variables will not work
+functions will not work
+classes will not work
+anything with more then one line will not work
         ''') # Print the help message
     else: # If the line does not start with any of the above
         try: # Try to run the line
@@ -675,8 +1021,26 @@ def lexer(lines=[],
           decomplie=False, 
           orglines=[]): # Define the lexer function
     
-    lines = orglines # Set the lines variable to the orglines variable
     global in_module, private_vars, numtabs, final, syntax, main_function_found, noargs, Version # Define the global variables
+    newdata = [] # Define the newdata list
+    for _line in lines:
+        _line = _line.strip()
+        if _line.startswith('from'):
+            newdata = include._from_Include(_line)
+    
+    index = 0 # Define the index variable
+    for _i in newdata:
+        # insert the new data into the lines list from the srart but in the correct order
+        lines.insert(index, _i)
+        index += 1
+    
+    index = 0 # Define the index variable
+    
+    for _formlines in lines:
+        if _formlines.startswith('from'):
+            lines.remove(_formlines)
+    
+    orglines.append(lines) # Set the lines variable to the orglines variable
     if noargs == True: # If the noargs variable is True
         print(f"Verscape Interpreter v{Version}") # Print the versin
         print("This also gives you low level access to all variables and functions in Verscae Code") # Print the low level access message
@@ -691,31 +1055,35 @@ def lexer(lines=[],
         
     foundMain = False # Define the foundMain variable
     index = 0   # Define the index
-    incomment = False  # Define the incomment variable
+    incomment = False  # Define the incomment variable            
     
-    for line in lines:
-        index = lines.index(line)
-        if line.startswith('{'):
-            lines[index-1] = lines[index-1].strip() + ' {'
-            # remove the first character of the line
-            lines[index] = lines[index][1:]
-            lines[index] = lines[index].strip()
-            if lines[index] == '':
-                lines.pop(index)
-
+    for i in lines:
+        index = 0
+        if '{' in i:
+            index = lines.index(i)
+            i = i.strip()            
+            if i.startswith('{'):
+                i = i.replace('\n', '')
+                if i.startswith('{') or i.endswith('{'):
+                    lines[index - 1] = lines[index - 1] + ' {'
+                    lines[index] = ''
+            else:
+                continue
+        index += 1        
     index = 0
     
     for line in lines:  # For each line in the lines list
-        if line.startswith('/*'): # Check if the line starts with /*
+        line = line.strip() # Strip the line
+        if line.startswith('/*') or line.endswith('/*'): # Check if the line starts with /*
             incomment = True
             line = line.replace('/*', '"""') # Remove the /* from the line
             
-        if line.endswith('*/'): # Check if the line ends with */
+        if line.endswith('*/') or line.startswith('*/'): # Check if the line ends with */
             incomment = False
             line = line.replace('*/', '"""') # Remove the /* from the line
             
         if incomment:
-            line = line.replace('*', '')
+            line = line.replace('*', '-')
             
         lines[index] = line # Set the line in the lines list to the line variable
 
@@ -768,7 +1136,7 @@ def lexer(lines=[],
     newlines = [line.strip() for line in lines] # Remove the spaces from the lines
 
     for i in sys.argv: # For each item in the sys.argv list
-        if i == '-debug': # Check if the item is -debug
+        if i == '-d': # Check if the item is -d
             from rich import console; syntaxprinting = console.Console().print # Set the syntaxprinting variable to the print function
             _syntax = Syntax('\n'.join(newlines), "swift", theme="one-dark", line_numbers=True, background_color="default") # Set the syntax variable to the Syntax class
             print("\n\u001b[1m\u001b[31m----------------- Orginal Verscae Code -----------------\u001b[0m") # Print the orginal verscae code message
@@ -799,8 +1167,14 @@ def lexer(lines=[],
             # check if the line starts with a keyword from syntax list
             if line.split(' ')[0] in syntax: # Check if the first word in the line is in the syntax list
                 fun = syntax.get(line.split(' ')[0]) # Set the fun variable to the syntax dictionary with the first word of the line as the key
-                fun(line) # Run the function
- 
+                # check how many arguments the function takes
+                try:
+                    fun(line, orglines) # Run the functio
+                    continue
+                except Exception as e:
+                    fun(line)
+                    continue                    
+                    
             elif 'else if' in line: # Check if the line has a else if
                 _SYNTAX.ELSEIF(line) # Run the ELSEIF function
                             
@@ -844,9 +1218,19 @@ def lexer(lines=[],
             if 'def main()' in line: IO.error('Did you mean to use "public main()"')
             IO.error('\nError: Failed to build') # Print the error message
             exit()
-
+    
+    for i in final:
+        if '@_async' in i and C.asynccode() not in final:
+                code =  C.asynccode()
+                final.insert(0, code)
+                final.insert(1, '\n')
+    
+    if 'from rich import console; print = console.Console().print\n' not in final:
+        final.insert(0, 'from rich import console; print = console.Console().print\n')
+    
+    
     for i in sys.argv: # For each item in the sys.argv list
-        if i == '-debug': # Check if the item is -debug
+        if i == '-d': # Check if the item is -d
             print("\n\u001b[1m\u001b[31m----------------- Compiled Python Code -----------------\u001b[0m") # Print the message
             from rich import console; syntaxprinting = console.Console().print # Define the syntaxprinting variable
             from rich.pretty import pprint # Import the pprint function
@@ -873,6 +1257,7 @@ def lexer(lines=[],
 
             # self test the new code in a subprocess and check if it works if it does not then print the error message
             create_temp() # Run the create_temp function
+            
             with open(f'temp{os.sep}src{os.sep}debug.tmp', 'w') as f: # Open the file in write mode
                 f.write(''.join(final)) # Write the final list to the file
 
@@ -978,6 +1363,9 @@ def lexer(lines=[],
                     f.write("\n========================= End of Data ========================\n") # Write to the file
                     f.close() # Close the file
             exit() # Exit the program
+        else:
+            continue
+
 
     if in_module == False: # Check if the in_module variable is False
         for i in final: # Loop through the final list
@@ -1049,7 +1437,7 @@ def build(filename,
     global compare_version # Define the compare_version variable
     try:    # Try to run the code
         for i in sys.argv:  # Loop through the arguments
-            if i == '-d':  # Check if the argument is -d
+            if i == '-c':  # Check if the argument is -c
                 decomplie = True # Define decomplie as True
     except IndexError: # If there is an IndexError
         pass # Pass
@@ -1058,25 +1446,6 @@ def build(filename,
             print('\u001b[41;1mYou are using an unsupported version of the compiler, please fix it. The complier will still work but it may not be as stable as the official version.\u001b[0m')
             time.sleep(2)  # Wait 2 seconds
             os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
-
-        if music_option:   # Check if the music option is True
-            from rich import console; cprint = console.Console().print
-            cprint('[bold red] Activacted ', end='', justify='center') # Print the question
-            subprocess.call(f'start python -m playsound {music_path}', shell=True)  # Play the music
-
-            print('\u001b[41;1mPlaying music.\u001b[0m', end='\r')  # Print the message
-            time.sleep(0.5) # Wait 0.5 seconds
-            print('\u001b[41;1mPlaying music..\u001b[0m', end='\r') # Print the message
-            time.sleep(0.5) # Wait 0.5 seconds
-            print('\u001b[41;1mPlaying music...\u001b[0m', end='\r')    # Print the message
-            time.sleep(0.5) # Wait 0.5 seconds
-            print('\u001b[42;1mMusic Started\u001b[0m    ', end='\n')   # Print the message
-            time.sleep(4)   # Wait 4 seconds
-            for i in range(10): # Loop 10 times
-                print('\u001b[41;1mBuilding' + '.'*i, '\u001b[0m', end='\r')    # Print the message
-                time.sleep(0.5) # Wait 0.5 seconds
-            print('\u001b[42;1mBuild Complete\u001b[0m      ', end='\n')    # Print the message
-            pass    # Continue the loop
 
         main(filename, decomplie)   # Run the main function
 
@@ -1147,6 +1516,8 @@ music_path = os.sep.join(__file__.split(os.sep)[:-1]) + os.sep + 'music.mp3' # c
 # does not exist, create it and then delete it after the program is run
 
 def create_temp():      # Create the temp folder
+    global st_time      # Define the st_time variable as global
+    st_time = perf_counter()  # Define the st_ti variable as the current time
     try:        # Try to run the code
         os.mkdir('temp')    # Create the temp folder
         os.mkdir('temp/src')    # Create the src folder
@@ -1154,6 +1525,12 @@ def create_temp():      # Create the temp folder
         pass    # Continue the loop
 
 def delete_temp():    # Delete the temp folder
+    global ed_time  # Define the ed_time variable as global
+    ed_time = perf_counter()    # Define the ed_time variable as the current time
+    
+    if '-f' in sys.argv:    # Check if -f is in the sys.argv list
+        os.system('pause')  # Pause the program
+    
     try:    # Try to run the code
         shutil.rmtree('temp')   # Delete the temp folder
     except FileNotFoundError:   # If the folder does not exist
@@ -1165,7 +1542,66 @@ def debugmode():
         file.close()
     return
 
-
+def perf_monitor():
+    import psutil
+    print(f'\u001b[1m\u001b[32mRuntime: {ed_time - st_time}s\u001b[0m')
+    # print all the performance data
+    print(f'\u001b[1m\u001b[32mTotal Lines: {len(final)}\u001b[0m')
+    # get the memory usage
+    memory_usage = psutil.virtual_memory().percent
+    print(f'\u001b[1m\u001b[32mMemory Usage: {memory_usage}%\u001b[0m')
+    # get the disk usage
+    disk_usage = psutil.disk_usage('/').percent
+    print(f'\u001b[1m\u001b[32mDisk Usage: {disk_usage}%\u001b[0m')
+    # check if a debug folder exists
+    # get the time in DD-MM-YY HH-MM-SS format 
+    import time
+    
+    def writestart(file):
+        data0 = " This file contains the performance data for Verscae "
+        data01 = " This file is generated when you run Verscae with the -p argument "
+        data02 = " This file may be used by the Performance Analyzer "
+        data03 = " Do not delete or modify this file unless you know what you are doing "
+        file.write(f"{data0: ^70}\n")
+        file.write(f"{data01: ^70}\n")
+        file.write(f"{data02: ^70}\n")
+        file.write(f"{data03: ^70}\n\n")
+        return
+    
+    def writedata(file):
+        data1 = f" Data was generated on {time.strftime('%d/%m/%Y %H:%M:%S', time.localtime())} "
+        file.write(f"{data1:-^70}\n")
+        data2 = f'Runtime: "{ed_time - st_time}s"'
+        file.write(f"1 | {data2:<60}{endsep: >6}\n")
+        data3 = f'Total Lines: "{len(final)}"'
+        file.write(f"2 | {data3:<60}{endsep: >6}\n")
+        data4 = f'Memory Usage: "{memory_usage}%"'
+        file.write(f"3 | {data4:<60}{endsep: >6}\n")
+        data5 = f'Disk Usage: "{disk_usage}%"'
+        file.write(f"4 | {data5:<60}{endsep: >6}\n")
+        data6 = f" END OF DATA "
+        file.write(f"{data6:-^70}\n\n")
+        return
+    
+    if os.path.exists('debug'):
+        if os.path.exists(f'debug{os.sep}performance.rt'):
+            with open(f'debug{os.sep}performance.rt', 'r') as file:
+                dataformfile = file.readlines()
+            with open(f'debug{os.sep}performance.rt', 'a+') as f:
+                endsep = "|"
+                try:
+                    if "This file contains the performance data for Verscae" not in dataformfile[0]:
+                        writestart(f)
+                except IndexError:
+                    writestart(f)
+                writedata(f)
+                f.close()
+        else:
+            with open(f'debug{os.sep}performance.rt', 'w') as f:
+                endsep = "|"
+                writestart(f)
+                writedata(f)
+                f.close()
 
 try:   # Try to run the code
     if len(sys.argv) == 1:   # If there are more than 2 arguments
@@ -1190,25 +1626,57 @@ try:   # Try to run the code
         exit()  # Exit the program
 
     if __name__ == '__main__':  # If the file is run directly
-        if sys.argv[1] == '-debug':    # If the user puts -debug as the first argument
+        if sys.argv[1] == '-d':    # If the user puts -d as the first argument
             print('\u001b[32;1mDebug mode started\u001b[0m') # Print the message
             debugmode() # Run the debugmode function
             filename = 'selftest.v' # Set the filename to selftest.v
-            sys.argv.append('-debug')   # Append the filename to the arguments
+            sys.argv.append('-d')   # Append the filename to the arguments
             pass
+        
+            """
+            All SYS.ARGV Comands
+            -p            | Shows performance stats
+            -h            | Shows help
+            -v            | Shows version
+            -d            | Shows debug mode
+            -o <filename> | Compiles the file to a .exe file
+            -c <filename> | Compiles the file to a .py file
+            -cfg          | Opens the config file
+            """
+                
+        for i in sys.argv:  # For every argument
+            if '-' in i:   # If the argument starts with a -
+                if '-p' in i or '-h' in i or '-v' in i or '-d' in i or '-o' in i or '-c' in i or '-cfg' in i or '-f' in i: # If the argument is -p, -h, -v, -d, -o, -c, or -cfg
+                    pass   # Continue the loop
+                elif i.count('"') == 2: # If the argument has 2 quotes
+                    pass  # Continue the loop
+                else:  # If none of the above conditions are met
+                    print('\u001b[31;1mInvalid argument provided\u001b[0m') # Print the message 
+                    print('\u001b[32;1mWorking arguments:\u001b[0m') # Print the message
+                    print('\u001b[32;1m-p            | Shows the performance statistics of the program\u001b[0m') # Print the message
+                    print('\u001b[32;1m-d            | Runs the debug mode\u001b[0m') # Print the message
+                    print('\u001b[32;1m-v            | Shows the version of the program\u001b[0m') # Print the message
+                    print('\u001b[32;1m-h            | Shows the help menu\u001b[0m') # Print the message
+                    print('\u001b[32;1m-o <filename> | Compiles the versace code to a binary exe file\u001b[0m') # Print the message
+                    print('\u001b[32;1m-c <filename> | Compiles the versace code to a python file\u001b[0m') # Print the message
+                    print('\u001b[32;1m-cfg          | Allows you to edit the config file\u001b[0m') # Print the message
+                    print('\u001b[32;1m-f            | Forces the program to freeze before exiting\u001b[0m') # Print the message
+                    print('\u001b[32;1m*<filename> is an optianl argument\u001b[0m') # Print the message
+                    exit()  # Exit the program
+        
         try:    # Try to run the code
             for i in sys.argv:  # Loop through the arguments
                 if i == '-m':  # Check if the argument is -m
                     music_option = True # Set the music_option to True
-                if i == '-help':
+                if i == '-h':
                     print('\u001b[41;1mYou can read the entire documentation\u001b[0m')   # Print the message
-                    print('\u001b[31;1m  In you browser, jsut ctrl + click this link\u001b[0m') # Print the message
+                    print('\u001b[31;1m  In you browser, just ctrl + click this link\u001b[0m') # Print the message
                     print('\u001b[34;1m  https://github.com/Ze7111/Verscae/wiki \u001b[0m')  # Print the link
                     print('\u001b[31;1m  If you have a question that is not answred there, you can open an issue or email me at \u001b[0m')   # Print the message
                     print('\u001b[31;1m  ze7111@gmail.com \u001b[0m')   # Print the message
                     exit()
 
-                if i == '-version':
+                if i == '-v':
                     print(f'\u001b[41;1mYou are using Verscae version {Version}\u001b[0m')
                     exit()
         except IndexError: # If there is an IndexError
@@ -1226,3 +1694,8 @@ except KeyboardInterrupt:   # If the user presses ctrl+c
     
 finally:   # Run this code no matter what
     delete_temp()   # Run the delete_temp function
+    for i in sys.argv:  # Loop through the sys.argv list
+        if i == '-p':
+            perf_monitor()
+    if perf_monitor_always_on:
+        perf_monitor()
