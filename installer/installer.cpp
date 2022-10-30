@@ -7,17 +7,17 @@ using namespace std;
 
 const string R_Version = "4.6.6";
 
-const string L_Link = "https://github.com/Ze7111/Versace/releases/latest/download/Linux-Versace-";
-const string W_Link = "https://github.com/Ze7111/Versace/releases/latest/download/Windows-Versace-";
+const string L_Link = "https://github.com/Ze7111/Versace/releases/latest/download/LinuxVersace";
+const string W_Link = "https://github.com/Ze7111/Versace/releases/latest/download/WindowsVersace";
 
 const string Final_Link_W = W_Link + R_Version + ".zip";
 const string Final_Link_L = L_Link + R_Version + ".zip";
 
-const string Win_F_Name = "Windows-Versace-" + R_Version + ".zip";
-const string Lin_F_Name = "Linux-Versace-" + R_Version + ".zip";
+const string Win_F_Name = "WindowsVersace" + R_Version + ".zip";
+const string Lin_F_Name = "LinuxVersace" + R_Version + ".zip";
 
-const string Win_F_DIR = "Windows-Versace-" + R_Version;
-const string Lin_F_DIR = "Linux-Versace-" + R_Version;
+const string Win_F_DIR = "WindowsVersace" + R_Version;
+const string Lin_F_DIR = "LinuxVersace" + R_Version;
 
 void WIN_INSTALLER(string osname, string colors[5])
 {
