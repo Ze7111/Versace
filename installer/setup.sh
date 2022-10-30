@@ -27,9 +27,8 @@ if [ $ARCH = "aarch64" ] || [ $ARCH = "arm64" ]; then
   INSTALL_ARCH=aarch64
 fi
 
-INSTALL_URL= https://github.com/Ze7111/Versace/releases/download/4.6.6/Linux-Versace
+INSTALL_URL=https://github.com/Ze7111/Versace/releases/download/4.6.6/Linux-Versace
 echo "Installing from $INSTALL_URL"
-wget -O- https://aka.ms/install-vscode-server/setup.sh | sh
 
 command_exists() {
     command -v "$1" > /dev/null 2>&1
