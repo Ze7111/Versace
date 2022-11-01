@@ -48,6 +48,15 @@
   - [With a basic Description](#with-a-basic-description)
 - [Dramatic Mode in action](#dramatic-mode-in-action)
 
+### New naming-scheme in place:
+```
+  x.x.xa
+  │ │ │╰─> Small Increments only denoted in alpabets
+  │ │ ╰──> Major Bug and Quality of life Increments
+  │ ╰────> Major internal changes, such as new syntax
+  ╰──────> Major Update Increment
+```
+ 
 ## Install for Windows
 - Open a non-admin powershell window
 - Paste the following command
