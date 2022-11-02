@@ -1,12 +1,11 @@
-import random
-import sys
+import configparser, os, sys, random, time, tempfile
 
-Version = '4.6.6'   # Define the Version variable as 4.6.6
+Version = '3.1.0a'   # Define the Version variable as 4.6.6
 
 def makeconfigfile(configpath):
-    data = """[Core-Config]
+    data = r"""[Core-Config]
 music-option = false
-version = 4.6.6
+version = 3.1.0a
 tab-style = "    "
 
 start-indentation-level = 0
@@ -14,9 +13,13 @@ do-once = true
 start-in-module-mode = false
 recurse-from-function = false
 no-args-start = false
-always-monitor-performance = false"""
-    with open(configpath, 'w') as f:
-        f.write(data)
+always-monitor-performance = false
+requests-made = 0"""
+    if type(configpath) == bool:
+        return data
+    else:
+        with open(configpath, 'w') as f:
+            f.write(data)
 
 def installmodules():  # Define the installmodules function
     try:   # Try to run the code
@@ -25,56 +28,46 @@ def installmodules():  # Define the installmodules function
         subprocess.run('pip3 install rich requests psutil pyinstaller', shell=True) # Install the modules        
 
 def readconfig():   # Define the readconfig function
-    import configparser, os
     config_obj = configparser.ConfigParser()  # Define the config variable as a ConfigParser object
-    
-    if os.name == 'nt': # Check if the OS is Windows
-        if os.path.exists(f"C:{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Windows-Versace-{Version}{os.sep}config.ini"):
-            configpath = f"C:{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Windows-Versace-{Version}{os.sep}config.ini"  # Define the configpath variable as the path to the config file
-        else:
-            if os.path.exists(f"C:{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Windows-Versace-{Version}"):
-                configpath = f"C:{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Windows-Versace-{Version}{os.sep}config.ini"  # Define the configpath variable as the path to the config file
-                makeconfigfile(configpath)
-            else:
-                makeconfigfile("config.ini")
-    elif os.name == 'posix':
-        if os.path.exists(f"{os.sep}home{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Linux-Versace-{Version}{os.sep}config.ini"):
-            configpath = f"{os.sep}home{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Linux-Versace-{Version}{os.sep}config.ini"
-        else:
-            if os.path.exists(f"{os.sep}home{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Linux-Versace-{Version}"):
-                configpath = f"{os.sep}home{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Linux-Versace-{Version}{os.sep}config.ini"
-                makeconfigfile(configpath)
-            else:
-                makeconfigfile("config.ini")
-    elif os.name == 'mac':
-        if os.path.exists(f'{os.path.dirname(os.path.realpath(__file__))}{os.sep}config.ini"'):
-            configpath = f"{os.sep}Users{os.sep}{os.getlogin()}{os.sep}versace{os.sep}Mac-Versace-{Version}{os.sep}config.ini"
-        else:
-            configpath = os.path.dirname(os.path.realpath(__file__)) + f"{os.sep}config.ini"
-            makeconfigfile(configpath)
+    configpath = os.getcwd() + os.sep + 'config.ini'  # Define the configpath variable as the current working directory + the config.ini file
+    if os.path.exists(configpath):
+        pass
     else:
-        print('Error: Could not locate the config file please add it to the same directory where you installed Versace')
-        exit()
+        makeconfigfile(configpath)
+        #pass
     
     try:
-        config_obj.read(f'{configpath}')   # Read the config.ini file
+        config_obj.read(f'{configpath}') # Read the config.ini file
         Core = config_obj["Core-Config"]   # Define the Core variable as the Core-Config section
-
-        music_option = Core["music-option"] # Define the music_option variable as the music-option option
-        tab = Core["tab-style"] # Define the tab variable as the tab-style option
-        
-        numtabs = Core["start-indentation-level"] # Define the numtabs variable as the start-indentation-level option
-        do_once = Core["do-once"]  # Define the do_once variable as the do-once option
-        in_module = Core["start-in-module-mode"] # Get the start-in-module-mode value
-        recurse = Core["recurse-from-function"]  # Get the recurse value
-        noargs = Core["no-args-start"] # Define the noargs variable as the no-args-start value in the config file
-        perf_monitor_always_on = Core["always-monitor-performance"] # Define the perf_monitor_always_on variable as the perf-monitor-always-on value in the config file
     except Exception as e:
-        print('Error: Could not read the config file from {}'.format(configpath))
-        print(f"Error: {e}")
-        exit()
+        os.system("")
+        print(f'\u001b[31m' + 'Error: ' + '\u001b[0m' + f'The config file at: {configpath} is corrupted or non-accessible. Will revert to default settings.') # Print an error message
+        print('\u001b[31m' + 'Reverting to default settings' + '\u001b[0m')
+        print(f"\u001b[31m" + "Error: " + "\u001b[0m" + f"{e}")
+        data = makeconfigfile(True)
+        # make a temp file with the data
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
+            f.write(data)
+        
+        # read the temp file
+        config_obj.read(f.name)
+        Core = config_obj["Core-Config"]   # Define the Core variable as the Core-Config section
+        # delete the temp file
+        os.remove(f.name)
+        time.sleep(1)
     
-    return music_option, tab, numtabs, do_once, in_module, recurse, noargs, perf_monitor_always_on # Return the variables
+    __B__MUSIC__OPTION__ = Core["music-option"] # Define the __B__MUSIC__OPTION__ variable as the music-option option
+    __S__TAB__SPACING__ = Core["tab-style"] # Define the __S__TAB__SPACING__ variable as the __S__TAB__SPACING__-style option
+    
+    __I__NUM__TABS__ = Core["start-indentation-level"] # Define the __I__NUM__TABS__ variable as the start-indentation-level option
+    __B__DO__ONCE__ = Core["do-once"]  # Define the __B__DO__ONCE__ variable as the do-once option
+    __B__IN__MODULE__ = Core["start-in-module-mode"] # Get the start-in-module-mode value
+    __B__RECURSE__ = Core["recurse-from-function"]  # Get the __B__RECURSE__ value
+    __B__NO__ARGUMENTS__ = Core["no-args-start"] # Define the __B__NO__ARGUMENTS__ variable as the no-args-start value in the config file
+    __B__PERFORMANCE__MONITOR__ = Core["always-monitor-performance"] # Define the __B__PERFORMANCE__MONITOR__ variable as the perf-monitor-always-on value in the config file
+    __I__REQUESTS__MADE__ = Core["requests-made"] # Define the __I__REQUESTS__MADE__ variable as the requests-made value in the config file
+    
+    return __B__MUSIC__OPTION__, __S__TAB__SPACING__, __I__NUM__TABS__, __B__DO__ONCE__, __B__IN__MODULE__, __B__RECURSE__, __B__NO__ARGUMENTS__, __B__PERFORMANCE__MONITOR__, __I__REQUESTS__MADE__ # Return the variables
 
 def convert_to_bool(string):    # Define the convert_to_bool function
     import os
@@ -89,21 +82,22 @@ def convert_to_bool(string):    # Define the convert_to_bool function
         print('\u001b[31;1m' + f'Expected : a boolean value not "{string}"' + '\u001b[0m')  # Print an error message
         exit()
 
-music_option, tab, numtabs, do_once, in_module, recurse, noargs, perf_monitor_always_on = readconfig() # Read the config file 
+__B__MUSIC__OPTION__, __S__TAB__SPACING__, __I__NUM__TABS__, __B__DO__ONCE__, __B__IN__MODULE__, __B__RECURSE__, __B__NO__ARGUMENTS__, __B__PERFORMANCE__MONITOR__, __I__REQUESTS__MADE__ = readconfig() # Read the config file 
 
-music_option = convert_to_bool(music_option) # Define the music_option variable as a boolean
-tab = tab.replace('"', '')
-numtabs = int(numtabs)  # Convert the numtabs variable to an integer
-do_once = convert_to_bool(do_once) # Convert the do_once variable to a bool
-in_module = convert_to_bool(in_module) # Convert the in_module variable to a bool
-recurse = convert_to_bool(recurse) # Convert the recurse variable to a bool
-noargs = convert_to_bool(noargs) # Convert the noargs variable to a bool
-perf_monitor_always_on = convert_to_bool(perf_monitor_always_on) # Convert the perf_monitor_always_on variable to a bool
+__B__MUSIC__OPTION__ = convert_to_bool(__B__MUSIC__OPTION__) # Define the __B__MUSIC__OPTION__ variable as a boolean
+__S__TAB__SPACING__ = __S__TAB__SPACING__.replace('"', '')
+__I__NUM__TABS__ = int(__I__NUM__TABS__)  # Convert the __I__NUM__TABS__ variable to an integer
+__B__DO__ONCE__ = convert_to_bool(__B__DO__ONCE__) # Convert the __B__DO__ONCE__ variable to a bool
+__B__IN__MODULE__ = convert_to_bool(__B__IN__MODULE__) # Convert the __B__IN__MODULE__ variable to a bool
+__B__RECURSE__ = convert_to_bool(__B__RECURSE__) # Convert the __B__RECURSE__ variable to a bool
+__B__NO__ARGUMENTS__ = convert_to_bool(__B__NO__ARGUMENTS__) # Convert the __B__NO__ARGUMENTS__ variable to a bool
+__B__PERFORMANCE__MONITOR__ = convert_to_bool(__B__PERFORMANCE__MONITOR__) # Convert the __B__PERFORMANCE__MONITOR__ variable to a bool
+__I__REQUESTS__MADE__ = int(__I__REQUESTS__MADE__) # Convert the __I__REQUESTS__MADE__ variable to an integer
 compare_version = Version # Define the compare version
 
 if len(sys.argv) == 1:  # If there are no arguments
-    if noargs == False:
-        noargs = True
+    if __B__NO__ARGUMENTS__ == False:
+        __B__NO__ARGUMENTS__ = True
 
 st_time: float # create the start time variable
 ed_time: float # Create the end function
@@ -123,7 +117,8 @@ try: # Try to run the main function
     import requests # Import requests
     import shutil # Import shutil
     import psutil # Import psutil
-    from sys import exit
+    import tempfile # Import tempfile
+    from sys import exit # Import exit from sys
     from time import perf_counter   # Import the perf_counter function from the time module
 
 except ModuleNotFoundError as e: # If the module is not found
@@ -147,74 +142,66 @@ except ModuleNotFoundError as e: # If the module is not found
 
 os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
 
-def memoize(func):
-    cache = {}
-    def memoized_func(*args):
-        if args in cache:
-            return cache[args]
-        result = func(*args)
-        cache[args] = result
-        return result
-
-    return memoized_func
-
 class C: # Class C
-    def class_(line, numtabs): # Class class_
-        global tab
+    def class_(line, __I__NUM__TABS__): # Class class_
+        global __S__TAB__SPACING__
         line.replace('public class', 'class')
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
         line += ':' # Add a : to the line
-        line = ((tab * numtabs) + line + '\n') # Add the line to the final list
-        numtabs += 1 # Add 1 to the number of tabs
-        return line, numtabs # Add the line to the final list
+        line = ((__S__TAB__SPACING__ * __I__NUM__TABS__) + line + '\n') # Add the line to the final list
+        __I__NUM__TABS__ += 1 # Add 1 to the number of tabs
+        return line, __I__NUM__TABS__ # Add the line to the final list
 
-    def else_if(line, numtabs): # define the else if function
-        global tab
+    def else_if(line, __I__NUM__TABS__): # define the else if function
+        global __S__TAB__SPACING__
         line = line.replace('else if', 'elif') # Replace else if with elif
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
         line += ':' # Add a : to the line
-        line = ((tab * numtabs) + line + '\n') # Add the line to the final list
-        numtabs += 1 # Add 1 to the number of tabs
-        return line, numtabs # Return the line and the number of tabs
+        line = ((__S__TAB__SPACING__ * __I__NUM__TABS__) + line + '\n') # Add the line to the final list
+        __I__NUM__TABS__ += 1 # Add 1 to the number of tabs
+        return line, __I__NUM__TABS__ # Return the line and the number of tabs
 
-    def public(line, numtabs): # Define the public function
-        global tab
+    def public(line, __I__NUM__TABS__): # Define the public function
+        global __S__TAB__SPACING__
+        # if __name__ == '__main__':
         if line.startswith('public'): # If the line starts with public
+            # remove everyhting inside ()
+            line = line.split('(')[0] # Split the line at the (
             line = line.replace('public', 'def') # Replace public with def
-        elif line.startswith('pub'):
-            line = line.replace('pub', 'def') # Replace public with def
+            line = line.replace('main', " main()") # Remove the { from the line
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
         line += ':' # Add a : to the line
-        line = ((tab * numtabs) + line + '\n') # Add the line to the final list
-        numtabs += 1 # Add 1 to the number of tabs
-        return line, numtabs # Return the line and the number of tabs
+        line = ((__S__TAB__SPACING__ * __I__NUM__TABS__) + line + '\n') # Add the line to the final list
+        __I__NUM__TABS__ += 1 # Add 1 to the number of tabs
+        return line, __I__NUM__TABS__ # Return the line and the number of tabs
 
-    def func(line, numtabs): # Define the function function
-        global tab
+    def func(line, __I__NUM__TABS__): # Define the function function
+        global __S__TAB__SPACING__
         if 'repr' in line: # Check if repr is in the line
             line = line.replace('repr', '__innit__') # Replace repr with __innit__
         line = line.replace('func', 'def') # Replace func with def
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
         line += ':' # Add a : to the line
-        line = ((tab * numtabs) + line + '\n') # Add the line to the final list
-        numtabs += 1 # Add 1 to the number of tabs
-        return line, numtabs # Return the line and the number of tabs
+        line = ((__S__TAB__SPACING__ * __I__NUM__TABS__) + line + '\n') # Add the line to the final list
+        __I__NUM__TABS__ += 1 # Add 1 to the number of tabs
+        return line, __I__NUM__TABS__ # Return the line and the number of tabs
 
-    def asyncfunc(line, numtabs): # Define the async function
-        global tab
+    def asyncfunc(line, __I__NUM__TABS__): # Define the async function
+        global __S__TAB__SPACING__
         if 'repr' in line: # Check if repr is in the line
             line = line.replace('repr', '__innit__') # Replace repr with __innit__
-        line = line.replace('async func', 'def') # Replace func with def
+        line = line.replace('async', 'def') # Replace func with def
+        line = line.replace(' func', '') # Remove the { from the line
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
         line += ':' # Add a : to the line
-        line = ((tab * numtabs) + line + '\n') # Add the line to the final list
-        numtabs += 1 # Add 1 to the number of tabs
-        return line, numtabs # Return the line and the number of tabs
+        line = ((__S__TAB__SPACING__ * __I__NUM__TABS__) + line + '\n') # Add the line to the final list
+        __I__NUM__TABS__ += 1 # Add 1 to the number of tabs
+        return line, __I__NUM__TABS__ # Return the line and the number of tabs
     
     def asynccode() -> str:
         async_code = """import threading # import threading
@@ -231,26 +218,26 @@ def _async(func): # decorator for async function
     
     return wrapper # return the wrapper function
 \"\"\"
-            You can edit any code below this line
+You can edit any code below this line
 \"\"\"
 """
         return async_code
     
-    def catch(line, numtabs): # Define the catch function
-        global tab
+    def catch(line, __I__NUM__TABS__): # Define the catch function
+        global __S__TAB__SPACING__
         line = line.replace('catch', 'except') # Replace catch with except
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
         line += ':' # Add a : to the line
-        line = ((tab * numtabs) + line + '\n') # Add the line to the final list
-        numtabs += 1 # Add 1 to the number of tabs
-        return line, numtabs # Return the line and the number of tabs
+        line = ((__S__TAB__SPACING__ * __I__NUM__TABS__) + line + '\n') # Add the line to the final list
+        __I__NUM__TABS__ += 1 # Add 1 to the number of tabs
+        return line, __I__NUM__TABS__ # Return the line and the number of tabs
 
-    def brace(line, numtabs): # Define the brace function
-        global tab
+    def brace(line, __I__NUM__TABS__): # Define the brace function
+        global __S__TAB__SPACING__
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
-        line = tab * numtabs + line + ':' + '\n' # Add the line to the final list
+        line = __S__TAB__SPACING__ * __I__NUM__TABS__ + line + ':' + '\n' # Add the line to the final list
         return line # Return the line
 
 class include: # Class include
@@ -277,7 +264,7 @@ class include: # Class include
         return line # Return the line
 
     def _from_Include(line):
-        global data, recurse
+        global data, __B__RECURSE__
         # line will be something like this
         # from [file] include *
         lineargs = line.split(' ') # Split the line by spaces
@@ -300,16 +287,16 @@ class include: # Class include
                 raise FileNotFoundError(f'File {filename} not found')
         
         with open(filename, 'r') as f:
-            recurse = False
+            __B__RECURSE__ = False
             for _ii in f.readlines():
                 data.append(_ii)
                 if _ii.startswith('from'):
-                    recurse = True
+                    __B__RECURSE__ = True
                     data.pop(-1)
                     include._from_Include(_ii)
                     continue
         
-        if recurse:
+        if __B__RECURSE__:
             return
         else:
             return data        
@@ -369,7 +356,7 @@ class IO: # Class IO
         } # Define the datatypes
         self.endtypes = {
             'newl' : r'\n\n',
-            'tab' : r'\t',
+            '__S__TAB__SPACING__' : r'\t',
             'rw' : r'\r',
             'space' : r' ',
             'endl' : r'',
@@ -495,8 +482,10 @@ def compiler(final,
              decomplie, 
              filename=None): # Define the compiler function
     
-    filename_only = ''
     os.system('cls' if os.name == 'nt' else 'clear')    # Clear the screen
+    # create a temp file
+    tempfilething = tempfile.NamedTemporaryFile(mode='w', delete=False) # Create a temp file
+    filename_only = ''
     current_time = time.time()  # Set the current time
     current_time = time.strftime('%d-%m-%Y %H-%M-%S', time.localtime(current_time)) # Set the current time
 
@@ -530,7 +519,7 @@ def compiler(final,
             if os.name == 'nt': # Check if the os is windows
                 name = f'{os.getcwd()}{os.sep}src{os.sep}{filename_only}.py' # Set the name to the current time
             else:   # If the os is not windows
-                name = f'{os.getcwd()}{os.sep}src{os.sep}{current_time}.py'  # Set the name to the current time
+                name = f'{os.getcwd()}{os.sep}src{os.sep}{filename_only}.py'  # Set the name to the current time
         else:   # If the name is not ''
             if os.name == 'nt': # Check if the os is windows
                 name = f'{os.getcwd()}{os.sep}src{os.sep}{name}.{file_ext}' # Set the name to the name
@@ -569,6 +558,7 @@ def compiler(final,
         print('\u001b[32;1mDecompiling Complete\u001b[0m')  # Print the decompiling complete message
         print(f'\u001b[32;1mFile saved to {name}\u001b[0m') # Print the file saved message
         print('\u001b[31;1mDo you want to run the file? (y/n) : \u001b[0m', end='') # Print the question
+        
         if input().lower() == 'y':  # Check if the input is y
             create_temp()
             pass    # If the input is y pass
@@ -576,11 +566,17 @@ def compiler(final,
             delete_temp()
             exit('\u001b[31;1mYOUR FILE IS SAVED!!\u001b[0m')   # Exit the program
 
-    with open(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{filename_only}.tmp', 'w') as f:  # Open the file
+    with open(tempfilething.name, 'w') as f:  # Open the file
         for line in final:  # For each line in the final
             f.write(line)   # Write the line to the file
     
     if '-o' in sys.argv:    # Check if -o is in the sys.argv
+        if '-03' in sys.argv:   # Check if -01 is in the sys.argv
+            pass
+        elif '-02' in sys.argv:   # Check if -01 is in the sys.argv
+            pass
+        elif '-01' in sys.argv: # Check if -02 is in the sys.argv
+            pass
         try:    # Try to open the file
             # rename the file in the temp folder to .py
             # run this command with subprocess pyinstaller --noconfirm --onefile --console --icon "C:/Users/dhruv/Downloads/logo.ico"  "Z:\GitHub\Repos\BrainLuck2.0\versace.py"
@@ -591,22 +587,23 @@ def compiler(final,
                 icon = input()
                 if icon.count('"') != 2:
                     icon = f'"{icon}"'
-            elif icon_choice == 'n':
-                icon = ''
             else:
                 icon_choice = 'n'
                 icon = ''
-                
-            filepath = f'"{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{filename_only}.tmp"'
+            
+            filepath = tempfilething.name
+            # copy filepath to src folder and add .py to the end
+            if os.path.exists('src'): pass
+            else: os.mkdir('src')
+            shutil.copy(filepath, f'{os.getcwd()}{os.sep}src{os.sep}{filename_only}.py')
+            filepath = f'{os.getcwd()}{os.sep}src{os.sep}.py'
             
             print('\u001b[31;1mWill this be an Window based application or a console based one? (w/c): \u001b[0m', end='')
             window_console = input().lower().strip()
             if window_console == 'w':
                 window_console = '--windowed'
-            elif window_console == 'c':
-                window_console = '--console'
             else:
-                window_console = ''  
+                window_console = '--console'  
             
             if icon_choice == 'y':
                 command = f'pyinstaller --noconfirm --onefile {window_console} --icon {icon} {filepath}'
@@ -616,14 +613,25 @@ def compiler(final,
                 delete_temp()
                 exit('\u001b[31;1mInvalid Input\u001b[0m')
                 
+                
             # move the .tmp file to the rood dir
             os.system(command)
+            
             # move the exe from the dist folder to the root dir
             # delete the build and dist folder
-            try:
-                shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}.exe', f'{os.getcwd()}{os.sep}{filename_only}.exe')
-            except FileNotFoundError:
-                shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
+            if os.name == 'nt':
+                # keep only yhe file ext
+                filename_only = '.' + filepath.split('.')[-1]
+                try:
+                    shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}.exe', f'{os.getcwd()}{os.sep}{filename_only}.exe')
+                except FileNotFoundError:
+                    shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}.{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
+            else:
+                filename_only = '.' + filepath.split('.')[-1]
+                try:
+                    shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
+                except FileNotFoundError:
+                    shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}.{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
             
             shutil.rmtree(f'{os.getcwd()}{os.sep}build')
             shutil.rmtree(f'{os.getcwd()}{os.sep}dist')
@@ -641,6 +649,7 @@ def compiler(final,
             if os.name == 'nt':
                 filename_only = filename_only + '.exe'
             
+            os.remove(filepath)
             print('\u001b[32;1mFile Compiled\u001b[0m')
             print(f'\u001b[32;1mFile saved to the root directory as "{filename_only}"\u001b[0m')
             print('\u001b[31;1mDo you want to run the binary compiled file? (y/n) : \u001b[0m', end='')
@@ -669,31 +678,98 @@ def compiler(final,
         
     os.system('cls' if os.name == 'nt' else 'clear')
     
-    def runfile(filename):  # Define the runfile function
-        try:    # Try to open the file
-            os.system(f'python "{filename}"')  # Run the file
-
-        except Exception:   # If the file is not found
-            os.system(f'python3 "{filename}"')  # Run the file
-
-        except KeyboardInterrupt:  # If the user presses ctrl + c
-            print(f'\u001b[41m\u001b[30mKeyboard Interrupt Detected\u001b[0m')  # Print the keyboard interrupt detected message
-            delete_temp()   # Delete the temp folder
-            exit()  # Exit the program
-        finally:
-            return
+    def errorcalculate(topline):         # Function to calculate the error
+        """
+            code should do the following:
+            There are 2 outputs expected, the top line, and the bottom line (the line we calculate)
+            The top line is the line before the error pointing line and looks like this:
+            isasn choice < "which question am I doing? (1, 2, 3, 4) : " < int < bold red
+            The bottom line is the line with the error and looks like this:
+            ^^^^^^^^^^^^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+            notice how only where there is " " is where the char is ~ and the rest is ^
+            heres a Second Example:
+            out < "What is your name? : " < go < "Hello " < name < "!" < bold red
+            ^^^^^^~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^~~~~~~~~^^^^^^^^^^~~~^^^^^^^^^^^
+        """
+        bottomline = ''    # The bottom line
+        char = '"'   # The char to look for
+        count = 0   # The count of the char
+        in_string = False  # If the char is in a string
+        for i in topline:  # Loop through the top line
+            if "'" == i: # If the char is a '
+                bottomline += '^' # Add a ^ to the bottom line
+            else:  # If the char is not a '
+                bottomline += ' ' # Add a space to the bottom line
         
+        if "'" in topline: # If the char is in the top line
+            if '\\' in topline[topline.index("'") - 1:]: # If the char is escaped
+                pass # Do nothing
+            else: # If the char is not escaped
+                bottomline += '\nAdd a \ before the \' so the string would look like this: \\\'' # Add the error message to the bottom line
+                return bottomline    # Return the bottom line
+         
+        bottomline = ''   # Reset the bottom line
+        
+        for i in range(len(topline)): # Loop through the top line
+            if topline[i] == char: # If the char is the char we are looking for
+                bottomline += '~' # Add a ~ to the bottom line
+                if count == 1: # If the count is 1
+                    in_string = False # Set the in string to False
+                    count = 0 # Reset the count
+                    continue  # Continue the loop
+                in_string = True # Set the in string to True
+                count += 1 # Add 1 to the count
+                continue # Continue the loop
+            else: # If the char is not the char we are looking for
+                if in_string: # If the char is in a string
+                    bottomline += '~' # Add a ~ to the bottom line
+                    continue # Continue the loop
+                else: # If the char is not in a string
+                    bottomline += '^' # Add a ^ to the bottom line
+                    continue # Continue the loop
+        return bottomline   # Return the bottom line      
     
-    try:    # Try to open the file
-        filename = f"{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{filename_only}.tmp"
+    def runfile(filename):  # Define the runfile function
+        # compile the code in filename, and using the exec node execute it
+        os.system("")  # This is to fix the bug in windows where the color doesnt work
+        
+        with open(filename, 'rb') as f: # Open the file in read binary mode
+            code = compile(f.read(), filename, 'exec') # Compile the code in the file
+            
+        if os.name == 'nt': # If the os is windows
+            if os.path.exists(f'{os.getenv("LOCALAPPDATA")}{os.sep}Programs{os.sep}Python'): # If the python folder exists in the localappdata
+                exec(code, {'__file__': filename}) # Execute the code
+                #os.system('python3 ' + filename)
+                print("\u001b[0m") # Reset the color
+            else: # If the python folder does not exist in the localappdata
+                exec(code, {'__file__': filename}) # Execute the code
+                #os.system('python ' + filename) # Run the file
+                print("\u001b[0m") # Reset the color
+        else: # If the os is not windows
+            os.system('python3 ' + filename) # Run the file
+            print("\u001b[0m") # reset the color
+        return 0 # Return 0 
+            
+    try:   # Try to run the code
+        filename = tempfilething.name # Get the filename of the temp file
         runfile(filename)   # Run the file
-
-    except Exception:   # If there is an error
-        print(f'\u001b[41m\u001b[30mError: {filename} Failed to run.\u001b[0m') # Print the error message
-        exit()  # Exit the program
-
-    finally:    # If there is an error or not
-        os.remove(f'{os.getcwd()}{os.sep}temp{os.sep}src{os.sep}{filename_only}.tmp') # Remove the file
+    except Exception as e: # If there is an error
+        os.system("") # reset the color
+        print(f'\u001b[41;1mError: {e}\u001b[0m')  # Print the error
+        if 'line' in str(e):   # If the error is a syntax error
+            lineno = str(e).split('line')[-1]  # Get the line number
+            # remove everything other then the number
+            lineno = ''.join([i for i in lineno if i.isdigit()]) # Get the line number
+            lineno = int(lineno)   # Convert the line number to an int
+        lineerror = final[lineno - 1].strip() # Get the line with the error
+        bottomline = errorcalculate(lineerror) # Get the bottom line
+        backline = f'Error in line {lineno} : ' # Get the line before the error
+        print(f'\u001b[31;1m{backline}\u001b[33m{lineerror}\u001b[0m') # Print the line before the error
+        print(f'\u001b[31;1m╰{"─"*(len(backline) - 3) }> {bottomline}\n\n\u001b[0m\u001b[31mThe line number is most likely in between {lineno-2} - {lineno+2}. But the line displayed is the line with the error.\u001b[0m') # Print the bottom line
+    finally: # If there is an error or not
+        # remove the temp file
+        tempfilething.close()  # Close the temp file
+        os.remove(filename) # Remove the temp file
         delete_temp()   # Delete the temp folder
         exit()  # Exit the program
 
@@ -779,47 +855,46 @@ def testType(_type, line):  # Define the testType function
         else:  # If the type is not complex
             raise Exception(f'{line} is not a complex') # Raise an exception
 
-
 class _SYNTAX: # Create the _SYNTAX class
     def CLASS(line): # Define the CLASS function
-        global numtabs, final, tab # Define the global variables
-        line, numtabs = C.class_(line, numtabs) # Run the class_ function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        line, __I__NUM__TABS__ = C.class_(line, __I__NUM__TABS__) # Run the class_ function
         final.append(line) # Add the line to the final list
         return # Continue the loop
 
     def ELSEIF(line): # Define the ELSEIF function
-        global numtabs, final, tab # Define the global variables
-        line, numtabs = C.else_if(line, numtabs) # Run the else_if function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        line, __I__NUM__TABS__ = C.else_if(line, __I__NUM__TABS__) # Run the else_if function
         final.append(line) # Add the line to the final list
         return # Continue the loop
 
     def PUBLIC(line): # Define the public function
-        global numtabs, final, tab # Define the global variables
-        line, numtabs = C.public(line, numtabs) # Run the public function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        line, __I__NUM__TABS__ = C.public(line, __I__NUM__TABS__) # Run the public function
         final.append(line)
         return
 
     def PUB(line):  # Define the PUB function
-        global numtabs, final, tab # Define the global variables
-        line, numtabs = C.public(line, numtabs) # Run the public function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        line, __I__NUM__TABS__ = C.public(line, __I__NUM__TABS__) # Run the public function
         final.append(line)
         return
 
     def FUNC(line): # Define the FUNC function
-        global numtabs, final, tab # Define the global variables
-        line, numtabs = C.func(line, numtabs) # Run the public function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        line, __I__NUM__TABS__ = C.func(line, __I__NUM__TABS__) # Run the public function
         final.append(line) # Add the line to the final list
         return
 
     def CATCH(line): # Define the catch function
-        global numtabs, final, tab # Define the global variables
-        line, numtabs = C.catch(line, numtabs) # Run the public function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        line, __I__NUM__TABS__ = C.catch(line, __I__NUM__TABS__) # Run the public function
         final.append(line) # Add the line to the final list
         return
 
     def INCLUDE(line): # Define the include function
-        global numtabs, final, tab # Define the global variables
-        tabs = tab*numtabs # Define the tabs
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
         
         if line.endswith("||"):
             keepinline = True
@@ -836,126 +911,133 @@ class _SYNTAX: # Create the _SYNTAX class
         return
 
     def OUT(line):
-        global numtabs, final, tab
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__
         io = IO()  # Create an instance of the IOStream class
-        tabs = tab*numtabs # Define the tabs
+        tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
         final.append(f"{tabs}{io.output(line)}") # Add the output statement to the final list
         return
 
     def IN(line):
-        global numtabs, final, tab
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__
         io = IO()  # Create an instance of the IOStream class
-        tabs = tab*numtabs # Define the tabs
+        tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
         final.append(f"{tabs}{io.inp(line, tabs)}\n") # Add the input statement to the final list
         return
 
     def RETURN(line):
-        global numtabs, final, tab
-        tabs = tab*numtabs # Define the tabs
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__
+        tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
         final.append(f"{tabs}{line}\n") # Add the return statement to the final list
         return
 
     def DEFMAIN(line):
-        global numtabs, final, tab
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__
         raise Exception('Line: "def main()", Did you mean "public main()"?') # Raise an exception
     
     def VAR(line):
-        global numtabs, final, tab
-        tabs = tab*numtabs
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__
+        tabs = __S__TAB__SPACING__*__I__NUM__TABS__
         # line may look like: int x = 5 or str x = "Hello World"
         # line needs to become x: int = 5 or x: str = "Hello World"
         def get_type(line):
             # line may look like: int x = 5 or str x = "Hello World"
             # line needs to become int or str
             line = line.split(' ')
-            return line[0]
+            line = [i for i in line if i != ''] # Remove empty spaces
+            line = [i for i in line if i != ' '] # Remove empty spaces
+            return line[0] # Return the type
         
-        def get_name(line):
+        def get_name(line): # Define the get_name function
             # line may look like: int x = 5 or str x = "Hello World"
             # line needs to become x
-            line = line.split(' ')
-            return line[1]
+            line = line.split(' ') # Split the line by spaces
+            # remove all empty spaces from the list
+            line = [i for i in line if i != ''] # Remove empty spaces
+            line = [i for i in line if i != ' '] # Remove empty spaces
+            return line[1] # Return the name
+         
         def get_value(line):
             # line may look like: int x = 5 or str x = "Hello World"
             # line needs to become 5 or "Hello World"
-            line = line.split('=')
-            return line[1]
+            line = line.split('=')[1] # Split the line by the = sign and get the second part
+            line = line.strip() # Remove the spaces from the start and end of the line
+            return line
         
-        line = f"{get_name(line)}: {get_type(line)} = {get_value(line)}"
-        final.append(f"{tabs}{line}\n")
-        return
+        line = f"{get_name(line)}: {get_type(line)} = {get_value(line)}" # Create the new line
+        final.append(f"{tabs}{line}\n") # Add the line to the final list
+        return # Continue the loop
 
-    def THROW(line):
-        global numtabs, final, tab
-        tabs = tab*numtabs
-        line = line.replace('throw', 'raise')
-        final.append(f"{tabs}{line}\n")
-        return
+    def THROW(line): # Define the throw function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
+        line = line.replace('throw', 'raise') # Replace throw with raise
+        final.append(f"{tabs}{line}\n") # Add the line to the final list
+        return # Continue the loop
 
-    def ASYNC(line):
-        global numtabs, final, tab
-        tabs = tab*numtabs
-        funcname = line.split(' ')[2][:-1]
-        async_code = C.asynccode()
-        if async_code not in final:
-            indexxx = 0
-            for i in final:
-                if i.startswith("\n") or i.startswith(""):
-                    final.insert(indexxx, async_code)
-                    break
-                indexxx += 1
+    def ASYNC(line): # Define the async function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
+        funcname = line.split(' ')[2][:-1] # Get the function name
+        async_code = C.asynccode() # Get the async code
+        if async_code not in final: # If the async code is not in the final list
+            indexxx = 0 # Define the indexxx variable
+            for i in final: # Loop through the final list
+                if i.startswith("\n") or i.startswith(""): # If the line starts with a new line or a space
+                    final.insert(indexxx, async_code) # Insert the async code
+                    break # Break the loop
+                indexxx += 1 # Add 1 to the indexxx variable
                 
-        line, numtabs = C.asyncfunc(line, numtabs) # Run the public function
+        line, __I__NUM__TABS__ = C.asyncfunc(line, __I__NUM__TABS__) # Run the public function
         line = line.replace('def', f'{tabs}@_async\n{tabs}def')
         final.append(line) # Add the line to the final list
         # locate which line is this line at and insert @_async before it
-        return
+        return # Continue the loop
     
-    def GLOBAL(line):
-        global numtabs, final, tab
-        tabs = tab*numtabs
-        line = line.replace('const ', '')
-        linetype = line.split(' ')[0]
-        if linetype == 'int':
-            line = line.replace('int ', '')
-            line = line.strip()
-            type_ = 'int'
-        elif linetype == 'str':
-            line = line.replace('str ', '')
-            line = line.strip()
-            type_ = 'str'
-        elif linetype == 'float':
-            line = line.replace('float ', '')
-            line = line.strip()
-            type_ = 'float'
-        elif linetype == 'bool':
-            line = line.replace('bool ', '')
-            line = line.strip()
-            type_ = 'bool'
-        elif linetype == 'list':
-            line = line.replace('list ', '')
-            line = line.strip()
-            type_ = 'list'
-        elif linetype == 'dict':
-            line = line.replace('dict ', '')
-            line = line.strip()
-            type_ = 'dict'
-        elif linetype == 'tuple':
-            line = line.replace('tuple ', '')
-            line = line.strip()
-            type_ = 'tuple'
-        elif linetype == 'set':
-            line = line.replace('set ', '')
-            line = line.strip()
-            type_ = 'set'
-        else:
-            raise Exception(f"Unknown type {linetype}")
+    def GLOBAL(line): # Define the global function
+        global __I__NUM__TABS__, final, __S__TAB__SPACING__ # Define the global variables
+        tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
+        line = line.replace('const ', '') # Remove the const from the line
+        linetype = line.split(' ')[0] # Get the type of the line
+        if linetype == 'int': # If the type is int
+            line = line.replace('int ', '') # Remove the int from the line
+            line = line.strip() # Remove the spaces from the start and end of the line
+            type_ = 'int' # Set the type to int
+        elif linetype == 'str': # If the type is str 
+            line = line.replace('str ', '') # Remove the str from the line
+            line = line.strip() # Remove the spaces from the start and end of the line
+            type_ = 'str' # Set the type to str
+        elif linetype == 'float': # If the type is float
+            line = line.replace('float ', '') # Remove the float from the line
+            line = line.strip() # Remove the spaces from the start and end of the line
+            type_ = 'float' # Set the type to float
+        elif linetype == 'bool': # If the type is bool
+            line = line.replace('bool ', '') # Remove the bool from the line
+            line = line.strip() # Remove the spaces from the start and end of the line
+            type_ = 'bool' # Set the type to bool
+        elif linetype == 'list': # If the type is list
+            line = line.replace('list ', '') # Remove the list from the line
+            line = line.strip() # Remove the spaces from the start and end of the line
+            type_ = 'list' # Set the type to list
+        elif linetype == 'dict': # If the type is dict
+            line = line.replace('dict ', '') # Remove the dict from the line
+            line = line.strip() # Remove the spaces from the start and end of the line
+            type_ = 'dict' # Set the type to dict
+        elif linetype == 'tuple': # If the type is tuple
+            line = line.replace('tuple ', '') # Remove the tuple from the line
+            line = line.strip()     # Remove the spaces from the start and end of the line
+            type_ = 'tuple' # Set the type to tuple
+        elif linetype == 'set': # If the type is set
+            line = line.replace('set ', '') # Remove the set from the line
+            line = line.strip() # Remove the spaces from the start and end of the line
+            type_ = 'set' # Set the type to set
+        else: # If the type is not any of the above
+            raise Exception(f"Unknown type {linetype}") # Raise an exception
         
-        if testType(type_, line):
-            final.insert(0, f"{line}\n")
-        else:
-            raise Exception(f"Invalid type for {line}")
-        return
+        if testType(type_, line): # If the type is correct
+            final.insert(0, f"{line}\n") # Add the line to the final list
+        else: # If the type is not correct
+            raise Exception(f"Invalid type for {line}") # Raise an exception
+        return # Continue the loop
 
 syntax = {
     'public class' : _SYNTAX.CLASS,
@@ -1021,7 +1103,7 @@ def lexer(lines=[],
           decomplie=False, 
           orglines=[]): # Define the lexer function
     
-    global in_module, private_vars, numtabs, final, syntax, main_function_found, noargs, Version # Define the global variables
+    global __B__IN__MODULE__, private_vars, __I__NUM__TABS__, final, syntax, main_function_found, __B__NO__ARGUMENTS__, Version # Define the global variables
     newdata = [] # Define the newdata list
     for _line in lines:
         _line = _line.strip()
@@ -1031,17 +1113,23 @@ def lexer(lines=[],
     index = 0 # Define the index variable
     for _i in newdata:
         # insert the new data into the lines list from the srart but in the correct order
-        lines.insert(index, _i)
-        index += 1
+        lines.insert(index, _i) # Insert the new data into the lines list
+        index += 1 # Add 1 to the index variable
+    
+    for iii in lines: # For each line in the lines list
+        if '::' in iii and ':::' not in iii: # If the line has :: in it
+            lines[lines.index(iii)] = iii.replace('::', '.') # Replace the :: with a .
     
     index = 0 # Define the index variable
     
-    for _formlines in lines:
-        if _formlines.startswith('from'):
-            lines.remove(_formlines)
+    for _formlines in lines: # For each line in the lines list
+        if _formlines.startswith('from'): # If the line starts with from
+            lines.remove(_formlines) # Remove the line from the lines list
+        elif _formlines.startswith('||'): # If the line starts with ||
+            lines[lines.index(_formlines)] = _formlines.replace('||', '') # Replace the || with nothing
     
     orglines.append(lines) # Set the lines variable to the orglines variable
-    if noargs == True: # If the noargs variable is True
+    if __B__NO__ARGUMENTS__ == True: # If the __B__NO__ARGUMENTS__ variable is True
         print(f"Verscape Interpreter v{Version}") # Print the versin
         print("This also gives you low level access to all variables and functions in Verscae Code") # Print the low level access message
         print('Type "exit()" to exit the interpreter') # Print the exit message
@@ -1057,33 +1145,33 @@ def lexer(lines=[],
     index = 0   # Define the index
     incomment = False  # Define the incomment variable            
     
-    for i in lines:
-        index = 0
-        if '{' in i:
-            index = lines.index(i)
-            i = i.strip()            
-            if i.startswith('{'):
-                i = i.replace('\n', '')
-                if i.startswith('{') or i.endswith('{'):
-                    lines[index - 1] = lines[index - 1] + ' {'
-                    lines[index] = ''
-            else:
-                continue
-        index += 1        
-    index = 0
+    for i in lines: # For each line in the lines list
+        index = 0 # Set the index variable to 0
+        if '{' in i: # If the line has { in it
+            index = lines.index(i) # Set the index variable to the index of the line
+            i = i.strip()           # Strip the line   
+            if i.startswith('{'): # If the line starts with {
+                i = i.replace('\n', '') # Remove the new line
+                if i.startswith('{') or i.endswith('{'): # If the line starts with { or ends with {
+                    lines[index - 1] = lines[index - 1] + ' {' # Add a { to the end of the line
+                    lines[index] = '' # Set the line to nothing
+            else: # If the line does not start with {
+                continue  # Continue the loop
+        index += 1 # Add 1 to the index variable            
+    index = 0 # Define the index variable
     
     for line in lines:  # For each line in the lines list
         line = line.strip() # Strip the line
         if line.startswith('/*') or line.endswith('/*'): # Check if the line starts with /*
-            incomment = True
+            incomment = True # Set the incomment variable to True
             line = line.replace('/*', '"""') # Remove the /* from the line
             
         if line.endswith('*/') or line.startswith('*/'): # Check if the line ends with */
-            incomment = False
+            incomment = False # Set the incomment variable to False
             line = line.replace('*/', '"""') # Remove the /* from the line
             
-        if incomment:
-            line = line.replace('*', '-')
+        if incomment: # If the incomment variable is True
+            line = line.replace('*', '-') # Replace the * with -
             
         lines[index] = line # Set the line in the lines list to the line variable
 
@@ -1147,8 +1235,8 @@ def lexer(lines=[],
         if line.startswith('\n'): # Check if the line is not empty
             final.append(' ')   # Add a space to the final list
 
-        if '////' in line:
-            line = line.replace('////', '18@!%281&*&(&*#(!')
+        if '////' in line: # Check if the line has ////
+            line = line.replace('////', '18@!%281&*&(&*#(!') # Replace the //// with 18@!%281&*&(&*#(!
 
         if line.startswith('//'): # Check if the line starts with //
             line = line.replace('//', '#') # Replace the // with #
@@ -1187,23 +1275,23 @@ def lexer(lines=[],
                 continue
 
             elif '{' in line and '}' in line: # Check if the line has a } and a {
-                tabs = tab*numtabs # Define the tabs
+                tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
                 final.append(f"{tabs}{line}\n") # Add the line to the final list
                 continue
 
             elif '{' in line: # Check if { is in the line
-                line = C.brace(line, numtabs) # Run the brace function
+                line = C.brace(line, __I__NUM__TABS__) # Run the brace function
                 final.append(line) # Add the line to the final list
-                numtabs += 1 # Add 1 to the number of tabs
+                __I__NUM__TABS__ += 1 # Add 1 to the number of tabs
                 pass # Continue the loop
 
             elif line.endswith('}'): # Check if the line ends with {
-                numtabs -= 1 # Subtract 1 from the number of tabs
+                __I__NUM__TABS__ -= 1 # Subtract 1 from the number of tabs
                 line = line.replace('}', '') # Remove the } from the line
                 pass # Continue the loop
 
             else: # If none of the above conditions are met
-                tabs = tab*numtabs # Define the tabs
+                tabs = __S__TAB__SPACING__*__I__NUM__TABS__ # Define the tabs
                 final.append(f"{tabs}{line}\n") # Add the line to the final list
                 continue
 
@@ -1219,15 +1307,15 @@ def lexer(lines=[],
             IO.error('\nError: Failed to build') # Print the error message
             exit()
     
-    for i in final:
-        if '@_async' in i and C.asynccode() not in final:
-                code =  C.asynccode()
-                final.insert(0, code)
-                final.insert(1, '\n')
+    for i in final: # For each item in the final list
+        if '@_async' in i and C.asynccode() not in final:   # Check if @_async is in the item and if the async code is not in the final list
+                code =  C.asynccode() # Define the code
+                final.insert(0, code) # Insert the code into the final list
+                final.insert(1, '\n') # Insert a new line into the final list
     
-    if 'from rich import console; print = console.Console().print\n' not in final:
-        final.insert(0, 'from rich import console; print = console.Console().print\n')
-    
+    if 'from rich import console; print = console.Console().print\n' not in final: # Check if the print function is not in the final list
+        final.insert(0, 'from rich import console; print = console.Console().print\n') # Insert the print function into the final list
+     
     
     for i in sys.argv: # For each item in the sys.argv list
         if i == '-d': # Check if the item is -d
@@ -1238,37 +1326,38 @@ def lexer(lines=[],
             _syntax = Syntax(''.join(final), "python", theme="one-dark", line_numbers=True, background_color="default") # Define the syntax variable
             syntaxprinting(_syntax) # Print the syntax
 
-            print("\n\u001b[1m\u001b[31m----------------- Locals -----------------\u001b[0m") # Print the message
-            pprint(locals()) # Print the locals
+            if '-a' in sys.argv: # Check if -p and -a are in the sys.argv list
+                print("\n\u001b[1m\u001b[31m----------------- Locals -----------------\u001b[0m") # Print the message
+                pprint(locals()) # Print the locals
 
-            print("\n\u001b[1m\u001b[31m----------------- Globals -----------------\u001b[0m") # Print the message
-            pprint(globals()) # Print the globals
+                print("\n\u001b[1m\u001b[31m----------------- Globals -----------------\u001b[0m") # Print the message
+                pprint(globals()) # Print the globals
 
-            print("\n\u001b[1m\u001b[31m----------------- Arguments -----------------\u001b[0m") # Print the message
-            pprint(sys.argv) # Print the sys.argv list
+                print("\n\u001b[1m\u001b[31m----------------- Arguments -----------------\u001b[0m") # Print the message
+                pprint(sys.argv) # Print the sys.argv list
 
-            print("\n\u001b[1m\u001b[31m----------------- Paths -----------------\u001b[0m") # Print the message
-            pprint(sys.path) # Print the sys.path list
-
+                print("\n\u001b[1m\u001b[31m----------------- Paths -----------------\u001b[0m") # Print the message
+                pprint(sys.path) # Print the sys.path list
+            
             print("\n\u001b[1m\u001b[31m----------------- End of Data -----------------\u001b[0m") # Print the message
-
+            print("\u001b[1m\u001b[31mIf you would like to see more data you can add the '-a' argument also...\u001b[0m\n") # Print the message
             numval = 3 # Define the numval variable
             lineno = 1 # Define the lineno variable
 
             # self test the new code in a subprocess and check if it works if it does not then print the error message
             create_temp() # Run the create_temp function
-            
-            with open(f'temp{os.sep}src{os.sep}debug.tmp', 'w') as f: # Open the file in write mode
+            tempfilething2 = tempfile.NamedTemporaryFile(mode='w', delete=False) # Create a temp file
+            with open(tempfilething2.name, 'w') as f: # Open the file
                 f.write(''.join(final)) # Write the final list to the file
 
             print("\u001b[1m\u001b[31mRunning Self Test...\u001b[0m") # Print the message
-            if subprocess.run(['python3', 'temp{}src{}debug.tmp'.format(os.sep, os.sep)], check=False, capture_output=True, text=False, timeout=5, encoding='utf-8', errors='ignore').returncode == 0:
+            if subprocess.run(['python3', tempfilething2.name], check=False, capture_output=True, text=False, timeout=5, encoding='utf-8', errors='ignore').returncode == 0:
                 print("\u001b[1m\u001b[32mTest Success Your Code has no errors\u001b[0m") # Print the message
                 pass # Break the loop
             else:
                 # get the line only from the error message
                 print("\u001b[1m\u001b[31mTest Failed Your Code has errors\u001b[0m") # Print the message
-                error = subprocess.run(['python3', 'temp{}src{}debug.tmp'.format(os.sep, os.sep)], check=False, capture_output=True, text=False).stderr.decode('utf-8') # Decode the error message
+                error = subprocess.run(['python3', tempfilething2.name], check=False, capture_output=True, text=False).stderr.decode('utf-8') # Decode the error message
                 error = error.split('\n')[1].split("^")[0].strip() # Split the error message
                 for i in final: # For each item in the final list
                     if error in i: # Check if the error is in the line
@@ -1363,36 +1452,31 @@ def lexer(lines=[],
                     f.write("\n========================= End of Data ========================\n") # Write to the file
                     f.close() # Close the file
             exit() # Exit the program
-        else:
-            continue
+        else: # Else
+            continue # Continue the loop
 
 
-    if in_module == False: # Check if the in_module variable is False
+    if __B__IN__MODULE__ == False: # Check if the __B__IN__MODULE__ variable is False
         for i in final: # Loop through the final list
-            if 'def main' in i: # Check if def main is in the line
-                args = i.split('(')[1].split(')')[0] # Define the args
-                foundMain = True # Define foundMain as True
-                continue
+            if 'def' in i and "main()" in i:
+                foundMain = True # Define the foundMain variable
+                continue # Continue the loop
 
-            if numtabs != 0: # Check if the number of tabs is not 0
+            if __I__NUM__TABS__ != 0: # Check if the number of tabs is not 0
                 # figure out which line is the } missing
-                def findMissingBrace():
-                    for i in newlines:
-                        pass
-
                 IO.error('Error: Missing "}"') # Raise an error
-                exit()
+                exit() # Exit the program
 
         if foundMain == False: # Check if foundMain is False
             IO.error('FATEL ERROR:') # Print the error
             IO.error('   No main function found') # Print the error
             IO.error("Failed to compile, exiting...") # Print the error
             exit() # Exit the program
-
-        final.append(f'main({args})') # Add the main function to the final list
-        compiler(final, decomplie, filename)
+        
+        final.append("main()") # Append the main function to the final list
+        compiler(final, decomplie, filename) # Call the compiler function
     else: # Else
-        in_module = False # Define in_module as False
+        __B__IN__MODULE__ = False # Define __B__IN__MODULE__ as False
         return final # Return the final list
 
 
@@ -1428,7 +1512,7 @@ def main(filename,
     lexer(code, filename, decomplie, orglines) # Run the lexer function
 
 def build(filename, 
-          music_option, 
+          __B__MUSIC__OPTION__, 
           Version, 
           music_path, 
           args=None):    # Define the build function
@@ -1458,7 +1542,7 @@ def build(filename,
         exit()  # Exit the program
 
 def starter(filename, 
-            music_option, 
+            __B__MUSIC__OPTION__, 
             Version, 
             music_path, 
             argv): # don't change this unless you know what you are doing
@@ -1475,19 +1559,41 @@ def starter(filename,
             print('\u001b[41;1mFile not found\u001b[0m') # Print the error
             print('\u001b[41;1mFatel Error Exiting...\u001b[0m') # Print the message
             exit() # Exit the program
-        try:
-            response = requests.get("https://api.github.com/repos/Ze7111/Verscae-Programing-language/releases/latest")  # Get the latest release
-            if response.status_code == 200: # Check if the status code is 200
-                print('\u001b[42;1mChecking for updates...\u001b[0m', end='\r') # Print the message
-            print('\u001b[42;1mCompleted\u001b[0m                  ', end='\r') # Print the message
-            os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
+        try:    # Try to run the code
+            line: str   = '' # Define the line variable as a string
+            lineno: int = 0 # Define the lineno variable as an integer
+            number: int = 0 # Define the number variable as an integer
+            with open(os.getcwd() + os.sep + 'config.ini', 'r+') as f: # Open the config.ini file in read and write mode
+                lines = f.readlines() # Read the lines
+                for i in lines: # Loop through the lines
+                    lines[lines.index(i)] = i.strip()   # Strip the lines
+                
+                for i in lines: # Loop through the lines
+                    if 'requests-made' in i.strip(): # Check if requests-made is in the line
+                        line = i.strip() # Set the line variable to the line
+                        lineno = lines.index(i) # Set the lineno variable to the index of the line
+                        break # Break the loop
+                number = int(line.split('=')[1]) # Set the number variable to the number in the line
+                number += 1 # Add 1 to the number variable
+                lines[lineno] = f'requests-made = {number}' # Set the line in the lines list to the new line
+                f.seek(0) # Go to the start of the file
+                f.write('\n'.join(lines)) # Write the lines to the file
+                f.close() # Close the file
+                
+            if __I__REQUESTS__MADE__ % 10 == 0: # Check if the number of requests made is divisible by 10
+                response = requests.get("https://api.github.com/repos/Ze7111/Verscae-Programing-language/releases/latest")  # Get the latest release
+                if response.status_code == 200: # Check if the status code is 200
+                    print('\u001b[42;1mChecking for updates...\u001b[0m', end='\r') # Print the message
+                print('\u001b[42;1mCompleted\u001b[0m                  ', end='\r') # Print the message
+                os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
 
-            if response.json()['tag_name'] != Version:  # Check if the version is not the same as the latest version
-                print('\u001b[41;1m This version of Verscae is not supported \u001b[0m')   # Print the message
-                print('\u001b[31;1m   Please update to the latest version\u001b[0m') # Print the message
-                print('\u001b[31;1m   You can Ctrl+click to open the link in a web browser \u001b[0m')   # Print the message
-                print('\u001b[34;1m   https://github.com/Ze7111/Verscae-Programing-language/releases/latest \u001b[0m')  # Print the link
-                time.sleep(5)   # Wait 5 seconds
+                if response.json()['tag_name'] != Version:  # Check if the version is not the same as the latest version
+                    print('\u001b[41;1m This version of Verscae is not supported \u001b[0m')   # Print the message
+                    print('\u001b[31;1m   Please update to the latest version\u001b[0m') # Print the message
+                    print('\u001b[31;1m   You can Ctrl+click to open the link in a web browser \u001b[0m')   # Print the message
+                    print('\u001b[34;1m   https://github.com/Ze7111/Verscae-Programing-language/releases/latest \u001b[0m')  # Print the link
+                    time.sleep(5)   # Wait 5 seconds
+            else: pass
         except KeyError: # If there is a KeyError
             print('\u001b[41;1mError: Could not connect to the internet\u001b[0m') # Print the message
             time.sleep(1)  # Wait 1 second
@@ -1495,10 +1601,10 @@ def starter(filename,
 
         try: # don't change this either
             if argv[1] != None or argv[1] != '': # don't change this unless you know what you are doing
-                build(argv[1], music_option, Version, music_path, argv) # don't change this unless you know what you are doing
+                build(argv[1], __B__MUSIC__OPTION__, Version, music_path, argv) # don't change this unless you know what you are doing
                 exit() # don't change this unless you know what you are doing
         except IndexError: # don't change this unless you know what you are doing
-            build(filename, music_option, Version, music_path) # don't change this unless you know what you are doing
+            build(filename, __B__MUSIC__OPTION__, Version, music_path) # don't change this unless you know what you are doing
     except KeyboardInterrupt:   # If the user presses ctrl+c
         print('\u001b[41;1mKeyboard Interrupt Detected\u001b[0m')   # Print the message
         delete_temp()   # Run the delete_temp function
@@ -1518,41 +1624,33 @@ music_path = os.sep.join(__file__.split(os.sep)[:-1]) + os.sep + 'music.mp3' # c
 def create_temp():      # Create the temp folder
     global st_time      # Define the st_time variable as global
     st_time = perf_counter()  # Define the st_ti variable as the current time
-    try:        # Try to run the code
-        os.mkdir('temp')    # Create the temp folder
-        os.mkdir('temp/src')    # Create the src folder
-    except FileExistsError: # If the folder already exists
-        pass    # Continue the loop
+    pass
 
 def delete_temp():    # Delete the temp folder
     global ed_time  # Define the ed_time variable as global
     ed_time = perf_counter()    # Define the ed_time variable as the current time
-    
     if '-f' in sys.argv:    # Check if -f is in the sys.argv list
         os.system('pause')  # Pause the program
-    
-    try:    # Try to run the code
-        shutil.rmtree('temp')   # Delete the temp folder
-    except FileNotFoundError:   # If the folder does not exist
-        pass    # Continue the loop
+    pass # Continue the loop
 
-def debugmode():
-    with open('selftest.v', 'w') as file:
+def debugmode(): # define debug mode function
+    with open('selftest.v', 'w') as file: 
         file.write('public main() {; out < "This is the SELF TEST" < red < newl; in num < "Enter a number: " < endl < green < int; Check.numCheck(num); in string < "Enter a string: " < endl < green < str; Check.stringCheck(string); }; class Check {; func numCheck(num) {; if (num > 0) {; out < "The number is positive" < endl;  }; else if (num < 0) {; out < "The number is negative" < endl; }; else {; out < "The number is zero" < endl; }; return 0; }; func stringCheck(string) {; if (string == "Hello") {; out < "The string is Hello" < endl; }; else {; out < "The string is not Hello" < endl; };return 0; }; }')
         file.close()
-    return
+    return 
 
 def perf_monitor():
-    import psutil
-    print(f'\u001b[1m\u001b[32mRuntime: {ed_time - st_time}s\u001b[0m')
+    import psutil; from rich import console; print = console.Console().print
+    
+    print(f'[green]Runtime: [bold yellow]{ed_time - st_time}s')
     # print all the performance data
-    print(f'\u001b[1m\u001b[32mTotal Lines: {len(final)}\u001b[0m')
+    print(f'[green]Total Lines: [bold yellow]{len(final)}')
     # get the memory usage
     memory_usage = psutil.virtual_memory().percent
-    print(f'\u001b[1m\u001b[32mMemory Usage: {memory_usage}%\u001b[0m')
+    print(f'[green]Memory Usage: [bold yellow]{memory_usage}%')
     # get the disk usage
     disk_usage = psutil.disk_usage('/').percent
-    print(f'\u001b[1m\u001b[32mDisk Usage: {disk_usage}%\u001b[0m')
+    print(f'[green]Disk Usage: [bold yellow]{disk_usage}%')
     # check if a debug folder exists
     # get the time in DD-MM-YY HH-MM-SS format 
     import time
@@ -1639,17 +1737,30 @@ try:   # Try to run the code
             -h            | Shows help
             -v            | Shows version
             -d            | Shows debug mode
-            -o <filename> | Compiles the file to a .exe file
-            -c <filename> | Compiles the file to a .py file
             -cfg          | Opens the config file
+            -f            | Forces the program to freeze before exiting
+            -c <filename> | Compiles the file to a .py file
+            -o <filename> | Compiles the file to a .exe file
+            -01           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a single slow-ish .exe file
+            -02           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a faster single directory with a .exe file
+            -03           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a the fastest .exe file, but nested with a lot of directories
             """
+        
+        argvcommands = [
+            '-p', '-h', '-v', '-d', '-o', '-c', '-cfg', '-f', '-01', '-02', '-03'
+        ]  # List of all the commands
                 
         for i in sys.argv:  # For every argument
             if '-' in i:   # If the argument starts with a -
-                if '-p' in i or '-h' in i or '-v' in i or '-d' in i or '-o' in i or '-c' in i or '-cfg' in i or '-f' in i: # If the argument is -p, -h, -v, -d, -o, -c, or -cfg
-                    pass   # Continue the loop
+                if i in argvcommands: # If the argument is -p, -h, -v, -d, -o, -c, or -cfg
+                    continue   # Continue the loop
+
                 elif i.count('"') == 2: # If the argument has 2 quotes
-                    pass  # Continue the loop
+                    continue  # Continue the loop
+
+                elif '\\' in i or '/' in i or '//' in i or '\\\\' in i: # If the argument has a \ or a / in it or // or \\
+                    continue # Continue the loop
+
                 else:  # If none of the above conditions are met
                     print('\u001b[31;1mInvalid argument provided\u001b[0m') # Print the message 
                     print('\u001b[32;1mWorking arguments:\u001b[0m') # Print the message
@@ -1657,32 +1768,49 @@ try:   # Try to run the code
                     print('\u001b[32;1m-d            | Runs the debug mode\u001b[0m') # Print the message
                     print('\u001b[32;1m-v            | Shows the version of the program\u001b[0m') # Print the message
                     print('\u001b[32;1m-h            | Shows the help menu\u001b[0m') # Print the message
-                    print('\u001b[32;1m-o <filename> | Compiles the versace code to a binary exe file\u001b[0m') # Print the message
-                    print('\u001b[32;1m-c <filename> | Compiles the versace code to a python file\u001b[0m') # Print the message
                     print('\u001b[32;1m-cfg          | Allows you to edit the config file\u001b[0m') # Print the message
                     print('\u001b[32;1m-f            | Forces the program to freeze before exiting\u001b[0m') # Print the message
+                    print('\u001b[32;1m-c <filename> | Compiles the versace code to a python file\u001b[0m') # Print the message
+                    print('\u001b[32;1m-o <filename> | Compiles the versace code to a binary exe file\u001b[0m') # Print the message
+                    print('\u001b[32;1m  -01**       | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a single slow-ish .exe file\u001b[0m')
+                    print('\u001b[32;1m  -02**       | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a faster single directory with a .exe file\u001b[0m')
+                    print('\u001b[32;1m  -03**       | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a the fastest .exe file, but nested with a lot of directories\u001b[0m')
+            
                     print('\u001b[32;1m*<filename> is an optianl argument\u001b[0m') # Print the message
+                    print('\u001b[32;1m**Not implemented yet.\u001b[0m') # Print the message
+                    print(f'\u001b[32;1mYou used {i}\u001b[0m') # Print the message
                     exit()  # Exit the program
         
         try:    # Try to run the code
             for i in sys.argv:  # Loop through the arguments
                 if i == '-m':  # Check if the argument is -m
-                    music_option = True # Set the music_option to True
-                if i == '-h':
+                    __B__MUSIC__OPTION__ = True # Set the __B__MUSIC__OPTION__ to True
+                if i == '-h': # Check if the argument is -h
                     print('\u001b[41;1mYou can read the entire documentation\u001b[0m')   # Print the message
                     print('\u001b[31;1m  In you browser, just ctrl + click this link\u001b[0m') # Print the message
                     print('\u001b[34;1m  https://github.com/Ze7111/Verscae/wiki \u001b[0m')  # Print the link
                     print('\u001b[31;1m  If you have a question that is not answred there, you can open an issue or email me at \u001b[0m')   # Print the message
                     print('\u001b[31;1m  ze7111@gmail.com \u001b[0m')   # Print the message
-                    exit()
+                    exit() # Exit the program
 
-                if i == '-v':
-                    print(f'\u001b[41;1mYou are using Verscae version {Version}\u001b[0m')
-                    exit()
+                if i == '-v':  # Check if the argument is -v
+                    print(f'\u001b[41;1mYou are using Verscae version {Version}\u001b[0m')  # Print the message
+                    exit() # Exit the program
+                
+                if i == '-cfg': # If the argument is -cfg
+                    print('\u001b[41;1mOpening config file\u001b[0m') # Print the message
+                    configpath = f"config.ini" # Set the configpath to the config.json file
+                    if os.path.exists(configpath): # If the config.json file exists
+                        os.system(f'start {configpath}') # Open the config.json file
+                    else:  # If the config.json file does not exist
+                        makeconfigfile(configpath) # Run the makeconfigfile function
+                        os.system(f'start {configpath}') # Open the config.json file
+                    exit() # Exit the program
+                
         except IndexError: # If there is an IndexError
             pass   # Continue the loop
         create_temp()   # Run the create_temp function
-        starter(filename, music_option, Version, music_path, sys.argv) # don't change this unless you know what you are doing
+        starter(filename, __B__MUSIC__OPTION__, Version, music_path, sys.argv) # don't change this unless you know what you are doing
 
     else:   # If the file is imported
         print('\u001b[41;1mYou are not allowed to import this file\u001b[0m') # don't change this unless you know what you are doing
@@ -1695,7 +1823,7 @@ except KeyboardInterrupt:   # If the user presses ctrl+c
 finally:   # Run this code no matter what
     delete_temp()   # Run the delete_temp function
     for i in sys.argv:  # Loop through the sys.argv list
-        if i == '-p':
-            perf_monitor()
-    if perf_monitor_always_on:
-        perf_monitor()
+        if i == '-p':  # If the argument is -p
+            perf_monitor() # Run the perf_monitor function
+    if __B__PERFORMANCE__MONITOR__: # If the __B__PERFORMANCE__MONITOR__ is True
+        perf_monitor()  # Run the perf_monitor function
