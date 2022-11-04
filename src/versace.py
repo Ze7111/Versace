@@ -1,11 +1,11 @@
-import configparser, os, sys, random, time, tempfile
+import configparser, os, sys, random, time, tempfile # Import the required modules
 
-Version = '3.1.0a'   # Define the Version variable as 4.6.6
+Version = '3.1.0f'   # Define the Version variable as the current version of the program
 
-def makeconfigfile(configpath):
+def makeconfigfile(configpath): # Define the makeconfigfile function
     data = r"""[Core-Config]
 music-option = false
-version = 3.1.0a
+version = 3.1.0f
 tab-style = "    "
 
 start-indentation-level = 0
@@ -15,46 +15,46 @@ recurse-from-function = false
 no-args-start = false
 always-monitor-performance = false
 requests-made = 0"""
-    if type(configpath) == bool:
-        return data
-    else:
-        with open(configpath, 'w') as f:
-            f.write(data)
+    if type(configpath) == bool: # If the configpath variable is a boolean
+        return data # Return the data variable
+    else:  # If the configpath variable is not a boolean
+        with open(configpath, 'w') as f: # Open the config.ini file
+            f.write(data) # Write the data variable to the config.ini file
 
 def installmodules():  # Define the installmodules function
     try:   # Try to run the code
         subprocess.run('pip install rich requests psutil pyinstaller', shell=True)  # Install the modules
-    except Exception as e:
+    except Exception as e: # If an error occurs
         subprocess.run('pip3 install rich requests psutil pyinstaller', shell=True) # Install the modules        
 
 def readconfig():   # Define the readconfig function
     config_obj = configparser.ConfigParser()  # Define the config variable as a ConfigParser object
     configpath = os.getcwd() + os.sep + 'config.ini'  # Define the configpath variable as the current working directory + the config.ini file
-    if os.path.exists(configpath):
-        pass
-    else:
-        makeconfigfile(configpath)
-        #pass
+    if os.path.exists(configpath): # If the config.ini file exists
+        pass # Do nothing
+    else: # If the config.ini file does not exist
+        makeconfigfile(configpath) # Run the makeconfigfile function
+        #pass # Do nothing
     
-    try:
+    try: # Try to run the code
         config_obj.read(f'{configpath}') # Read the config.ini file
         Core = config_obj["Core-Config"]   # Define the Core variable as the Core-Config section
-    except Exception as e:
-        os.system("")
+    except Exception as e: # If an error occurs
+        os.system("") # Clear the screen 
         print(f'\u001b[31m' + 'Error: ' + '\u001b[0m' + f'The config file at: {configpath} is corrupted or non-accessible. Will revert to default settings.') # Print an error message
-        print('\u001b[31m' + 'Reverting to default settings' + '\u001b[0m')
-        print(f"\u001b[31m" + "Error: " + "\u001b[0m" + f"{e}")
-        data = makeconfigfile(True)
+        print('\u001b[31m' + 'Reverting to default settings' + '\u001b[0m') # Print an error message
+        print(f"\u001b[31m" + "Error: " + "\u001b[0m" + f"{e}") # Print the error
+        data = makeconfigfile(True) # Define the data variable as the makeconfigfile function
         # make a temp file with the data
-        with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
-            f.write(data)
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as f: # Open a temporary file
+            f.write(data) # Write the data variable to the temporary file
         
-        # read the temp file
-        config_obj.read(f.name)
+        # read the temp file 
+        config_obj.read(f.name) # Read the temporary file
         Core = config_obj["Core-Config"]   # Define the Core variable as the Core-Config section
         # delete the temp file
-        os.remove(f.name)
-        time.sleep(1)
+        os.remove(f.name) # Remove the temporary file
+        time.sleep(1) # Wait for 1 second
     
     __B__MUSIC__OPTION__ = Core["music-option"] # Define the __B__MUSIC__OPTION__ variable as the music-option option
     __S__TAB__SPACING__ = Core["tab-style"] # Define the __S__TAB__SPACING__ variable as the __S__TAB__SPACING__-style option
@@ -70,13 +70,13 @@ def readconfig():   # Define the readconfig function
     return __B__MUSIC__OPTION__, __S__TAB__SPACING__, __I__NUM__TABS__, __B__DO__ONCE__, __B__IN__MODULE__, __B__RECURSE__, __B__NO__ARGUMENTS__, __B__PERFORMANCE__MONITOR__, __I__REQUESTS__MADE__ # Return the variables
 
 def convert_to_bool(string):    # Define the convert_to_bool function
-    import os
+    import os  # Import the os module
     if string.lower() == 'true':    # If the string is True
-        return True
+        return True # Return True
     elif string.lower() == 'false': # If the string is False
-        return False
-    else:
-        os.system("")
+        return False   # Return False
+    else:  # If the string is not True or False
+        os.system("") # Clear the screen
         # find where in the config file is the string
         print('\u001b[41;1m' + f'Error: Could not read a line in the config file as it is not a valid statemnt' + '\u001b[0m')  # Print an error message
         print('\u001b[31;1m' + f'Expected : a boolean value not "{string}"' + '\u001b[0m')  # Print an error message
@@ -129,11 +129,11 @@ except ModuleNotFoundError as e: # If the module is not found
     print('\u001b[32;1mWould you like to auto-install the following modules? \u001b[0m') # Print the message
     print('\u001b[31;1m    rich\n    psutil\n    requests\n    pyinstaller\n\u001b[0m') # Print the message
     print('\u001b[32;1m(y/n) : \u001b[0m', end='') # Print the message
-    if input().lower() == 'y':
-        installmodules()
+    if input().lower() == 'y': # If the user wants to install the modules
+        installmodules() # Install the modules
         print('\u001b[32;1mModules Installed \u001b[0m') # Print the message
         print('\u001b[31;1mPlease re-run Versace to continue\u001b[0m') # Print the message
-        exit()
+        exit() # Exit the program
     else: # If the user does not want to install the modules
         print('\u001b[32;1mInvalid Input\u001b[0m') # Print the message
         print('\u001b[32;1mPlease install the modules manually\u001b[0m') # Print the message
@@ -221,10 +221,10 @@ def _async(func): # decorator for async function
 You can edit any code below this line
 \"\"\"
 """
-        return async_code
+        return async_code # return the async code
     
     def catch(line, __I__NUM__TABS__): # Define the catch function
-        global __S__TAB__SPACING__
+        global __S__TAB__SPACING__ # Make the global variable __S__TAB__SPACING__ usable
         line = line.replace('catch', 'except') # Replace catch with except
         line = line.replace('{', '') # Remove the { from the line
         line = line.strip() # Remove the spaces from the line
@@ -245,16 +245,16 @@ class include: # Class include
         if 'from' in line: # Check if from is in the line
             # include [sleep] from [time]
             # from time import sleep
-            line = line.replace('include', '')
-            line = line.replace('from', '')
-            line = line.split('[')[1].split(']')[0] + '893498*&(@*(&&(**' + line.split('[')[2].split(']')[0]
-            line = line.split('893498*&(@*(&&(**')
-            line = 'from ' + line[1] + ' import ' + line[0]
-            pass
+            line = line.replace('include', '') # Remove include from the line
+            line = line.replace('from', '') # Remove from from the line
+            line = line.split('[')[1].split(']')[0] + '893498*&(@*(&&(**' + line.split('[')[2].split(']')[0] # Split the line at the [ and ]
+            line = line.split('893498*&(@*(&&(**') # Split the line at the 893498*&(@*(&&(** string
+            line = 'from ' + line[1] + ' import ' + line[0] # Add from and import to the line
+            pass # Pass
 
         else: # If from is not in the line
             line = line.replace('include', 'import').replace('[', '').replace(']', '') # Replace include with import and remove the [ and ]
-            pass
+            pass # Pass
 
         if '{' in line or '}' in line or '{}' in line: # Check if { or } or {} is in the line
             print('\u001b[41;1mINVALID SYNTAX\u001b[0m') # Print a message
@@ -263,43 +263,43 @@ class include: # Class include
 
         return line # Return the line
 
-    def _from_Include(line):
-        global data, __B__RECURSE__
+    def _from_Include(line): # Define the _from_Include function
+        global data, __B__RECURSE__ # Make the global variables data and __B__RECURSE__ usable
         # line will be something like this
         # from [file] include *
         lineargs = line.split(' ') # Split the line by spaces
         filename = lineargs[1].replace('[', '').replace(']', '') # Get the filename
         lineargs.pop(1) # Remove the filename from the lineargs
-        lineargs.pop(-1)
+        lineargs.pop(-1) # Remove the * from the lineargs
         lineargs = ' '.join(lineargs) # Join the lineargs
-        lineargs = lineargs.strip()
-        if lineargs == 'from include':
-            filename = filename.replace('.', os.sep)
-            if os.path.exists(filename + '.v'):
-                filename = filename + '.v'
-            elif os.path.exists(filename + '.py'):
-                filename = filename + '.py'
-            elif os.path.exists(filename + '.vh'):
-                filename = filename + '.vh'
-            elif os.path.exists(filename + '.vs'):
-                filename = filename + '.vs'
-            else:
-                raise FileNotFoundError(f'File {filename} not found')
+        lineargs = lineargs.strip() # Remove the spaces from the lineargs
+        if lineargs == 'from include': # Check if the lineargs is from include
+            filename = filename.replace('.', os.sep) # Replace the . with the os.sep
+            if os.path.exists(filename + '.v'): # Check if the file exists
+                filename = filename + '.v' # Add .v to the filename
+            elif os.path.exists(filename + '.py'): # Check if the file exists
+                filename = filename + '.py' # Add .py to the filename
+            elif os.path.exists(filename + '.vh'): # Check if the file exists
+                filename = filename + '.vh' # Add .vh to the filename
+            elif os.path.exists(filename + '.vs'): # Check if the file exists
+                filename = filename + '.vs' # Add .vs to the filename
+            else: # If the file does not exist
+                raise FileNotFoundError(f'File {filename} not found') # Raise a FileNotFoundError
         
-        with open(filename, 'r') as f:
-            __B__RECURSE__ = False
-            for _ii in f.readlines():
-                data.append(_ii)
-                if _ii.startswith('from'):
-                    __B__RECURSE__ = True
-                    data.pop(-1)
-                    include._from_Include(_ii)
-                    continue
+        with open(filename, 'r') as f: # Open the file
+            __B__RECURSE__ = False # Set __B__RECURSE__ to False
+            for _ii in f.readlines(): # Loop through the lines in the file
+                data.append(_ii) # Add the line to the data list
+                if _ii.startswith('from'):   # Check if the line starts with from
+                    __B__RECURSE__ = True     # Set __B__RECURSE__ to True
+                    data.pop(-1)    # Remove the line from the data list
+                    include._from_Include(_ii) # Call the _from_Include function
+                    continue # Continue the loop
         
-        if __B__RECURSE__:
-            return
-        else:
-            return data        
+        if __B__RECURSE__: # Check if __B__RECURSE__ is True
+            return data # Return the data list
+        else: # If __B__RECURSE__ is False
+            return data      # Return the data list   
         
         
 
@@ -356,15 +356,16 @@ class IO: # Class IO
         } # Define the datatypes
         self.endtypes = {
             'newl' : r'\n\n',
-            '__S__TAB__SPACING__' : r'\t',
+            'tab' : r'\t',
             'rw' : r'\r',
             'space' : r' ',
             'endl' : r'',
+            'erase' : r'\x1b[2K',
         } # Define the endtypes
 
     def output(self, text): # Define the output function
         line = '' # Define the line
-        if '"' not in text:
+        if '"' not in text: # Check if " is not in the text
             args = text.split('<') # Split the text
             text = text.replace('<', '') # Replace the text
             text = text.replace(args[0], '') # Replace the text
@@ -478,14 +479,79 @@ class IO: # Class IO
     def error(text):    # Define the error function
         print(f"\u001b[41;1m{text}\u001b[0m")   # Print the error
 
+
+def errorcalculate(topline):         # Function to calculate the error
+    """
+        code should do the following:
+        There are 2 outputs expected, the top line, and the bottom line (the line we calculate)
+        The top line is the line before the error pointing line and looks like this:
+        isasn choice < "which question am I doing? (1, 2, 3, 4) : " < int < bold red
+        The bottom line is the line with the error and looks like this:
+        ^^^^^^^^^^^^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        notice how only where there is " " is where the char is ~ and the rest is ^
+        heres a Second Example:
+        out < "What is your name? : " < go < "Hello " < name < "!" < bold red
+        ^^^^^^~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^~~~~~~~~^^^^^^^^^^~~~^^^^^^^^^^^
+    """
+    bottomline = ''    # The bottom line
+    char = '"'   # The char to look for
+    count = 0   # The count of the char
+    in_string = False  # If the char is in a string
+    for i in topline:  # Loop through the top line
+        if "'" == i: # If the char is a '
+            bottomline += '^' # Add a ^ to the bottom line
+        else:  # If the char is not a '
+            bottomline += ' ' # Add a space to the bottom line
+    
+    if "'" in topline: # If the char is in the top line
+        if '\\' in topline[topline.index("'") - 1:]: # If the char is escaped
+            pass # Do nothing
+        else: # If the char is not escaped
+            bottomline += '\nAdd a \ before the \' so the string would look like this: \\\'' # Add the error message to the bottom line
+            return bottomline    # Return the bottom line
+        
+    bottomline = ''   # Reset the bottom line
+    
+    for i in range(len(topline)): # Loop through the top line
+        if topline[i] == char: # If the char is the char we are looking for
+            bottomline += '~' # Add a ~ to the bottom line
+            if count == 1: # If the count is 1
+                in_string = False # Set the in string to False
+                count = 0 # Reset the count
+                continue  # Continue the loop
+            in_string = True # Set the in string to True
+            count += 1 # Add 1 to the count
+            continue # Continue the loop
+        else: # If the char is not the char we are looking for
+            if in_string: # If the char is in a string
+                bottomline += '~' # Add a ~ to the bottom line
+                continue # Continue the loop
+            else: # If the char is not in a string
+                bottomline += '^' # Add a ^ to the bottom line
+                continue # Continue the loop
+    return bottomline   # Return the bottom line  
+
+def setupbuild(name, version, description, window_console, icon_choice, icon, filename):
+    return f"""
+from cx_Freeze import setup, Executable
+base = '{window_console}'
+executables = [
+    Executable("{filename}", base=base, target_name = '{name}'{icon})
+]
+setup(name='{name}',
+      version = '{version}',
+      description = '{description}',
+      executables = executables)
+""" # Set the builddata to the cx_Freeze setup
+
 def compiler(final, 
              decomplie, 
              filename=None): # Define the compiler function
-    
+        
     os.system('cls' if os.name == 'nt' else 'clear')    # Clear the screen
     # create a temp file
     tempfilething = tempfile.NamedTemporaryFile(mode='w', delete=False) # Create a temp file
-    filename_only = ''
+    filename_only = '' # The filename only
     current_time = time.time()  # Set the current time
     current_time = time.strftime('%d-%m-%Y %H-%M-%S', time.localtime(current_time)) # Set the current time
 
@@ -495,23 +561,27 @@ def compiler(final,
         except FileExistsError:     # If the folder already exists
             pass    # If the folder already exists pass
         
-        filename_only = filename.split(os.sep)[-1] # Set the filename only to the filename without the extension
-        filename_only = filename_only.split('.')[0]    # Set the filename only to the filename without the extension
+        filename_only = sys.argv[1]
+        if "\\" in filename_only:
+            filename_only = filename_only.split("\\")[-1]
+        elif "/" in filename_only:
+            filename_only = filename_only.split("/")[-1]
+        filename_only = filename_only.split('.')[0]
         
-        for i in sys.argv:
-            if i == '-c':
-                try:
-                    name = sys.argv[sys.argv.index(i)+1]
-                    if '.' in name:
-                        file_ext = name.split('.')[1]
-                        name = name.split('.')[0]
-                    else:
-                        file_ext = 'py'
-                        name = name
-                    break
-                except IndexError:
-                    name = ''
-                    break
+        for i in sys.argv: # Loop through the arguments
+            if i == '-c': # Check if the -c flag is in the arguments
+                try:   # Try to open the file
+                    name = sys.argv[sys.argv.index(i)+1]    # Set the name to the argument after the -c flag
+                    if '.' in name: # Check if the name has a . in it
+                        file_ext = name.split('.')[1]  # Set the file extension to the name without the filename
+                        name = name.split('.')[0]  # Set the name to the name without the file extension
+                    else:  # If the name does not have a . in it
+                        file_ext = 'py' # Set the file extension to py
+                        name = name # Set the name to the name
+                    break  # Break the loop
+                except IndexError: # If there is no argument after the -c flag
+                    name = ''  # Set the name to nothing
+                    break # Break the loop
 
         print('\u001b[0m')  # Print the reset color
 
@@ -526,13 +596,13 @@ def compiler(final,
             else:   # If the os is not windows
                 name = f'{os.getcwd()}{os.sep}src{os.sep}{name}.{file_ext}'  # Set the name to the name
         
-        delete_temp()
-        times = 0
+        delete_temp()  # Delete the temp file
+        times = 0  # Set the times to 0
         os.system('cls' if os.name == 'nt' else 'clear')    # Clear the screen
-        for i in range(5):
+        for i in range(5): # Loop 5 times
             print(f'\u001b[41;1mDecompiling.{"."*times}\u001b[0m', end='\r')  # Print the decompiling message
             time.sleep(random.randint(3, 10)/10) # Sleep for a random amount of time
-            times += 1
+            times += 1 # Add 1 to the times
         print('\t\t\t\t\t\t\t\t\t\t\t', end='\r') # Print a blank line
 
         try:    # Try to open the file
@@ -560,10 +630,10 @@ def compiler(final,
         print('\u001b[31;1mDo you want to run the file? (y/n) : \u001b[0m', end='') # Print the question
         
         if input().lower() == 'y':  # Check if the input is y
-            create_temp()
+            create_temp()  # Create the temp folder
             pass    # If the input is y pass
         else:   # If the input is not y
-            delete_temp()
+            delete_temp()  # Delete the temp folder
             exit('\u001b[31;1mYOUR FILE IS SAVED!!\u001b[0m')   # Exit the program
 
     with open(tempfilething.name, 'w') as f:  # Open the file
@@ -571,168 +641,279 @@ def compiler(final,
             f.write(line)   # Write the line to the file
     
     if '-o' in sys.argv:    # Check if -o is in the sys.argv
-        if '-03' in sys.argv:   # Check if -01 is in the sys.argv
-            pass
-        elif '-02' in sys.argv:   # Check if -01 is in the sys.argv
-            pass
-        elif '-01' in sys.argv: # Check if -02 is in the sys.argv
-            pass
-        try:    # Try to open the file
-            # rename the file in the temp folder to .py
-            # run this command with subprocess pyinstaller --noconfirm --onefile --console --icon "C:/Users/dhruv/Downloads/logo.ico"  "Z:\GitHub\Repos\BrainLuck2.0\versace.py"
-            print('\u001b[31;1mDo you want to put an icon for the file? (y/n) : \u001b[0m', end='') # Print the question
-            icon_choice = input().lower().strip()
-            if icon_choice == 'y':
-                print('\u001b[31;1mEnter the icon path ("path\\to\\icon.ico"): \u001b[0m', end='')
-                icon = input()
-                if icon.count('"') != 2:
-                    icon = f'"{icon}"'
-            else:
-                icon_choice = 'n'
-                icon = ''
+        filename_only = sys.argv[1]
+        if "\\" in filename_only: filename_only = filename_only.split("\\")[-1]
+        elif "/" in filename_only: filename_only = filename_only.split("/")[-1]
+        filename_only = filename_only.split('.')[0]
+        
+        if '-O3' in sys.argv or '-3' in sys.argv:   # Check if -O3 is in the sys.argv
+            # check if cx_Freeze is installed
+            try:    # Try to import cx_Freeze
+                import cx_Freeze  # Import cx_Freeze
+            except ModuleNotFoundError: # If cx_Freeze is not installed
+                raise ModuleNotFoundError('cx_Freeze is not installed, It can be installed here \'https://github.com/marcelotduarte/cx_Freeze\'')  # Raise a ModuleNotFoundError
             
-            filepath = tempfilething.name
-            # copy filepath to src folder and add .py to the end
-            if os.path.exists('src'): pass
-            else: os.mkdir('src')
-            shutil.copy(filepath, f'{os.getcwd()}{os.sep}src{os.sep}{filename_only}.py')
-            filepath = f'{os.getcwd()}{os.sep}src{os.sep}.py'
-            
-            print('\u001b[31;1mWill this be an Window based application or a console based one? (w/c): \u001b[0m', end='')
-            window_console = input().lower().strip()
-            if window_console == 'w':
-                window_console = '--windowed'
-            else:
-                window_console = '--console'  
-            
-            if icon_choice == 'y':
-                command = f'pyinstaller --noconfirm --onefile {window_console} --icon {icon} {filepath}'
-            elif icon_choice == 'n':
-                command = f'pyinstaller --noconfirm --onefile {window_console} {filepath}'
-            else:
-                delete_temp()
-                exit('\u001b[31;1mInvalid Input\u001b[0m')
-                
-                
-            # move the .tmp file to the rood dir
-            os.system(command)
-            
-            # move the exe from the dist folder to the root dir
-            # delete the build and dist folder
-            if os.name == 'nt':
-                # keep only yhe file ext
-                filename_only = '.' + filepath.split('.')[-1]
-                try:
-                    shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}.exe', f'{os.getcwd()}{os.sep}{filename_only}.exe')
-                except FileNotFoundError:
-                    shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}.{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
-            else:
-                filename_only = '.' + filepath.split('.')[-1]
-                try:
-                    shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
-                except FileNotFoundError:
-                    shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}.{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
-            
-            shutil.rmtree(f'{os.getcwd()}{os.sep}build')
-            shutil.rmtree(f'{os.getcwd()}{os.sep}dist')
-            os.remove(f'{os.getcwd()}{os.sep}{filename_only}.spec')
-            # is something is after the -o in the sys.argv
             try:
-                if sys.argv[sys.argv.index('-o') + 1] != '-o':  # Check if the sys.argv is not -o
-                    # rename the exe to the name after the -o
-                    os.rename(f'{os.getcwd()}{os.sep}{filename_only}.exe', f'{os.getcwd()}{os.sep}{sys.argv[sys.argv.index("-o") + 1]}')
-            except IndexError:
-                pass
-            
-            os.system('cls' if os.name == 'nt' else 'clear')
-            
-            if os.name == 'nt':
-                filename_only = filename_only + '.exe'
-            
-            os.remove(filepath)
-            print('\u001b[32;1mFile Compiled\u001b[0m')
-            print(f'\u001b[32;1mFile saved to the root directory as "{filename_only}"\u001b[0m')
-            print('\u001b[31;1mDo you want to run the binary compiled file? (y/n) : \u001b[0m', end='')
-            
-            if input().lower() == 'y':
-                if os.name == 'nt':
-                    os.system(f'start {filename_only}.exe')
+                print('\u001b[31;1mVersion of the Executable? (1.0.0) : \u001b[0m', end='') # Print the question
+                version = input()   # Set the version to the input
+                if version == '':   # Check if the version is ''
+                    version = '1.0.0'   # Set the version to 1.0.0
+                
+                if sys.argv[sys.argv.index('-o') + 1] != '-3' or sys.argv[sys.argv.index('-o') + 1] != '-O3': # Check if the argument after -0 is not -3 or -O3
+                    print('\u001b[31;1mName of the Executable? (My-Executable) : \u001b[0m', end='') # Print the question
+                    name = input()  # Set the name to the input
+                    if name == '':  # Check if the name is ''
+                        name = 'My-Executable' # Set the name to My-Program
                 else:
-                    os.system(f'{filename_only}')
-            else:
-                delete_temp()
-                exit('\u001b[31;1mYOUR FILE IS SAVED!!\u001b[0m')
-            exit()
+                    name = sys.argv[sys.argv.index('-o') + 1].split('.')[0] # Set the name to the argument after -o
+                    if '\\' in name: name = name.split('\\')[-1]
+                    elif '/' in name: name = name.split('/')[-1]
+                    if name == '':  # Check if the name is ''
+                        name = 'My-Executable' # Set the name to My-Program
+                
+                print('\u001b[31;1mDescription for the Executable? (Simple-App) : \u001b[0m', end='')
+                description = input()
+                if description == '':
+                    description = 'Simple-App'
+                
+                print('\u001b[31;1mWill this be an executable that opens a UI based Window or a console based one? (w/c): \u001b[0m', end='')
+                window_console = input().lower().strip()
+                if window_console == 'w':
+                    if os.name == 'nt':
+                        window_console = 'Win32GUI'
+                    else:
+                        window_console = 'None'
+                else:
+                    window_console = 'console' 
+                    
+                print('\u001b[31;1mDo you want to put an icon for the file? (y/n) : \u001b[0m', end='') # Print the question
+                icon_choice = input().lower().strip()
+                if icon_choice == 'y':
+                    print('\u001b[31;1mEnter the icon path ("path\\to\\icon.ico"): \u001b[0m', end='')
+                    icon = input()
+                    if icon.count('"') != 2:
+                        icon = f'"{icon}"'
+                    icon = f", icon='{icon}'"
+                else:
+                    icon_choice = 'n'
+                    icon = ''
+
+                with open("OPTIMIZED_ULTRA.py", 'w') as f:  # Open the file
+                    for line in final:  # For each line in the final
+                        f.write(line)   # Write the line to the file
+                        
+                builddata = setupbuild(name, version, description, window_console, icon_choice, icon, "OPTIMIZED_ULTRA.py")
+                
+                with open("setup.py", 'w') as f:  # Open the file
+                    f.write(builddata)  # Write the builddata to the file
+                    f.close()  # Close the file
+                filepath = tempfilething.name
+                tempfilething.close()
+
+                python_version = f'{sys.version_info[0]}.{sys.version_info[1]}'        
+                
+                os.system(f'python setup.py build') # Run the file
+                os.remove('setup.py')   # Remove the setup.py file
+                # rename the folder inside the build folder
+                # get python version 
+                
+                if os.name == 'nt':
+                    os.rename(f'{os.getcwd()}{os.sep}build{os.sep}exe.win-amd64-{python_version}', f'{os.getcwd()}{os.sep}build{os.sep}{name}')
+                    path = f'{os.getcwd()}{os.sep}build{os.sep}{name}'
+                else:
+                    os.rename(f'{os.getcwd()}{os.sep}build{os.sep}exe.linux-x86_64-{python_version}', f'{os.getcwd()}{os.sep}build{os.sep}{name}')
+                    path = f'{os.getcwd()}{os.sep}build{os.sep}{name}'
+                
+                # move the folder in the build folder to the root directory
+                shutil.move(path, f'{os.getcwd()}{os.sep}{name}')
+                
+                shutil.rmtree('build')  # Remove the build folder
+                
+                os.remove(filepath) # Remove the file
+                os.remove('OPTIMIZED_ULTRA.py') # Remove the OPTIMIZED_ULTRA.py file
+                exit('\u001b[31;1mMAX OPTIMIZED EXE CREATED\u001b[0m')   # Exit the program
             
-        except Exception as e:
-            raise Exception(e)
-        except FileNotFoundError:   # If the file is not found
-            raise FileNotFoundError('Failure File not found in the temp dir')    # Raise the file not found error
-        except KeyboardInterrupt:   # If the user presses ctrl + c
-            raise KeyboardInterrupt('Keyboard Interrupt Detected')  # Raise the keyboard interrupt detected error
-        except ModuleNotFoundError:
-            raise ModuleNotFoundError('Pyinstaller is not installed, plase install it with "pip install pyinstaller" or "pip3 install pyinstaller"')
+            except KeyboardInterrupt:
+                raise KeyboardInterrupt("Keyboard Interrupt Detected")
+            except FileNotFoundError:
+                raise FileNotFoundError("File Not Found")
+            except Exception as e:
+                raise Exception(e)
+
+        elif '-O2' in sys.argv or '-2' in sys.argv:   # Check if -O2 is in the sys.argv
+            try:    # Try to open the file
+                # rename the file in the temp folder to .py
+                # run this command with subprocess pyinstaller --noconfirm --onefile --console --icon "C:/Users/dhruv/Downloads/logo.ico"  "Z:\GitHub\Repos\BrainLuck2.0\versace.py"
+                print('\u001b[31;1mDo you want to put an icon for the file? (y/n) : \u001b[0m', end='') # Print the question
+                icon_choice = input().lower().strip() # Set the icon_choice to the input
+                if icon_choice == 'y':  # Check if the icon_choice is y
+                    print('\u001b[31;1mEnter the icon path ("path\\to\\icon.ico"): \u001b[0m', end='') # Print the question
+                    icon = input() # Set the icon to the input
+                    if icon.count('"') != 2:   # Check if the icon does not have 2 " in it
+                        icon = f'"{icon}"' # Add the " to the icon
+                else:  # If the icon_choice is not y
+                    icon_choice = 'n'  # Set the icon_choice to n
+                    icon = ''  # Set the icon to ''
+                
+                icon = f'--icon {icon}' if icon_choice == 'y' else '' # Set the icon to the icon if the icon_choice is y else ''
+                
+                filepath = tempfilething.name # Set the filepath to the tempfilething.name
+                # copy filepath to temp folder and add .py to the end
+                if os.path.exists('temp'): pass # Check if the temp folder exists
+                else: os.mkdir('temp')  # If the temp folder does not exist create it
+
+                shutil.copy(filepath, f'{os.getcwd()}{os.sep}temp{os.sep}{filename_only}.py') # Copy the file to the temp folder
+                filepath = f'{os.getcwd()}{os.sep}temp{os.sep}{filename_only}.py' # Set the filepath to the temp folder
+                
+                print('\u001b[31;1mWill this be an Window based application or a console based one? (w/c): \u001b[0m', end='') # Print the question
+                window_console = input().lower().strip() # Set the window_console to the input
+                if window_console == 'w':  # Check if the window_console is w
+                    window_console = '--windowed' # Set the window_console to --windowed
+                else: # If the window_console is not w
+                    window_console = '--console'   # Set the window_console to --console
+
+                command = f'pyinstaller --noconfirm --onedir {window_console} {icon} {filepath}' # Set the command to the command
+
+                # move the .tmp file to the rood dir
+                os.system(command) # Run the file
+                
+                shutil.rmtree(f'{os.getcwd()}{os.sep}temp') # Remove the temp folder
+                shutil.rmtree(f'{os.getcwd()}{os.sep}build') # Remove the build folder
+                # move the folder inside the dist folder to the root dir
+                # remove the dist folder
+
+                shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}') # Move the folder inside the dist folder to the root dir
+                shutil.rmtree(f'{os.getcwd()}{os.sep}dist') # Remove the dist folder
+                
+                # rename this new folder to the name specified by the user in the argument after -o in sys.argv
+                os.rename(f'{os.getcwd()}{os.sep}{filename_only}', f'{os.getcwd()}{os.sep}{sys.argv[sys.argv.index("-o") + 1].split(".")[0]}') # Rename the folder to the output_name
+                pathofexe = f'{os.getcwd()}{os.sep}{sys.argv[sys.argv.index("-o") + 1].split(".")[0]}{os.sep}{filename_only}.exe' if os.name == 'nt' else f'{os.getcwd()}{os.sep}{sys.argv[sys.argv.index("-o") + 1].split(".")[0]}{os.sep}{filename_only}' # Set the pathofexe to the path of the exe
+                os.rename(pathofexe, f'{os.getcwd()}{os.sep}{sys.argv[sys.argv.index("-o") + 1].split(".")[0]}{os.sep}{sys.argv[sys.argv.index("-o") + 1]}') # Rename the exe to the output_name
+                
+                
+                # remove all the .spec files in sys.argv[1]
+                for file in os.listdir(os.getcwd()): # For each file in the current working directory
+                    if file.endswith('.spec'): # Check if the file ends with .spec
+                        os.remove(file) # Remove the file
+                
+                exit('\u001b[32;1mOpperation Complete\u001b[0m') # Print the message
+                
+            except Exception as e: # If there is an error
+                raise Exception(e)   # Raise the error
+            except FileNotFoundError:   # If the file is not found
+                raise FileNotFoundError('Failure File not found in the temp dir')    # Raise the file not found error
+            except KeyboardInterrupt:   # If the user presses ctrl + c
+                raise KeyboardInterrupt('Keyboard Interrupt Detected')  # Raise the keyboard interrupt detected error
+            except ModuleNotFoundError: # If the module is not found
+                raise ModuleNotFoundError('Pyinstaller is not installed, plase install it with "pip install pyinstaller" or "pip3 install pyinstaller"')  # Raise the module not found error   
+        
+        elif '-O1' in sys.argv or '-o' in sys.argv or '-1' in sys.argv:
+            try:    # Try to open the file
+                # rename the file in the temp folder to .py
+                # run this command with subprocess pyinstaller --noconfirm --onefile --console --icon "C:/Users/dhruv/Downloads/logo.ico"  "Z:\GitHub\Repos\BrainLuck2.0\versace.py"
+                print('\u001b[31;1mDo you want to put an icon for the file? (y/n) : \u001b[0m', end='') # Print the question
+                icon_choice = input().lower().strip() # Get the input
+                if icon_choice == 'y': # Check if the input is y
+                    print('\u001b[31;1mEnter the icon path ("icon.ico"): \u001b[0m', end='') # Print the question
+                    icon = input() # Get the input
+                    if icon.count('"') != 2: # Check if the input has 2 " in it
+                        icon = f'"{icon}"' # Add the " to the input
+                else: # If the input is not y
+                    icon_choice = 'n' # Set the icon_choice to n
+                    icon = '' # Set the icon to ''
+                
+                icon = f'--icon {icon}' if icon_choice == 'y' else '' # Set the icon to the icon if the icon_choice is y else ''
+                
+                filepath = tempfilething.name # Set the filepath to the temp file
+                # copy filepath to src folder and add .py to the end
+                if os.path.exists('temp'): pass # Check if the src folder exists
+                else: os.mkdir('temp') # If the src folder does not exist, create it
+                
+                shutil.copy(filepath, f'{os.getcwd()}{os.sep}temp{os.sep}{filename_only}.py') # Copy the file to the src folder
+                filepath = f'{os.getcwd()}{os.sep}temp{os.sep}{filename_only}.py' # Set the filepath to the new file
+                
+                print('\u001b[31;1mWill this be an Window based application or a console based one? (w/c): \u001b[0m', end='') # Print the question
+                window_console = input().lower().strip() # Get the input
+                if window_console == 'w': # Check if the input is w
+                    window_console = '--windowed' # Set the window_console to --windowed
+                else: # If the input is not w
+                    window_console = '--console'   # Set the window_console to --console  
+                
+                command = f'pyinstaller --noconfirm --onefile {window_console} {icon} {filepath}' # Set the command to the pyinstaller command           
+
+                # move the .tmp file to the rood dir
+                os.system(command) # Run the command
+                
+                # move the exe from the dist folder to the root dir
+                # delete the build and dist folder
+                if os.name == 'nt':
+                    try:
+                        shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}.exe', f'{os.getcwd()}{os.sep}{filename_only}.exe')
+                    except FileNotFoundError:
+                        shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}.{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
+                else:
+                    try:
+                        shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
+                    except FileNotFoundError:
+                        shutil.move(f'{os.getcwd()}{os.sep}dist{os.sep}.{filename_only}', f'{os.getcwd()}{os.sep}{filename_only}')
+                
+                shutil.rmtree(f'{os.getcwd()}{os.sep}build')
+                shutil.rmtree(f'{os.getcwd()}{os.sep}dist')
+                shutil.rmtree(f'{os.getcwd()}{os.sep}temp')
+                os.remove(f'{os.getcwd()}{os.sep}{filename_only}.spec')
+                # is something is after the -o in the sys.argv
+                try: # Try to get the output
+                    if sys.argv[sys.argv.index('-o') + 1] != '-o':  # Check if the sys.argv is not -o
+                        # rename the exe to the name after the -o
+                        os.rename(f'{os.getcwd()}{os.sep}{filename_only}.exe', f'{os.getcwd()}{os.sep}{sys.argv[sys.argv.index("-o") + 1]}') # Rename the file
+                except IndexError: # If the index is out of range
+                    pass   # If there is no index after the -o, pass
+                
+                os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
+                
+                if os.name == 'nt': # Check if the os is windows
+                    filename_only = filename_only + '.exe' # Add .exe to the filename_only
+                
+                finalfilename = sys.argv[sys.argv.index('-o') + 1]
+                
+                os.remove(filepath) # Delete the file in the src folder
+                
+                print('\u001b[32;1mFile Compiled\u001b[0m') # Print the message
+                print(f'\u001b[32;1mFile saved to the root directory as "{finalfilename}"\u001b[0m')    # Print the message 
+                print('\u001b[31;1mDo you want to run the binary compiled file? (y/n) : \u001b[0m', end='') # Print the question
+                
+                for file in os.listdir(os.getcwd()): # For each file in the current working directory
+                    if file.endswith('.spec'): # Check if the file ends with .spec
+                        os.remove(file) # Remove the file
+                
+                if input().lower() == 'y': # Check if the input is y
+                    if os.name == 'nt': # Check if the os is windows
+                        os.system(f'start {finalfilename}') # Run the file
+                    else: # If the os is not windows
+                        os.system(f'{filename_only}') # Run the file
+                else: # If the input is not y
+                    delete_temp() # Delete the temp file
+                    exit('\u001b[31;1mYOUR FILE IS SAVED!!\u001b[0m') # Exit the program with the message
+                exit() # Exit the program
+                
+            except Exception as e:  # If there is an error
+                raise Exception(e) # Raise the error
+            except FileNotFoundError:   # If the file is not found
+                raise FileNotFoundError('Failure File not found in the temp dir')    # Raise the file not found error
+            except KeyboardInterrupt:   # If the user presses ctrl + c
+                raise KeyboardInterrupt('Keyboard Interrupt Detected')  # Raise the keyboard interrupt detected error
+            except ModuleNotFoundError:
+                raise ModuleNotFoundError('Pyinstaller is not installed, plase install it with "pip install pyinstaller" or "pip3 install pyinstaller"')
 
     for i in range(20):
         print('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n')
         
-    os.system('cls' if os.name == 'nt' else 'clear')
-    
-    def errorcalculate(topline):         # Function to calculate the error
-        """
-            code should do the following:
-            There are 2 outputs expected, the top line, and the bottom line (the line we calculate)
-            The top line is the line before the error pointing line and looks like this:
-            isasn choice < "which question am I doing? (1, 2, 3, 4) : " < int < bold red
-            The bottom line is the line with the error and looks like this:
-            ^^^^^^^^^^^^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-            notice how only where there is " " is where the char is ~ and the rest is ^
-            heres a Second Example:
-            out < "What is your name? : " < go < "Hello " < name < "!" < bold red
-            ^^^^^^~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^~~~~~~~~^^^^^^^^^^~~~^^^^^^^^^^^
-        """
-        bottomline = ''    # The bottom line
-        char = '"'   # The char to look for
-        count = 0   # The count of the char
-        in_string = False  # If the char is in a string
-        for i in topline:  # Loop through the top line
-            if "'" == i: # If the char is a '
-                bottomline += '^' # Add a ^ to the bottom line
-            else:  # If the char is not a '
-                bottomline += ' ' # Add a space to the bottom line
-        
-        if "'" in topline: # If the char is in the top line
-            if '\\' in topline[topline.index("'") - 1:]: # If the char is escaped
-                pass # Do nothing
-            else: # If the char is not escaped
-                bottomline += '\nAdd a \ before the \' so the string would look like this: \\\'' # Add the error message to the bottom line
-                return bottomline    # Return the bottom line
-         
-        bottomline = ''   # Reset the bottom line
-        
-        for i in range(len(topline)): # Loop through the top line
-            if topline[i] == char: # If the char is the char we are looking for
-                bottomline += '~' # Add a ~ to the bottom line
-                if count == 1: # If the count is 1
-                    in_string = False # Set the in string to False
-                    count = 0 # Reset the count
-                    continue  # Continue the loop
-                in_string = True # Set the in string to True
-                count += 1 # Add 1 to the count
-                continue # Continue the loop
-            else: # If the char is not the char we are looking for
-                if in_string: # If the char is in a string
-                    bottomline += '~' # Add a ~ to the bottom line
-                    continue # Continue the loop
-                else: # If the char is not in a string
-                    bottomline += '^' # Add a ^ to the bottom line
-                    continue # Continue the loop
-        return bottomline   # Return the bottom line      
+    os.system('cls' if os.name == 'nt' else 'clear')    
     
     def runfile(filename):  # Define the runfile function
         # compile the code in filename, and using the exec node execute it
         os.system("")  # This is to fix the bug in windows where the color doesnt work
-        
+
         with open(filename, 'rb') as f: # Open the file in read binary mode
             code = compile(f.read(), filename, 'exec') # Compile the code in the file
             
@@ -783,7 +964,10 @@ def testType(_type, line):  # Define the testType function
             return True # Return True
         else:  # If the type is not int
             raise Exception(f'{line} is not a int') # Raise an exception
-
+    
+    elif _type == 'usize':  # Check if the type is usize or isize
+        return True # Return True
+    
     elif _type == 'str': # Check if the type is string
         line = line.split('=')[-1]  # Split the line by spaces
         line = line.strip() # Strip the line
@@ -1030,12 +1214,18 @@ class _SYNTAX: # Create the _SYNTAX class
             line = line.replace('set ', '') # Remove the set from the line
             line = line.strip() # Remove the spaces from the start and end of the line
             type_ = 'set' # Set the type to set
+        elif 'usize' in linetype: # If the type is function
+            if linetype == 'usize*': # If the type is usize
+                raise TypeError('usize* is not supported, did you mean usize?') # Raise an error
+            line = line.replace('usize ', '') # Remove the usize from the line
+            line = line.strip() # Remove the spaces from the start and end of the line
+            type_ = 'usize' # Set the type to usize
         else: # If the type is not any of the above
-            raise Exception(f"Unknown type {linetype}") # Raise an exception
+            raise TypeError(f"Unknown type {linetype}") # Raise an exception             
         
         if testType(type_, line): # If the type is correct
             final.insert(0, f"{line}\n") # Add the line to the final list
-        else: # If the type is not correct
+        else: # If the type is not correct 
             raise Exception(f"Invalid type for {line}") # Raise an exception
         return # Continue the loop
 
@@ -1119,6 +1309,22 @@ def lexer(lines=[],
     for iii in lines: # For each line in the lines list
         if '::' in iii and ':::' not in iii: # If the line has :: in it
             lines[lines.index(iii)] = iii.replace('::', '.') # Replace the :: with a .
+    
+    for iiii in lines:
+        if "\\|" in iiii:
+            lines[lines.index(iiii)] = iiii.replace("\\|", r"\u2502")
+        if "\\-" in iiii:
+            lines[lines.index(iiii)] = iiii.replace("\\-", r"\u2500")
+        if "\\+" in iiii:
+            lines[lines.index(iiii)] = iiii.replace("\\+", r"\u253c")
+        if "\\>" in iiii:
+            lines[lines.index(iiii)] = iiii.replace("\\>", r"\u251c")
+        if "\\^" in iiii:
+            lines[lines.index(iiii)] = iiii.replace("\\^", r"\u2534")
+        if "\\<" in iiii:
+            lines[lines.index(iiii)] = iiii.replace("\\<", r"\u2524")
+        if "\\v" in iiii:
+            lines[lines.index(iiii)] = iiii.replace("\\v", r"\u252c")
     
     index = 0 # Define the index variable
     
@@ -1298,10 +1504,10 @@ def lexer(lines=[],
         except Exception as e: # If an exception is raised
             IO.error('Traceback: Most Recent Call') # Print the error message
             IO.error(f'Exception: {e}') # Print the error message
-            IO.error('  File "temp/src/{}.tmp", line {}'.format(filename, lines.index(line)+1)) # Print the error message
+            IO.error('  File "{}", line {}'.format(filename, lines.index(line)+1)) # Print the error message
             IO.error('    {}'.format(line)) # Print the error message
-            symobol = '^'*len(line) # Define the symbol
-            IO.error('    {}'.format(symobol)) # Print the error message
+            bottomline = errorcalculate(line)
+            IO.error(f"    {bottomline}")
             if 'int main()' in line: IO.error('Did you mean to use "public main()"')
             if 'def main()' in line: IO.error('Did you mean to use "public main()"')
             IO.error('\nError: Failed to build') # Print the error message
@@ -1316,6 +1522,12 @@ def lexer(lines=[],
     if 'from rich import console; print = console.Console().print\n' not in final: # Check if the print function is not in the final list
         final.insert(0, 'from rich import console; print = console.Console().print\n') # Insert the print function into the final list
      
+    # move all the import and from statements to the top of final
+    for i in final: # For each item in the final list
+        if i.startswith('import') or i.startswith('from'): # Check if the item starts with import or from
+            final.remove(i) # Remove the item from the final list
+            final.insert(0, i) # Insert the item into the final list
+    
     
     for i in sys.argv: # For each item in the sys.argv list
         if i == '-d': # Check if the item is -d
@@ -1474,6 +1686,9 @@ def lexer(lines=[],
             exit() # Exit the program
         
         final.append("main()") # Append the main function to the final list
+        final.insert(0, f'from sys import exit\n')
+        final.insert(0, f'# Versace can be found here https://github.com/Ze7111/Versace\n\n')
+        final.insert(0, f'# This file was transpiled from Versace to Python\n')
         compiler(final, decomplie, filename) # Call the compiler function
     else: # Else
         __B__IN__MODULE__ = False # Define __B__IN__MODULE__ as False
@@ -1552,9 +1767,25 @@ def starter(filename,
     except IndexError: # If there is an IndexError
         print('\u001b[41;1mNo file specified\u001b[0m') # Print the message
     try:    # Try to run the code
-        path = os.getcwd() # Define the path variable as the current working directory
+        if '"' in sys.argv[1]:  # Check if the filename contains a "
+            sys.argv[1] = sys.argv[1].replace('"', '') # Remove the " from the filename
+        elif "'" in sys.argv[1]:    # Check if the filename contains a '
+            sys.argv[1] = sys.argv[1].replace("'", '') # Remove the ' from the filename
+        
+        path = sys.argv[1]  # Set the path to the second argument
+        # remove the last term after the last os.sep
+        if '\\' in path:    # Check if the path contains a \
+            path = path.split('\\') # Split the path by \
+        elif '/' in path:   # Check if the path contains a /
+            path = path.split('/') # Split the path by /
+        elif os.sep in path:    # Check if the path contains a seperator
+            path = path.split(os.sep)   # Split the path by the seperator
+        
+        path = path[:-1]    # Remove the last item in the path list
+        path = os.sep.join(path)    # Join the path list by the seperator
+                
         try:   # Try to run the code
-            os.system(f'cd {path}') # Change the directory
+            pass
         except FileNotFoundError: # If the file is not found
             print('\u001b[41;1mFile not found\u001b[0m') # Print the error
             print('\u001b[41;1mFatel Error Exiting...\u001b[0m') # Print the message
@@ -1601,9 +1832,11 @@ def starter(filename,
 
         try: # don't change this either
             if argv[1] != None or argv[1] != '': # don't change this unless you know what you are doing
+                os.chdir(path)  # Change the current working directory to the path
                 build(argv[1], __B__MUSIC__OPTION__, Version, music_path, argv) # don't change this unless you know what you are doing
                 exit() # don't change this unless you know what you are doing
         except IndexError: # don't change this unless you know what you are doing
+            os.chdir(path)  # Change the current working directory to the path
             build(filename, __B__MUSIC__OPTION__, Version, music_path) # don't change this unless you know what you are doing
     except KeyboardInterrupt:   # If the user presses ctrl+c
         print('\u001b[41;1mKeyboard Interrupt Detected\u001b[0m')   # Print the message
@@ -1741,13 +1974,13 @@ try:   # Try to run the code
             -f            | Forces the program to freeze before exiting
             -c <filename> | Compiles the file to a .py file
             -o <filename> | Compiles the file to a .exe file
-            -01           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a single slow-ish .exe file
-            -02           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a faster single directory with a .exe file
-            -03           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a the fastest .exe file, but nested with a lot of directories
+            -O1           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a single slow-ish .exe file
+            -O2           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a faster single directory with a .exe file
+            -O3           | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a the fastest .exe file, but nested with a lot of directories
             """
         
         argvcommands = [
-            '-p', '-h', '-v', '-d', '-o', '-c', '-cfg', '-f', '-01', '-02', '-03'
+            '-p', '-h', '-v', '-d', '-o', '-c', '-cfg', '-f', '-O1', '-O2', '-O3', '-1', '-2', '-3'
         ]  # List of all the commands
                 
         for i in sys.argv:  # For every argument
@@ -1772,9 +2005,9 @@ try:   # Try to run the code
                     print('\u001b[32;1m-f            | Forces the program to freeze before exiting\u001b[0m') # Print the message
                     print('\u001b[32;1m-c <filename> | Compiles the versace code to a python file\u001b[0m') # Print the message
                     print('\u001b[32;1m-o <filename> | Compiles the versace code to a binary exe file\u001b[0m') # Print the message
-                    print('\u001b[32;1m  -01**       | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a single slow-ish .exe file\u001b[0m')
-                    print('\u001b[32;1m  -02**       | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a faster single directory with a .exe file\u001b[0m')
-                    print('\u001b[32;1m  -03**       | Must be used with -o, and cannot be directly infront of -o, it compiles the file to a the fastest .exe file, but nested with a lot of directories\u001b[0m')
+                    print('\u001b[32;1m -O1 or -1**  | Must be directly infront of -o, it compiles the file to a single unoptimized executable file\u001b[0m')
+                    print('\u001b[32;1m -O2 or -2**  | Must be directly infront of -o, it compiles the file to a faster single directory with a executable file\u001b[0m')
+                    print('\u001b[32;1m -O3 or -3**  | Must be directly infront of -o, it compiles the file to a the fastest most-optimized executable file, but nested with a lot of directories\u001b[0m')
             
                     print('\u001b[32;1m*<filename> is an optianl argument\u001b[0m') # Print the message
                     print('\u001b[32;1m**Not implemented yet.\u001b[0m') # Print the message
