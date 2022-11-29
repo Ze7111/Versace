@@ -7,12 +7,12 @@ description: >-
 
 # Versace - Documentation
 
-## I am just [Getting Started](https://app.gitbook.com/o/JINqpW3d60FhPCiGKamF/s/Rnp7Yh8w5If7fLCUvpT7/\~/changes/bzYSF1UV1Nys1sVaEYZu/getting-started/page-1)
+## I am just [Getting Started](https://dhruvan.gitbook.io/vs/getting-started/introduction)
 
-## I am here only to learn the [Basics ](broken-reference)of programing
+## I am here only to learn the [Basics](https://dhruvan.gitbook.io/vs/basics/introduction) of programing
 
-## I will be [Developing Applications](broken-reference)
+## I will be [Developing Applications](https://dhruvan.gitbook.io/vs/optimization/inroduction)
 
-## I want to learn how to [Optimize ](broken-reference)my code
+## I want to learn how to [Optimize](https://dhruvan.gitbook.io/vs/developing-applications/introduction) my code
 
-## I want to become a [God](broken-reference) in coding
+## I want to become a [God](https://dhruvan.gitbook.io/vs/tips-tricks/introduction) in coding
