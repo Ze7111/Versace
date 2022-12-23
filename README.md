@@ -1,3 +1,5 @@
+# VERSACE IS IN THE PROCESS OF BEING COMPLETLY RE-WRITTEN FROM SCRATCH
+
 <p align="center">
   <img src="images/logo.png">
 </p>
