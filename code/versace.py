@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=line-too-long
 #!/usr/bin/env python3
 
-# Github copilot should always use type annotations in this file
+# pylint: disable=line-too-long
+
+# You should always use type annotations in this file
 # how to use type annotations: https://www.python.org/dev/peps/pep-0484/
 
 """
@@ -85,85 +86,85 @@ class __GLOBAL_VARIABLES__():
         'cls',
     )
     __KEYWORDS_NEED_INDENTATION__: tuple[str, ...] = (
-    'if',
-    'else if',
-    'else',
-    'for',
-    'while',
-    'func',
-    'public',
-    'async',
-    'try',
-    'catch',
-    'finally',
-    'class',
+        'if',
+        'else if',
+        'else',
+        'for',
+        'while',
+        'func',
+        'public',
+        'async',
+        'try',
+        'catch',
+        'finally',
+        'class',
 
-    # python keywords that need indentation
-    'except',
-    'with',
-    '{',
-    '}',
-    '(',
-    ')',
-    '[',
-    ']',
-    ',',
-    '/*',
-    '*/',
+        # python keywords that need indentation
+        'except',
+        'with',
+        '{',
+        '}',
+        '(',
+        ')',
+        '[',
+        ']',
+        ',',
+        '/*',
+        '*/',
     )
     __NON_NORMAL_CHARS__: tuple[str, ...] = (
-    ' ' ,
-    '@' ,
-    '#' ,
-    '$' ,
-    '%' ,
-    '^' ,
-    '&' ,
-    '*' ,
-    '!' ,
-    '(' ,
-    ')' ,
-    '-' ,
-    '+' ,
-    '=' ,
-    '[' ,
-    ']' ,
-    '{' ,
-    '}' ,
-    ';' ,
-    ':' ,
-    ',' ,
-    '.' ,
-    '<' ,
-    '>' ,
-    '/' ,
-    '?' ,
-    '`' ,
-    '~' ,
-    '|' ,
-    '\\',
+        ' ' ,
+        '@' ,
+        '#' ,
+        '$' ,
+        '%' ,
+        '^' ,
+        '&' ,
+        '*' ,
+        '!' ,
+        '(' ,
+        ')' ,
+        '-' ,
+        '+' ,
+        '=' ,
+        '[' ,
+        ']' ,
+        '{' ,
+        '}' ,
+        ';' ,
+        ':' ,
+        ',' ,
+        '.' ,
+        '<' ,
+        '>' ,
+        '/' ,
+        '?' ,
+        '`' ,
+        '~' ,
+        '|' ,
+        '\\',
     )
     __DATA_TYPES__: tuple[str, ...] = (
-    'array',
-    'arr',
-    'int',
-    'float',
-    'complex',
-    'double',
-    'str',
-    'usize',
-    'bool',
-    'list',
-    'dict',
-    'tuple',
-    'set',
-    'bytes',
-    'char',
-    'memoryview',
-    'bytearray',
-    'frozenset',
-    'range',
-    'nullType',
+        'array',
+        'arr',
+        'int',
+        'float',
+        'complex',
+        'double',
+        'str',
+        'usize',
+        'bool',
+        'list',
+        'dict',
+        'tuple',
+        'set',
+        'bytes',
+        'char',
+        'memoryview',
+        'bytearray',
+        'frozenset',
+        'range',
+        'nullType',
     )
     __END_TYPES__: MappingProxyType[str, str] = _MAP_(
         {
@@ -176,114 +177,114 @@ class __GLOBAL_VARIABLES__():
         }
     )
     __JUSTIFY_TYPES__: tuple[str, ...] = (
-    'left',
-    'right',
-    'center',
-    'justify',
+        'left',
+        'right',
+        'center',
+        'justify',
     )
     __COLOR_TYPES__: tuple[str, ...] = (
     # primitive colors
-    'red',
-    'green',
-    'yellow',
-    'blue',
-    'magenta',
-    'cyan',
-    'white',
-    'black',
-    'bold red',
-    'bold green',
-    'bold yellow',
-    'bold blue',
-    'bold magenta',
-    'bold cyan',
-    'bold white',
-    'bold black',
-    'bright_red',
-    'bright_green',
-    'bright_yellow',
-    'bright_blue',
-    'bright_magenta',
-    'bright_cyan',
-    'bright_white',
-    'bright_black',
+        'red',
+        'green',
+        'yellow',
+        'blue',
+        'magenta',
+        'cyan',
+        'white',
+        'black',
+        'bold red',
+        'bold green',
+        'bold yellow',
+        'bold blue',
+        'bold magenta',
+        'bold cyan',
+        'bold white',
+        'bold black',
+        'bright_red',
+        'bright_green',
+        'bright_yellow',
+        'bright_blue',
+        'bright_magenta',
+        'bright_cyan',
+        'bright_white',
+        'bright_black',
     )
     __STYLE_TYPES__: tuple[str, ...] = (
-    'bold',
-    'dim',
-    'italic',
-    'underline',
-    'blink',
-    'reverse',
-    'hidden',
-    'strike',
+        'bold',
+        'dim',
+        'italic',
+        'underline',
+        'blink',
+        'reverse',
+        'hidden',
+        'strike',
     )
     __RESERVED_WORDS__: tuple[str, ...] = (
-    'if',
-    'else if',
-    'else',
-    'for',
-    'while',
-    'func',
-    'public',
-    'async',
-    'try',
-    'catch',
-    'finally',
-    'class',
-    'include',
-    'from',
-    'const',
-    'out',
-    'in',
-    'stop',
-    'throw',
-    'null',
-    'True',
-    'static',
-    'struct',
-    'enum',
-    'False',
-    'set',
-    'frozenset',
-    'dict',
-    'list',
-    'tuple',
-    'pack',
-    'unpack',
-    'range',
-    'bytearray',
-    'memoryview',
-    'bytes',
-    'char',
-    'str',
-    'double',
-    'complex',
-    'float',
-    'int',
-    'bool',
-    'usize',
-    'array',
-    'arr',
-    'nullType',
-    'print',
-    'input',
-    'pyc',
-    'exec',
-    'alloc',
-    'dealloc',
-    'exit',
+        'if',
+        'else if',
+        'else',
+        'for',
+        'while',
+        'func',
+        'public',
+        'async',
+        'try',
+        'catch',
+        'finally',
+        'class',
+        'include',
+        'from',
+        'const',
+        'out',
+        'in',
+        'stop',
+        'throw',
+        'null',
+        'True',
+        'static',
+        'struct',
+        'enum',
+        'False',
+        'set',
+        'frozenset',
+        'dict',
+        'list',
+        'tuple',
+        'pack',
+        'unpack',
+        'range',
+        'bytearray',
+        'memoryview',
+        'bytes',
+        'char',
+        'str',
+        'double',
+        'complex',
+        'float',
+        'int',
+        'bool',
+        'usize',
+        'array',
+        'arr',
+        'nullType',
+        'print',
+        'input',
+        'pyc',
+        'exec',
+        'alloc',
+        'dealloc',
+        'exit',
     )
     __OPTIANAL_ARGS_ALLOWED__: tuple[str, str, str, str, str, str, str, str, str] = (
-    r'-*- no types -*-',
-    r'-*- no color -*-',
-    r'-*- no indent -*-',
-    r'-*- no init -*-',
-    r'-*- no newline -*-',
-    r'-*- py -*-',
-    r'-*- cache -*-',
-    r'-*- exec -*-',
-    r'-*- all errors -*-',
+        r'-*- no types -*-',
+        r'-*- no color -*-',
+        r'-*- no indent -*-',
+        r'-*- no init -*-',
+        r'-*- no newline -*-',
+        r'-*- py -*-',
+        r'-*- cache -*-',
+        r'-*- exec -*-',
+        r'-*- all errors -*-',
     )
     __CHANGE_WORDS__: MappingProxyType[str, str] = _MAP_(
         {
@@ -876,34 +877,34 @@ def __CREATE_CONFIG_FILE__() -> str:
     """
     import time
     __CURRENT_TIME__ = time.strftime('%d/%m/%Y %H:%M:%S', time.localtime())
-    __CONFIG_DATA__ = f"""# {'-' * len(f"This is the config file for Versace it was auto generated at {__CURRENT_TIME__}")} #
-# This is the config file for Versace it was auto generated at {__CURRENT_TIME__} #
-# {'-' * len(f"This is the config file for Versace it was auto generated at {__CURRENT_TIME__}")} #
+    __CONFIG_DATA__ = f"""  # {'-' * len(f"This is the config file for Versace it was auto generated at {__CURRENT_TIME__}")} #
+    # This is the config file for Versace it was auto generated at {__CURRENT_TIME__} #
+    # {'-' * len(f"This is the config file for Versace it was auto generated at {__CURRENT_TIME__}")} #
 
-["BASIC-INFORMATION"]
-version = "{__VERSION__}"{' ' * (64 - len(f'version = "{__VERSION__}"'))}# the version of Versace
-indentation = "    "                                            # 4 spaces is the default
-allow_tracking = True                                           # This is to allow tracking of Versace
-allow_update = False                                            # This is to allow updates of Versace
+    ["BASIC-INFORMATION"]
+    version = "{__VERSION__}"{' ' * (64 - len(f'version = "{__VERSION__}"'))}# the version of Versace
+    indentation = "    "                                            # 4 spaces is the default
+    allow_tracking = True                                           # This is to allow tracking of Versace
+    allow_update = False                                            # This is to allow updates of Versace
 
-["PATHS"]
-python_path = "{sys.executable}"{' ' * (62 - len(f'python_path = "{sys.executable}"'))}# This is the path to the python interpreter
-versace_path = "{os.path.expanduser('~') + os.sep + 'Versace'}"{' ' * (61 - len(f"versace_path = '{os.path.expanduser('~') + os.sep + 'Versace'}'"))}# This is the path to the Versace folder
+    ["PATHS"]
+    python_path = "{sys.executable}"{' ' * (62 - len(f'python_path = "{sys.executable}"'))}# This is the path to the python interpreter
+    versace_path = "{os.path.expanduser('~') + os.sep + 'Versace'}"{' ' * (61 - len(f"versace_path = '{os.path.expanduser('~') + os.sep + 'Versace'}'"))}# This is the path to the Versace folder
 
-["COMPILER"]
-no_includes = False                                             # This determines if the Versace compiler should include the modules specified by the user in thier Versace code
-no_args_start = False                                           # This determines if the Versace compiler should start the Versace code with the args passed to the Versace compiler
-no_version_check = False                                        # This determines if the Versace compiler should check for updates
+    ["COMPILER"]
+    no_includes = False                                             # This determines if the Versace compiler should include the modules specified by the user in thier Versace code
+    no_args_start = False                                           # This determines if the Versace compiler should start the Versace code with the args passed to the Versace compiler
+    no_version_check = False                                        # This determines if the Versace compiler should check for updates
 
-["EXECUTABLE"]
-binary_file_ext = ".exe"                                        # The type of binary to compile to when compiling to binary
-binary = 1                                                      # Optimization level when compiling 0 = low_optimization(onfile), 1 = medium_optimization(ondir), 2 = max_optimization(nested_dirs)
+    ["EXECUTABLE"]
+    binary_file_ext = ".exe"                                        # The type of binary to compile to when compiling to binary
+    binary = 1                                                      # Optimization level when compiling 0 = low_optimization(onfile), 1 = medium_optimization(ondir), 2 = max_optimization(nested_dirs)
 
-["EXTRA"]
-keep_perf_data = False                                          # This determines if the Versace compiler should keep the performance data
-always_monitor_perf_data = False                                # This determines if the Versace compiler should always show the performance data
-transpile_file_ext = ".py"                                      # The type of file to transpile to when compiling to python
-use_cache = False                                               # This determines if the Versace compiler should use the cache"""
+    ["EXTRA"]
+    keep_perf_data = False                                          # This determines if the Versace compiler should keep the performance data
+    always_monitor_perf_data = False                                # This determines if the Versace compiler should always show the performance data
+    transpile_file_ext = ".py"                                      # The type of file to transpile to when compiling to python
+    use_cache = False                                               # This determines if the Versace compiler should use the cache"""
     if '\\' in __CONFIG_DATA__:
         __CONFIG_DATA__ = __CONFIG_DATA__.replace('\\', '\\\\')
     return __CONFIG_DATA__
