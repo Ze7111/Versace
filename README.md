@@ -1,20 +1,17 @@
-![2](https://user-images.githubusercontent.com/68388561/204641332-64ba5772-c9fb-4e14-a3f4-b5d6e30f70e4.png)
-
 ---
 description: >-
   This is the detailed documentation for Versace, its structure and how to write
   elegant Versace Code along with handy tricks used while coding in Versace (or
   even Python).
+cover: .gitbook/assets/copy 75c7f8c9ca13849a94cfa52e2d5d2402 (1).jpg
+coverY: 0
+layout: landing
 ---
 
 # Versace - Documentation
 
-## I am just [Getting Started](https://dhruvan.gitbook.io/vs/getting-started/introduction)
+## I am just [Getting Started](getting-started/introduction.md)
 
-## I am here only to learn the [Basics](https://dhruvan.gitbook.io/vs/basics/introduction) of programing
+## I am here only to learn the [Basics ](broken-reference)of programing
 
-## I will be [Developing Applications](https://dhruvan.gitbook.io/vs/optimization/inroduction)
-
-## I want to learn how to [Optimize](https://dhruvan.gitbook.io/vs/developing-applications/introduction) my code
-
-## I want to become a [God](https://dhruvan.gitbook.io/vs/tips-tricks/introduction) in coding
+## I want to become a [God](broken-reference) in coding
