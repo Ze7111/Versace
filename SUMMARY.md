@@ -52,3 +52,7 @@
 * [All Output Styling Options](appendix-extras/all-output-styling-options.md)
 * [Keywords](appendix-extras/keywords/README.md)
   * [Examples](appendix-extras/keywords/examples.md)
+
+## Introduction
+
+* [Versace, Python, and C++](introduction/versace-python-and-c++.md)
