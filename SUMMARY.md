@@ -47,12 +47,32 @@
 
 ## 📃 Appendix/Extra's
 
-* [Execution Model](appendix-extras/execution-model.md)
 * [Operators and Symbols](appendix-extras/operators-and-symbols.md)
 * [All Output Styling Options](appendix-extras/all-output-styling-options.md)
 * [Keywords](appendix-extras/keywords/README.md)
   * [Examples](appendix-extras/keywords/examples.md)
 
-## Introduction
+## 💻 DOWNLOAD
 
-* [Versace, Python, and C++](introduction/versace-python-and-c++.md)
+* [Versace, Python, and C++](download/versace-python-and-c++.md)
+
+## 📓 GET STARTED
+
+* [Page 1](get-started/page-1.md)
+
+## 📖 Versace Appendix&#x20;
+
+* [Page 2](versace-appendix/page-2.md)
+
+## 📑 Versace Detailed Docs
+
+* [Page 3](versace-detailed-docs/page-3.md)
+
+## 🎛 Versace Standard Library
+
+* [Page 4](versace-standard-library/page-4.md)
+
+## 🗺 Overview&#x20;
+
+* [Introduction to the Overview](overview/introduction-to-the-overview.md)
+* [Execution Model](overview/execution-model.md)
