@@ -52,13 +52,20 @@
 * [Keywords](appendix-extras/keywords/README.md)
   * [Examples](appendix-extras/keywords/examples.md)
 
+***
+
+* [Versace Programming Language](versace-programming-language.md)
+
 ## 💻 DOWNLOAD
 
-* [Versace, Python, and C++](download/versace-python-and-c++.md)
+* [Download Visual Studio Code for Windows](download/download-visual-studio-code-for-windows.md)
+* [Adding Versace support in VS Code](download/adding-versace-support-in-vs-code.md)
+* [Installing Versace](download/installing-versace.md)
 
 ## 📓 GET STARTED
 
 * [Page 1](get-started/page-1.md)
+* [Differences](get-started/differences.md)
 
 ## 📖 Versace Appendix&#x20;
 
@@ -70,7 +77,7 @@
 
 ## 🎛 Versace Standard Library
 
-* [Page 4](versace-standard-library/page-4.md)
+* [Introduction](versace-standard-library/introduction.md)
 
 ## 🗺 Overview&#x20;
 

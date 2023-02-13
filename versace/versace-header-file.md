@@ -68,4 +68,4 @@ public init() { // This is the main function
 
 ### Output of running the main.v file:
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>Execution of the main.v file</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (1).png" alt=""><figcaption><p>Execution of the main.v file</p></figcaption></figure>
