@@ -47,6 +47,7 @@
 
 ## 📃 Appendix/Extra's
 
+* [Identifiers](appendix-extras/identifiers.md)
 * [Operators and Symbols](appendix-extras/operators-and-symbols.md)
 * [All Output Styling Options](appendix-extras/all-output-styling-options.md)
 * [Keywords](appendix-extras/keywords/README.md)
