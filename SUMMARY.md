@@ -45,14 +45,6 @@
 * [Type annotations](versace/type-annotations.md)
 * [Optional Arguments](versace/optional-arguments.md)
 
-## 📃 Appendix/Extra's
-
-* [Identifiers](appendix-extras/identifiers.md)
-* [Operators and Symbols](appendix-extras/operators-and-symbols.md)
-* [All Output Styling Options](appendix-extras/all-output-styling-options.md)
-* [Keywords](appendix-extras/keywords/README.md)
-  * [Examples](appendix-extras/keywords/examples.md)
-
 ***
 
 * [Versace Programming Language](versace-programming-language.md)
@@ -68,10 +60,6 @@
 * [Page 1](get-started/page-1.md)
 * [Differences](get-started/differences.md)
 
-## 📖 Versace Appendix&#x20;
-
-* [Page 2](versace-appendix/page-2.md)
-
 ## 📑 Versace Detailed Docs
 
 * [Page 3](versace-detailed-docs/page-3.md)
@@ -79,6 +67,14 @@
 ## 🎛 Versace Standard Library
 
 * [Introduction](versace-standard-library/introduction.md)
+
+## 📃 Versace Appendix
+
+* [Identifiers](versace-appendix/identifiers.md)
+* [Operators and Symbols](versace-appendix/operators-and-symbols.md)
+* [All Output Styling Options](versace-appendix/all-output-styling-options.md)
+* [Keywords](versace-appendix/keywords/README.md)
+  * [Examples](versace-appendix/keywords/examples.md)
 
 ## 🗺 Overview&#x20;
 

@@ -1,6 +1,6 @@
 # Identifiers
 
-### <mark style="color:red;">If you land on this page, while looking for the identifier that was provided in the error message, click on the second result in the search bar and you will be redirected to the page that you are looking for.</mark>
+### <mark style="color:red;">If you landed on this page, while looking for the identifier that was provided in the error message, click on the second result in the search bar and you will be redirected to the page that you are looking for.</mark>
 
 ### What are identifiers?
 
