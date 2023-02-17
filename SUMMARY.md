@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Versace - Documentation](README.md)
+* [README](README.md)
 
 ## 🚀 Getting Started
 
