@@ -28,7 +28,7 @@ To test if Versace is installed correctly, open a command prompt and run `versac
 
 If you see something like this, you have installed Versace correctly:
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>x.x.x represents a version number.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (2).png" alt=""><figcaption><p>x.x.x represents a version number.</p></figcaption></figure>
 
 ### Why do I need admin privileges?
 

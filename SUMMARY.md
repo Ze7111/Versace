@@ -62,7 +62,7 @@
 
 ## 📑 Versace Detailed Docs
 
-* [Page 3](versace-detailed-docs/page-3.md)
+* [Functions](versace-detailed-docs/functions.md)
 
 ## 🎛 Versace Standard Library
 

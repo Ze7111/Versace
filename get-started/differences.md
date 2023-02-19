@@ -19,7 +19,7 @@ If you're already a Python developer, Versace should have a gentle learning curv
 {% tab title="Versace" %}
 The Python code in the pervious tab would correspond to this Versace code.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Pure Versace code with explanation.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Pure Versace code with explanation.</p></figcaption></figure>
 
 
 {% endtab %}
@@ -46,6 +46,6 @@ If you're already a C++ developer, Versace should have a somewhat steeper learni
 Versace and C++ are not interoperable.
 {% endhint %}
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Pure C++ code.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>Pure C++ code.</p></figcaption></figure>
 {% endtab %}
 {% endtabs %}
