@@ -4,7 +4,7 @@
 
 * <mark style="color:blue;">**Windows 10 (x64)**</mark> or above
 * <mark style="color:green;">**Code editor**</mark>, I recommend [**Visual Studio Code**](https://code.visualstudio.com/download), along with the [**Versace Extension**](https://marketplace.visualstudio.com/items?itemName=ZE7111.Versace). &#x20;
-* <mark style="color:yellow;">Python 3.6.0</mark> **** or above **** (optional) if you do not have it you can download it [**here!**](https://www.python.org/downloads/release/python-3110/)****
+* <mark style="color:yellow;">Python 3.6.0</mark> or above (optional) if you do not have it you can download it [**here!**](https://www.python.org/downloads/release/python-3110/)
 
 ## Installation ✅
 
@@ -27,7 +27,7 @@ This method is **not** entirely reliable, due to the you having to do all the st
 {% endhint %}
 
 {% hint style="warning" %}
-For installing for **Mac** or **Linux** click [**here.**](https://github.com/Ze7111/Versace/releases/latest)****
+For installing for **Mac** or **Linux** click [**here.**](https://github.com/Ze7111/Versace/releases/latest)
 {% endhint %}
 
 1. Download the `(yourOS)-Versace-(version).zip` from the respective post.

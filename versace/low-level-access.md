@@ -53,10 +53,12 @@ alloc(10); // Allocates 10 MB of memory
 
 You can deallocate memory by using the `dealloc` keyword like follows:
 
+{% code fullWidth="false" %}
 ```cs
 dealloc(5); // Deallocates 5 MB out of the 10 MB allocated
 dealloc(); // Deallocates all allocated memory
 ```
+{% endcode %}
 
 {% hint style="danger" %}
 You can <mark style="color:red;">**NOT**</mark> allocate more memory then is available on the computer. If you try to allocate more memory then is available, it will throw an error. This also happens Vice Versa, if you try to deallocate more memory then is allocated, it will throw an error.

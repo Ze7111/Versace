@@ -10,7 +10,7 @@ In most aspects Versace is better than other readily available languages, for st
 
 Versace also has the ability to transpile code written in Versace to python, or even a binary executable.&#x20;
 
-Versace has excellent runtime speeds (Versace runtime <mark style="color:green;">**0.043s**</mark>, C++ runtime ** **<mark style="color:yellow;">**0.032s**</mark>, Python runtime <mark style="color:red;">**0.076s**</mark>) \* even the compiled versions of your code will run much faster than python, but still a little slower than C++.&#x20;
+Versace has excellent runtime speeds (Versace runtime <mark style="color:green;">**0.043s**</mark>, C++ runtime <mark style="color:yellow;">**0.032s**</mark>, Python runtime <mark style="color:red;">**0.076s**</mark>) \* even the compiled versions of your code will run much faster than python, but still a little slower than C++.&#x20;
 
 Best part? - IT DOES NOT NEED ANY COMPILER TO WORK, all it needs is python, and if python is not there don't worry, it will still execute Versace code, you will only lose the ability to compile it to a binary executable.
 
