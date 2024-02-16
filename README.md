@@ -1,3 +1,7 @@
+# Versace is no longer maintained
+### I am working on a new language, that I'm writing in Python, then will migrate to Rust
+### The language will be designed with Interoperability between C, C++, Rust and Python
+
 ---
 description: >-
   This is the detailed documentation for Versace, its structure and how to write
