@@ -1,6 +1,7 @@
 # Versace is no longer maintained
-### I am working on a new language, that I'm writing in Python, then will migrate to Rust
-### The language will be designed with Interoperability between C, C++, Rust and Python
+# I am working on a new language, that I'm writing in Python, then will migrate to Rust
+# The language will be designed with Interoperability between C, C++, Rust and Python
+# [Helix the new language](https://github.com/kneorain/helix)
 
 ---
 description: >-
